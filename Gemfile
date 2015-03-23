@@ -23,8 +23,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Haml replaces erb
 gem 'haml'
-# Bootstrap for page layouts
-gem 'bootstrap-sass', '~> 2.3.2.0'
+# Bootstrap and sass for page layouts
+gem 'bootstrap-sass', '~> 3.3.4'
 # Use Simpleform to create forms with complete html input
 gem 'simple_form'
 # Use Devise for user authentication system

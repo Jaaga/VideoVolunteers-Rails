@@ -1,0 +1,8 @@
+= provide(:title, "New State")
+
+%h1.text-center New State
+= simple_form_for @state do |f|
+  = f.input :state
+  = f.input :state_abb, label: name_modifier('state_abb')
+  = f.input :district
+  = f.submit 'Save', class: 'btn btn-primary btn-block'

@@ -1,0 +1,17 @@
+= provide(:title, "States")
+
+%h1.text-center All States
+
+.table-responsive
+  %table.table.table-bordered.table-striped
+    %thead
+      %tr
+        - @columns.each do |column|
+          %th
+            = name_modifier(column)
+    %tbody
+      - @states.each do |state|
+        %tr
+          %td.col-sm-4= link_to state.state, state
+          %td.col-sm-4= state.state_abb
+          %td.col-sm-4= state.district

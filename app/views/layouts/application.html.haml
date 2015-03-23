@@ -1,0 +1,28 @@
+!!!
+%html
+  %head
+    %title= yield(:title)
+    = stylesheet_link_tag    "application", media: "all"
+    = javascript_include_tag "application", :'data-turbolinks-track' => true
+    %script{ src: "/js/js-webshim/minified/polyfiller.js" }
+    :javascript
+      // configure before calling webshims.polyfill
+      webshim.setOptions("forms-ext",
+      { replaceUI: true,
+        types: 'date',
+        "widgets":
+          { "yearSelect": true, "monthSelect": true, "daySelect": true,
+            "monthNames": "monthNames"}
+      });
+
+      webshim.polyfill('forms forms-ext');
+    = csrf_meta_tags
+  %body
+    = render 'layouts/navigation'
+    .container
+      .row
+        .col-md-12
+          = render 'layouts/messages'
+          = yield
+
+    =render 'layouts/footer'
