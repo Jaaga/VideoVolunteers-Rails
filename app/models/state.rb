@@ -1,6 +1,9 @@
 class State < ActiveRecord::Base
-  validates_presence_of :state
-  validates_presence_of :state_abb
+  validates :state, presence: true, length: { maximum: 50 },
+             uniqueness: { case_sensitive: false }
+  validates :state_abb, presence: true, length: { maximum: 5 },
+             uniqueness: { case_sensitive: false }
+  validates :district, length: { maximum: 50 }, allow_blank: true
 
   before_save :capitalize_data
 

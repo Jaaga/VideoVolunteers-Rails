@@ -3,10 +3,12 @@
 %p
   = link_to 'Back to all states', states_path
 
-%h1 #{ @state.state }
+%h1.text-center #{ @state.state }
 
 %p
   = link_to 'Edit', edit_state_path(@state), class: 'btn btn-default'
+  = link_to 'Delete', state_path(@state), method: :delete, class: 'btn btn-default',
+    data: { confirm: "Are you sure you want to delete #{ @state.state }?" }
 
 .table-responsive
   %table.table.table-bordered.table-striped#view-margin
@@ -16,5 +18,6 @@
           %strong= name_modifier(column)
         %td.col-sm-6
           = @state.send(:"#{ column }")
-= link_to 'Delete', state_path(@state), method: :delete, class: 'btn btn-default',
-  data: { confirm: "Are you sure you want to delete #{ @state.state }?" }
+
+%p
+  = link_to 'Back to all states', states_path

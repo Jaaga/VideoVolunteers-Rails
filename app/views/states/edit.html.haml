@@ -1,8 +1,4 @@
 = provide(:title, "Edit #{@state.state}")
 
 %h1.text-center Edit State
-= simple_form_for @state do |f|
-  = f.input :state
-  = f.input :state_abb, label: name_modifier('state_abb')
-  = f.input :district
-  = f.submit 'Save', class: 'btn btn-primary btn-block'
+= render 'states/form'
