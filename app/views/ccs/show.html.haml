@@ -1,7 +1,6 @@
 = provide(:title, "#{ @cc.full_name }")
 
-%p
-  = link_to 'Back to all CCs', ccs_path
+%p= link_to 'Back to all CCs', ccs_path
 
 %h1.text-center #{ @cc.full_name }
 
@@ -23,5 +22,4 @@
           - else
             = @cc.send(:"#{ column }")
 
-%p
-  = link_to 'Back to all CCs', ccs_path
+%p= link_to 'Back to all CCs', ccs_path

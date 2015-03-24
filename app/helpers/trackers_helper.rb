@@ -41,7 +41,7 @@ module TrackersHelper
                  'officials_involved', 'screening_details']
     payment = ['payment_status']
     ratings = ['footage_rating', 'final_video_rating']
-    extra = ['impact_uid', 'original_uid', 'no_original_uid', 'note', 'flag',
+    extra = ['impact_uid', 'original_uid', 'no_original_uid', 'notes', 'flag',
              'flag_notes', 'flag_date', 'updated_by', 'created_at', 'updated_at']
     special = ['footage_location', 'iu_theme', 'subcategory', 'story_type',
                'project', 'campaign',

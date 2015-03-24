@@ -1,7 +1,6 @@
 = provide(:title, "#{@state.name}")
 
-%p
-  = link_to 'Back to all states', states_path
+%p= link_to 'Back to all states', states_path
 
 %h1.text-center #{ @state.name }
 
@@ -19,5 +18,4 @@
         %td.col-sm-6
           = @state.send(:"#{ column }")
 
-%p
-  = link_to 'Back to all states', states_path
+%p= link_to 'Back to all states', states_path

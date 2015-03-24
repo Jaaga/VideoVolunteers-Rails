@@ -8,11 +8,13 @@ class TrackersController < ApplicationController
   def show
     @tracker = Tracker.find(params[:id])
     @columns = view_context.array_set
+    @sections = @columns.keys
+    @sections -= [:special, :yesno, :numbers]
   end
 
   def new
     @tracker = Tracker.new
-    @columns = array_set
+    @columns = view_context.array_set
     @context = "new"
   end
 
@@ -23,6 +25,8 @@ class TrackersController < ApplicationController
       flash[:success] = "Tracker successfully created."
       redirect_to @tracker
     else
+      @columns = view_context.array_set
+      @context = "new"
       render :new
     end
   end
@@ -30,6 +34,8 @@ class TrackersController < ApplicationController
   def edit
     @tracker = Tracker.find(params[:id])
     @columns = view_context.array_set
+    @sections = @columns.keys
+    @sections -= [:extra, :special, :yesno, :numbers]
     @context = "edit"
   end
 
@@ -40,6 +46,8 @@ class TrackersController < ApplicationController
       flash[:success] = "Tracker successfully edited."
       redirect_to @tracker
     else
+      @columns = view_context.array_set
+      @context = "edit"
       render :edit
     end
   end

@@ -1,4 +1,8 @@
 = provide(:title, "Edit #{@cc.full_name}")
 
+%p= link_to "Back to #{ @cc.full_name }", cc_path(@cc)
+
 %h1.text-center Edit #{ @cc.full_name }
 = render 'ccs/form'
+
+%p= link_to "Back to #{ @cc.full_name }", cc_path(@cc)

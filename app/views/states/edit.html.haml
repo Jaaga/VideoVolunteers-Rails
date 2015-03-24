@@ -1,4 +1,8 @@
 = provide(:title, "Edit #{@state.name}")
 
+%p= link_to "Back to #{ @state.name }", state_path(@state)
+
 %h1.text-center Edit #{@state.name}
 = render 'states/form'
+
+%p= link_to "Back to #{ @state.name }", state_path(@state)
