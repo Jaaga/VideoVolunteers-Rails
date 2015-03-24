@@ -45,6 +45,34 @@ class CcsController < ApplicationController
     end
   end
 
+  def note_form
+    @cc = Cc.find(params[:id])
+    render 'note'
+  end
+
+  def note
+    @cc = Cc.find(params[:id])
+
+    if params[:cc][:notes].blank?
+      flash[:danger] = "Note was blank and not saved."
+      redirect_to @cc
+    else
+      if @cc.notes.blank?
+        @cc.notes = "#{ Date.today }: #{ params[:cc][:notes] }"
+      else
+        old_notes = @cc.notes
+        @cc.notes = "#{ Date.today }: #{ params[:cc][:notes] }\n#{ old_notes }"
+      end
+
+      if @cc.save
+        flash[:success] = "Note successfully added."
+        redirect_to @cc
+      else
+        render :note
+      end
+    end
+  end
+
   def destroy
     @cc = Cc.find(params[:id])
     @cc.destroy

@@ -1,0 +1,8 @@
+= provide(:title, "Add CC Note")
+
+%h1.text-center Notes on #{ @cc.full_name }
+
+= simple_form_for @cc, url: note_cc_path(@cc) do |f|
+  = f.error_notification
+  = f.input :notes, label: 'Notes', input_html: { value: '' }
+  = f.submit 'Save', class: 'btn btn-primary btn-block'

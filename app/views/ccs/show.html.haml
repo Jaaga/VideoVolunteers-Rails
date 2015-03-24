@@ -7,6 +7,7 @@
 
 %p
   = link_to 'Edit', edit_cc_path(@cc), class: 'btn btn-default'
+  = link_to 'Add Note', note_form_cc_path(@cc), class: 'btn btn-default'
   = link_to 'Delete', cc_path(@cc), method: :delete, class: 'btn btn-default',
     data: { confirm: "Are you sure you want to delete #{ @cc.full_name }?" }
 
@@ -17,7 +18,10 @@
         %td.col-sm-6
           %strong= name_modifier(column)
         %td.col-sm-6
-          = @cc.send(:"#{ column }")
+          - if column == 'notes'
+            = simple_format(@cc.notes)
+          - else
+            = @cc.send(:"#{ column }")
 
 %p
   = link_to 'Back to all CCs', ccs_path
