@@ -1,4 +1,3 @@
 california:
-  state: "California"
-  state_abb: "CA"
-  district: "Sunset"
+  name: California
+  state_abb: CA

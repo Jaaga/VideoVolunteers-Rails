@@ -1,0 +1,19 @@
+= provide(:title, "Correspondents")
+
+%h1.text-center All Correspondents
+
+.table-responsive
+  %table.table.table-bordered.table-striped
+    %thead
+      %tr
+        - @columns.each do |column|
+          %th
+            = name_modifier(column)
+    %tbody
+      - @ccs.each do |cc|
+        %tr
+          - @columns.each do |column|
+            - if column == 'full_name'
+              %td= link_to cc.full_name, cc
+            - else
+              %td= cc.send(:"#{ column }")

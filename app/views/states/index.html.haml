@@ -12,6 +12,5 @@
     %tbody
       - @states.each do |state|
         %tr
-          %td.col-sm-4= link_to state.state, state
+          %td.col-sm-4= link_to state.name, state
           %td.col-sm-4= state.state_abb
-          %td.col-sm-4= state.district

@@ -1,4 +1,4 @@
-= provide(:title, "Edit #{@state.state}")
+= provide(:title, "Edit #{@state.name}")
 
-%h1.text-center Edit State
+%h1.text-center Edit #{@state.name}
 = render 'states/form'

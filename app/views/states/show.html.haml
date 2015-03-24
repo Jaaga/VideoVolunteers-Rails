@@ -1,14 +1,14 @@
-= provide(:title, "#{@state.state}")
+= provide(:title, "#{@state.name}")
 
 %p
   = link_to 'Back to all states', states_path
 
-%h1.text-center #{ @state.state }
+%h1.text-center #{ @state.name }
 
 %p
   = link_to 'Edit', edit_state_path(@state), class: 'btn btn-default'
   = link_to 'Delete', state_path(@state), method: :delete, class: 'btn btn-default',
-    data: { confirm: "Are you sure you want to delete #{ @state.state }?" }
+    data: { confirm: "Are you sure you want to delete #{ @state.name }?" }
 
 .table-responsive
   %table.table.table-bordered.table-striped#view-margin

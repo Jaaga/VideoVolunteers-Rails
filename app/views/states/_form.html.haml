@@ -1,6 +1,5 @@
 = simple_form_for @state do |f|
   = f.error_notification
-  = f.input :state
+  = f.input :name
   = f.input :state_abb, label: name_modifier('state_abb')
-  = f.input :district
   = f.submit 'Save', class: 'btn btn-primary btn-block'

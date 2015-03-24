@@ -11,12 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150323072306) do
+ActiveRecord::Schema.define(version: 20150323144404) do
+
+  create_table "ccs", force: :cascade do |t|
+    t.string  "full_name",  null: false
+    t.string  "first_name", null: false
+    t.string  "last_name",  null: false
+    t.string  "state_name", null: false
+    t.string  "state_abb",  null: false
+    t.string  "district",   null: false
+    t.string  "phone"
+    t.string  "mentor",     null: false
+    t.text    "notes"
+    t.integer "state_id"
+  end
 
   create_table "states", force: :cascade do |t|
-    t.string "state",     null: false
+    t.string "name",      null: false
     t.string "state_abb", null: false
-    t.string "district"
   end
 
 end

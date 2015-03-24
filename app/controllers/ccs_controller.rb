@@ -1,0 +1,61 @@
+class CcsController < ApplicationController
+  def index
+    @ccs = Cc.all.order("last_name ASC")
+    @columns = Cc.column_names - ['id', 'first_name', 'last_name',
+                                  'state_name', 'state_id']
+  end
+
+  def show
+    @cc = Cc.find(params[:id])
+    @columns = Cc.column_names - ['id', 'full_name', 'state_id']
+  end
+
+  def new
+    @cc = Cc.new
+  end
+
+  def create
+    @state = State.find(params[:cc][:state_id])
+    @cc = @state.ccs.new(cc_params)
+    @cc.state_name = @state.name
+    @cc.state_abb = @state.state_abb
+    if @cc.save
+      flash[:success] = "CC successfully created."
+      redirect_to @cc
+    else
+      render :new
+    end
+  end
+
+  def edit
+    @cc = Cc.find(params[:id])
+  end
+
+  def update
+    @state = State.find(params[:cc][:state_id])
+    @cc = Cc.find(params[:id])
+    @cc.assign_attributes(cc_params)
+    @cc.state_name = @state.name
+    @cc.state_abb = @state.state_abb
+    if @cc.save
+      flash[:success] = "CC successfully edited."
+      redirect_to @cc
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    @cc = Cc.find(params[:id])
+    @cc.destroy
+    flash[:success] = "CC successfully deleted."
+    redirect_to ccs_path
+  end
+
+  private
+
+
+    def cc_params
+      params.require(:cc).permit(:first_name, :last_name, :district, :phone, :mentor, :state_id)
+    end
+end

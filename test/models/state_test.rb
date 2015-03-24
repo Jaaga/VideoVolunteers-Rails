@@ -2,8 +2,7 @@ require 'test_helper'
 
 class StateTest < ActiveSupport::TestCase
   def setup
-    @state = State.new(state: "Oregon", state_abb: "OR",
-                       district: "Portlandia")
+    @state = State.new(name: "Oregon", state_abb: "OR")
   end
 
   test "should be valid" do
@@ -11,18 +10,18 @@ class StateTest < ActiveSupport::TestCase
   end
 
   test "state name should exist" do
-    @state.state = "     "
+    @state.name = "     "
     assert_not @state.valid?
   end
 
   test "state name should have a maximum length" do
-    @state.state = 'a' * 51
+    @state.name = 'a' * 51
     assert_not @state.valid?
   end
 
   test "state name should be unique" do
     duplicate_state = @state.dup
-    duplicate_state.state = @state.state.upcase
+    duplicate_state.name = @state.name.upcase
     @state.save
     assert_not duplicate_state.valid?
   end
@@ -44,22 +43,10 @@ class StateTest < ActiveSupport::TestCase
     assert_not duplicate_state.valid?
   end
 
-  test "district doesn't have to exist" do
-    @state.district = "     "
-    assert @state.valid?
-  end
-
-  test "district name should have a maximum length" do
-    @state.state = 'a' * 51
-    assert_not @state.valid?
-  end
-
   test "data should be in the right case" do
-    @state.assign_attributes(state: "oregon", state_abb: "or",
-                             district: "portlandia")
+    @state.assign_attributes(name: "oregon", state_abb: "or")
     @state.save
-    assert @state.state == "Oregon"
+    assert @state.name == "Oregon"
     assert @state.state_abb == "OR"
-    assert @state.district == "Portlandia"
   end
 end

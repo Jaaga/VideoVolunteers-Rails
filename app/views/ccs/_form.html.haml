@@ -1,0 +1,10 @@
+- @columns = Cc.column_names - ['id', 'full_name', 'state_abb', 'notes', 'state_id']
+
+= simple_form_for @cc do |f|
+  = f.error_notification
+  - @columns.each do |column|
+    - if column == 'state_name'
+      = f.association :state, collection: State.all.order('name'), value_method: :id
+    - else
+      = f.input :"#{ column }", label: name_modifier(column)
+  = f.submit 'Save', class: 'btn btn-primary btn-block'

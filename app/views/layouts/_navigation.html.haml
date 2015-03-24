@@ -8,16 +8,12 @@
           CCs
           %span.caret
         %ul.dropdown-menu{ role: 'menu' }
-          %li
-            %a{ href: '#' }New
-          %li
-            %a{ href: '#' }View All
+          %li= link_to "View All", ccs_path
+          %li= link_to "New", new_cc_path
       %li.dropdown
         %a.dropdown-toggle{ href: '#', :'data-toggle' => 'dropdown', role: 'button' }
           States
           %span.caret
         %ul.dropdown-menu{ role: 'menu' }
-          %li
-            = link_to "View All", states_path
-          %li
-            = link_to "New", new_state_path
+          %li= link_to "View All", states_path
+          %li= link_to "New", new_state_path
