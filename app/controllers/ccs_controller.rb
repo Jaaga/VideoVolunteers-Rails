@@ -2,7 +2,7 @@ class CcsController < ApplicationController
   def index
     @ccs = Cc.all.order("last_name ASC")
     @columns = Cc.column_names - ['id', 'first_name', 'last_name',
-                                  'state_name', 'state_id']
+                                  'state_name', 'state_id', 'notes']
   end
 
   def show

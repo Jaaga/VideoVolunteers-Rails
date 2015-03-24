@@ -3,7 +3,7 @@ class State < ActiveRecord::Base
 
   validates :name, presence: true, length: { maximum: 50 },
              uniqueness: { case_sensitive: false }
-  validates :state_abb, presence: true, length: { maximum: 5 },
+  validates :state_abb, presence: true, length: { maximum: 2 },
              uniqueness: { case_sensitive: false }
 
   before_save :capitalize_data

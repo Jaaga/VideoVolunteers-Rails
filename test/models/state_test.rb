@@ -32,7 +32,7 @@ class StateTest < ActiveSupport::TestCase
   end
 
   test "state abbreviation should have a maximum length" do
-    @state.state_abb = 'a' * 6
+    @state.state_abb = 'a' * 3
     assert_not @state.valid?
   end
 

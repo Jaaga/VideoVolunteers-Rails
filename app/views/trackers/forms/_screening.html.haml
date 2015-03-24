@@ -1,0 +1,9 @@
+%h2 Screening Forms
+= simple_form_for @tracker do |f|
+  = f.error_notification
+  - @columns[:screening].each do |column|
+    - if column.include? "_date"
+      = f.input :"#{ column }", label: name_modifier(column), include_blank: true
+    - else
+      = f.input :"#{ column }", label: name_modifier(column)
+  = f.submit 'Save', class: 'btn btn-primary btn-block'

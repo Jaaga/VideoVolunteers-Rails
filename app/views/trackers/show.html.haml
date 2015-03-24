@@ -1,0 +1,27 @@
+= provide(:title, "#{ @tracker.uid }")
+
+%p
+  = link_to 'Back to all trackers', trackers_path
+
+%h1.text-center #{ @tracker.uid }
+
+%p
+  = link_to 'Edit', edit_tracker_path(@tracker), class: 'btn btn-default'
+  -# = link_to 'Add Note', note_form_cc_path(@cc), class: 'btn btn-default'
+  = link_to 'Delete', tracker_path(@tracker), method: :delete, class: 'btn btn-default',
+    data: { confirm: "Are you sure you want to delete #{ @tracker.uid }?" }
+
+= render 'trackers/show/story'
+= render 'trackers/show/status'
+= render 'trackers/show/raw_review'
+= render 'trackers/show/footage_edit'
+= render 'trackers/show/footage_review'
+= render 'trackers/show/impact_planning'
+= render 'trackers/show/impact_achieved'
+= render 'trackers/show/impact_video'
+= render 'trackers/show/screening'
+= render 'trackers/show/payment'
+= render 'trackers/show/ratings'
+
+%p
+  = link_to 'Back to all trackers', trackers_path

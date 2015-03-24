@@ -1,0 +1,19 @@
+= provide(:title, "Trackers")
+
+%h1.text-center All Trackers
+
+.table-responsive
+  %table.table.table-bordered.table-striped
+    %thead
+      %tr
+        - @columns.each do |column|
+          %th
+            = name_modifier(column)
+    %tbody
+      - @trackers.each do |tracker|
+        %tr
+          - @columns.each do |column|
+            - if column == 'uid'
+              %td= link_to tracker.uid, tracker
+            - else
+              %td= tracker.send(:"#{ column }")

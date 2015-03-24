@@ -1,0 +1,9 @@
+%h2 Raw Footage Review
+.table-responsive
+  %table.table.table-bordered.table-striped#view-margin
+    - @columns[:raw_review].each do |column|
+      %tr
+        %td.col-sm-6
+          %strong= name_modifier(column)
+        %td.col-sm-6
+          = @tracker.send(:"#{ column }")
