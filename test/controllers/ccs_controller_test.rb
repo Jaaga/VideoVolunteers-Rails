@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class CcsControllerTest < ActionController::TestCase
-  
+
   def setup
     @cc = ccs(:minister)
   end
@@ -26,5 +26,10 @@ class CcsControllerTest < ActionController::TestCase
     get :show, id: @cc
     assert_response :success
     assert_select 'td', 'Kuan Yew'
+  end
+
+  test "should get note_form" do
+    get :note_form, id: @cc
+    assert_response :success
   end
 end
