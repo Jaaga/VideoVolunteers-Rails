@@ -14,7 +14,7 @@
     - @columns.each do |column|
       %tr
         %td.col-sm-6
-          %strong= name_modifier(column)
+          %strong= state_name_modifier(column)
         %td.col-sm-6
           = @state.send(:"#{ column }")
 

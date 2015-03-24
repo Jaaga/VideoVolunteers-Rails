@@ -15,7 +15,7 @@
     - @columns.each do |column|
       %tr
         %td.col-sm-6
-          %strong= name_modifier(column)
+          %strong= cc_name_modifier(column)
         %td.col-sm-6
           - if column == 'notes'
             = simple_format(@cc.notes)

@@ -25,7 +25,7 @@ class TrackersControllerTest < ActionController::TestCase
   test "should get show" do
     get :show, id: @tracker
     assert_response :success
-    assert_select 'td', 'Brice'
+    assert_select 'td', 'IU Theme'
   end
 
   # test "should get note_form" do

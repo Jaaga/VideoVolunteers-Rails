@@ -9,7 +9,7 @@
 %ul.btn-group.btn-group-sm{ role: "group" }
   - @sections.each do |section|
     %li.btn.btn-default
-      = link_to name_modifier(section.to_s),
+      = link_to tracker_name_modifier(section.to_s),
         tracker_path(@tracker, anchor: section)
 
 %p.show-buttons
@@ -20,8 +20,7 @@
 
 - @sections.each do |section|
   %a{ id: "#{ section }" }
-  = render "trackers/show/#{ section }"
-  %br
+  = render "trackers/display", section: section
   = link_to '^ back to top ^', tracker_path(@tracker, anchor: 'top')
 
-%p= link_to 'Back to all trackers', trackers_path
+%p{ style: "margin-top: 20px;" }= link_to 'Back to all trackers', trackers_path

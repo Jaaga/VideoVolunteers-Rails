@@ -8,12 +8,12 @@
 %ul.btn-group.btn-group-sm{ role: "group" }
   - @sections.each do |section|
     %li.btn.btn-default
-      = link_to name_modifier(section.to_s),
+      = link_to tracker_name_modifier(section.to_s),
         edit_tracker_path(@tracker, anchor: section)
 
 - @sections.each do |section|
   %a{ id: "#{ section }" }
-  = render "trackers/forms/#{ section }"
+  = render "trackers/forms", section: section
   %br
   = link_to '^ back to top ^', edit_tracker_path(@tracker, anchor: 'top')
 

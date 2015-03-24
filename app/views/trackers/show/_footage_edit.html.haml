@@ -1,9 +1,0 @@
-%h2 Footage Edit
-.table-responsive
-  %table.table.table-bordered.table-striped#view-margin
-    - @columns[:footage_edit].each do |column|
-      %tr
-        %td.col-sm-6
-          %strong= name_modifier(column)
-        %td.col-sm-6
-          = @tracker.send(:"#{ column }")

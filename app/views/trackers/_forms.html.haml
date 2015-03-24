@@ -1,0 +1,28 @@
+%h2= tracker_name_modifier(section.to_s)
+= simple_form_for @tracker do |f|
+  = f.error_notification
+  - if @context == 'new'
+    -# = f.association :state, collection: State.all.order('name'), value_method: :id
+    -# = f.association :cc, collection: Cc.all.order('name'), value_method: :id
+    = f.input :state_name
+    = f.input :cc_name
+  - @columns[section].each do |column|
+    - if column.include? "_date"
+      = f.input :"#{ column }", label: tracker_name_modifier(column), include_blank: true
+    - elsif column.include? "_rating"
+      = f.input :"#{ column }", as: :select,
+        collection: ratings_collection,
+        label: tracker_name_modifier(column)
+    - elsif @unique[:special].include? column
+      = f.input :"#{ column }", as: :select,
+        collection: find_collection(column),
+        label: tracker_name_modifier(column)
+    - elsif @unique[:yesno].include? column
+      = f.input :"#{ column }", as: :select,
+        collection: [['yes', :yes], ['no', :no]],
+        label: tracker_name_modifier(column)
+    - elsif @unique[:numbers].include? column
+      = f.input :"#{ column }", as: :integer, label: tracker_name_modifier(column)
+    - else
+      = f.input :"#{ column }", label: tracker_name_modifier(column)
+  = f.submit 'Save', class: 'btn btn-primary btn-block'

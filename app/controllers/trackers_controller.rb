@@ -15,6 +15,7 @@ class TrackersController < ApplicationController
   def new
     @tracker = Tracker.new
     @columns = view_context.array_set
+    @unique = view_context.unique_set
     @context = "new"
   end
 
@@ -35,7 +36,8 @@ class TrackersController < ApplicationController
     @tracker = Tracker.find(params[:id])
     @columns = view_context.array_set
     @sections = @columns.keys
-    @sections -= [:extra, :special, :yesno, :numbers]
+    @sections -= [:extra]
+    @unique = view_context.unique_set
     @context = "edit"
   end
 

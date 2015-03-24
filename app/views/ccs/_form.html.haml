@@ -6,5 +6,5 @@
     - if column == 'state_name'
       = f.association :state, collection: State.all.order('name'), value_method: :id
     - else
-      = f.input :"#{ column }", label: name_modifier(column)
+      = f.input :"#{ column }", label: cc_name_modifier(column)
   = f.submit 'Save', class: 'btn btn-primary btn-block'

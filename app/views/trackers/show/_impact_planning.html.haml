@@ -1,9 +1,0 @@
-%h2 Impact Planning
-.table-responsive
-  %table.table.table-bordered.table-striped#view-margin
-    - @columns[:impact_planning].each do |column|
-      %tr
-        %td.col-sm-6
-          %strong= name_modifier(column)
-        %td.col-sm-6
-          = @tracker.send(:"#{ column }")

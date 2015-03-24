@@ -1,0 +1,18 @@
+- story_columns = ['uid', 'state_name', 'cc_name', 'district', 'mentor']
+
+%h2= tracker_name_modifier(section.to_s)
+.table-responsive
+  %table.table.table-bordered.table-striped#view-margin
+    - if section == :story
+      - story_columns.each do |column|
+        %tr
+          %td.col-sm-6
+            %strong= tracker_name_modifier(column)
+          %td.col-sm-6
+            = @tracker.send(:"#{ column }")
+    - @columns[section].each do |column|
+      %tr
+        %td.col-sm-6
+          %strong= tracker_name_modifier(column)
+        %td.col-sm-6
+          = @tracker.send(:"#{ column }")
