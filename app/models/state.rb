@@ -11,6 +11,7 @@ class State < ActiveRecord::Base
 
   private
 
+    # Capitalizes the state's name and upcases the state's abbreviation.
     def capitalize_data
       self.name = name.split(' ').map(&:capitalize).join(' ')
       self.state_abb = state_abb.upcase

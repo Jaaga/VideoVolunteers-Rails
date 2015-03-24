@@ -1,3 +1,7 @@
 california:
   name: California
   state_abb: CA
+
+singapore:
+  name: Singapore
+  state_abb: SG

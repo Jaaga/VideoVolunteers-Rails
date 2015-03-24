@@ -1,9 +1,12 @@
 class Cc < ActiveRecord::Base
+  # Included for the name_modifier method.
+  include CcsHelper
+
   belongs_to :state
 
   validates :first_name, presence: true, length: { maximum: 50 }
   validates :last_name, presence: true, length: { maximum: 50 }
-  validates :state_name, presence: true, length: { maximum: 50 }
+  validates :state_name, presence: true
   validates :district, presence: true, length: { maximum: 50 }
   validates :phone, length: { maximum: 15 }
   validates :mentor, presence: true, length: { maximum: 50 }
@@ -14,18 +17,23 @@ class Cc < ActiveRecord::Base
 
   private
 
+    # Capitalizes the column data from the capitalize array.
     def capitalize_data
-      self.first_name = first_name.split(' ').map(&:capitalize).join(' ')
-      self.last_name = last_name.split(' ').map(&:capitalize).join(' ')
-      self.district = district.split(' ').map(&:capitalize).join(' ')
-      self.mentor = mentor.split(' ').map(&:capitalize).join(' ')
+      capitalize = ['first_name', 'last_name', 'district', 'mentor']
+      capitalize.each do |column|
+        self.send(:"#{ column }=", name_modifier(self.send(:"#{ column }")))
+      end
     end
 
+    # Sets the full name based on the given first and last name
+    # after capitalization.
     def full_name_set
       self.full_name = "#{ self.first_name } #{ self.last_name }"
     end
 
+    # Removes any characters that aren't digits from 0-9 from the
+    # given phone number.
     def phone_set
-      self.phone = phone.gsub(/[^0-9]/, "")
+      self.phone = phone.gsub(/[^0-9]/, "") unless self.phone.nil?
     end
 end
