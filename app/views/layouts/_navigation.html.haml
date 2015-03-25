@@ -8,7 +8,12 @@
           Trackers
           %span.caret
         %ul.dropdown-menu{ role: 'menu' }
-          %li= link_to "View All", trackers_path
+          %li= link_to "Recent", trackers_path(recent: true)
+          %li.dropdown-submenu
+            %a{ href: "#" } View All By State
+            %ul.dropdown-menu
+              - State.all.order(:name).each do |state|
+                %li= link_to state.name, trackers_path(state_name: "#{state.name}")
           %li.dropdown-submenu
             %a{ href: "#" } New
             %ul.dropdown-menu
