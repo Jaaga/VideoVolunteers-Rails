@@ -2,8 +2,9 @@
 = simple_form_for @tracker do |f|
   = f.error_notification
   - if @context == 'new'
-    = f.association :tracker_details, collection: @state.ccs.order('last_name'),
-      value_method: :id, label_method: :full_name, label: 'CC'
+    = f.input :cc_name, as: :select, collection: @state.ccs.order('full_name'),
+      value_method: :id, label_method: :full_name, label: 'CC Name'
+    = f.input :state_name, as: :hidden, :input_html => { :value => @state.name }
   - @columns[section].each do |column|
     - if column.include? "_date"
       = f.input :"#{ column }", label: tracker_name_modifier(column), include_blank: true
@@ -23,4 +24,11 @@
       = f.input :"#{ column }", as: :integer, label: tracker_name_modifier(column)
     - else
       = f.input :"#{ column }", label: tracker_name_modifier(column)
+
+  - if @context == 'new'
+    %h2 Impact Video?
+    = f.input :is_impact, label: tracker_name_modifier('is_impact')
+    = f.input :original_uid, as: :select, collection: @state.trackers,
+      label: tracker_name_modifier('original_uid'), value_method: :uid, label_method: :uid
+    = f.input :no_original_uid, label: tracker_name_modifier('no_original_uid')
   = f.submit 'Save', class: 'btn btn-primary btn-block'

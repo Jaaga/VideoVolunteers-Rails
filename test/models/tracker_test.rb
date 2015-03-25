@@ -18,7 +18,7 @@ class TrackerTest < ActiveSupport::TestCase
   end
 
   test "uid should have a maximum length" do
-    @tracker.uid = 'a' * 11
+    @tracker.uid = 'a' * 17
     assert_not @tracker.valid?
   end
 
@@ -38,20 +38,4 @@ class TrackerTest < ActiveSupport::TestCase
     @tracker.cc_name = "     "
     assert_not @tracker.valid?
   end
-
-  # test "data should be in the right case" do
-  #   @tracker.assign_attributes(first_name: "stEve", last_name: "joBs",
-  #                         district: "atHertoN", mentor: "zen")
-  #   @tracker.save
-  #   assert @tracker.first_name == "Steve"
-  #   assert @tracker.last_name == "Jobs"
-  #   assert @tracker.district == "Atherton"
-  #   assert @tracker.mentor == "Zen"
-  # end
-
-  # test "phone should just be numbers" do
-  #   @tracker.assign_attributes(phone: "(221)-123-43.54")
-  #   @tracker.save
-  #   assert @tracker.phone == "2211234354"
-  # end
 end

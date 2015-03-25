@@ -125,6 +125,7 @@ ActiveRecord::Schema.define(version: 20150324090847) do
     t.string   "impact_video_approved_by"
     t.text     "call_to_action_review"
     t.string   "footage_location"
+    t.boolean  "is_impact"
     t.integer  "tracker_details_id"
     t.string   "tracker_details_type"
     t.datetime "created_at"

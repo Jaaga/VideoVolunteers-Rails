@@ -1,9 +1,46 @@
 module TrackersHelper
 
-  def set_uid
-    rand(10..100)
+  def set_uid(in_state, state_abb, tracker, is_impact = false)
+    if !in_state.empty?
+      # Save each UID in an array
+      uids_from_state = Array.new
+      in_state.each do |tracker|
+        uids_from_state.push(tracker.uid)
+      end
+
+      # Sort it then save the highest number
+      uids_from_state.sort!
+      last_uid_from_state = uids_from_state[uids_from_state.length - 1].split('_')
+
+      # Take the number from the split UID (looks like ['XX', '1234']), then
+      # increment it
+      id = last_uid_from_state[1].to_i + 1
+
+      if is_impact == true
+        unless tracker.original_uid.blank?
+          id = tracker.original_uid.split('_').pop
+          impact_uid_set(tracker.original_uid)
+        end
+        return "#{ state_abb }_#{ id.to_s }_impact"
+      else
+        # Make unique UID from state abbreviation and newly created number
+        return "#{ state_abb }_#{ id.to_s }"
+      end
+    else
+      if is_impact == true
+        return "#{ state_abb }_1001_impact"
+      else
+        return "#{ state_abb }_1001"
+      end
+    end
   end
 
+  # Set the uid for an impact video tracker
+  def impact_uid_set(original_uid)
+    track = Tracker.find_by(uid: original_uid)
+    track.impact_uid = "#{ original_uid }_impact"
+    track.save
+  end
 
   # Used to capitalize each segment of names and other words along with column
   # names. If the column name won't do for display, a custom one is given in the
