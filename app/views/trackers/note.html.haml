@@ -1,0 +1,8 @@
+= provide(:title, "Add Tracker Note")
+
+%h1.text-center Notes on #{ @tracker.uid }
+
+= simple_form_for @tracker, url: note_tracker_path(@tracker) do |f|
+  = f.error_notification
+  = f.input :notes, label: 'Notes', input_html: { value: '' }
+  = f.submit 'Save', class: 'btn btn-primary btn-block'

@@ -36,7 +36,8 @@ class TrackersController < ApplicationController
     @tracker = Tracker.new
     @state = State.find_by(name: params[:state_name])
     # For dropdown of issue videos that have no impact videos linked to them.
-    @state_videos = @state.trackers.where("impact_uid IS NULL AND uid NOT LIKE '%_impact'")
+    @state_videos = @state.trackers.where("impact_uid IS NULL AND uid NOT
+                                          LIKE '%_impact'").map {|x| x.uid}
     @columns = view_context.array_set
     @unique = view_context.unique_set
     @context = "new"
@@ -45,6 +46,7 @@ class TrackersController < ApplicationController
   def create
     @tracker = Tracker.new(tracker_params)
 
+    # For checking if this tracker is an impact tracker
     if params[:tracker][:is_impact] == "1"
       if params[:tracker][:original_uid].blank? && params[:tracker][:no_original_uid].blank?
         flash.now[:error] = "Need an original_uid or a reason for not having one if
@@ -69,15 +71,21 @@ class TrackersController < ApplicationController
       end
     end
 
+    # This condition exists just in case somebody submits a tracker with an
+    # empty 'CC Name'. This way, simple_form will pick up on the model
+    # validations.
     unless params[:tracker][:cc_name].blank?
       @cc = Cc.find(params[:tracker][:cc_name])
       @tracker.cc_name = @cc.full_name
       @state = @cc.state
       @tracker.state_name = @state.name
-      @tracker.uid = view_context.set_uid(@state.trackers, @cc.state_abb, @tracker, @is_impact)
+      @tracker.uid = view_context.set_uid(@state.trackers, @cc.state_abb,
+                                          @tracker, @is_impact)
     end
 
     if @tracker.save
+      @tracker.update_attribute(:updated_by,
+                              "#{ Date.today }: Someone created this tracker.")
       @tracker.update_attribute(:tracker_details, @cc)
       @tracker.update_attribute(:tracker_details, @state)
       flash[:success] = "Tracker successfully created."
@@ -90,27 +98,63 @@ class TrackersController < ApplicationController
   def edit
     @tracker = Tracker.find(params[:id])
     @columns = view_context.array_set
-
-    if @tracker.uid.include?('_impact') && !@tracker.original_uid.blank?
-      @columns.except!(:impact_planning, :impact_achieved, :impact_video)
-    end
-
     @sections = @columns.keys
     @sections -= [:extra]
     @unique = view_context.unique_set
     @context = "edit"
+
+    if @tracker.uid.include?('_impact') && !@tracker.original_uid.blank?
+      @columns.except!(:impact_planning, :impact_achieved, :impact_video)
+    end
   end
 
   def update
     @tracker = Tracker.find(params[:id])
     @tracker.assign_attributes(tracker_params)
+    @tracker.updated_by.prepend("#{ Date.today }: this tracker was edited.\n")
+
     if @tracker.save
       flash[:success] = "Tracker successfully edited."
       redirect_to @tracker
     else
       @columns = view_context.array_set
+      @sections = @columns.keys
+      @sections -= [:extra]
+      @unique = view_context.unique_set
       @context = "edit"
       render :edit
+    end
+  end
+
+  # Notes exists to add text to the 'notes' column.
+  def note_form
+    @tracker = Tracker.find(params[:id])
+    render 'note'
+  end
+
+  def note
+    @tracker = Tracker.find(params[:id])
+
+    if params[:tracker][:notes].blank?
+      flash[:danger] = "Note was blank and not saved."
+      redirect_to @tracker
+    else
+      if @tracker.notes.blank?
+        @tracker.notes = "#{ Date.today }: #{ params[:tracker][:notes] }"
+      else
+        old_notes = @tracker.notes
+        @tracker.notes = "#{ Date.today }:
+                          #{ params[:tracker][:notes] }\n#{ old_notes }"
+      end
+
+      @tracker.updated_by.prepend("#{ Date.today }: Someone added a note.\n")
+
+      if @tracker.save
+        flash[:success] = "Note successfully added."
+        redirect_to @tracker
+      else
+        render :note
+      end
     end
   end
 

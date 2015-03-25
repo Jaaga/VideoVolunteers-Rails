@@ -15,4 +15,9 @@
         %td.col-sm-6
           %strong= tracker_name_modifier(column)
         %td.col-sm-6
-          = @tracker.send(:"#{ column }")
+          - if column == 'notes'
+            = simple_format(@tracker.notes)
+          - elsif column == 'updated_by'
+            = simple_format(@tracker.updated_by)
+          - else
+            = @tracker.send(:"#{ column }")

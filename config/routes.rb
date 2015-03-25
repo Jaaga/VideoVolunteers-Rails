@@ -10,5 +10,10 @@ Rails.application.routes.draw do
       patch :note
     end
   end
-  resources :trackers
+  resources :trackers do
+    member do
+      get :note_form
+      patch :note
+    end
+  end
 end

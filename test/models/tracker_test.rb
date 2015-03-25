@@ -5,7 +5,14 @@ class TrackerTest < ActiveSupport::TestCase
   def setup
     @tracker = Tracker.new(uid: 'test_456',
                            cc_name: 'Ouan',
-                           state_name: 'Thailand')
+                           state_name: 'Thailand',
+                           iu_theme: 'Corruption',
+                           description: 'Politicians taking bribes. Again.',
+                           story_type: 'Entitlement Violation',
+                           project: 'Oak',
+                           campaign: 'Forced Evictions',
+                           shoot_plan: 'Make video.',
+                           story_pitch_date: '2012-12-12')
   end
 
   test "should be valid" do
@@ -36,6 +43,21 @@ class TrackerTest < ActiveSupport::TestCase
 
   test "CC name should exist" do
     @tracker.cc_name = "     "
+    assert_not @tracker.valid?
+  end
+
+  test "presence should exist" do
+    @validations = ['iu_theme', 'description', 'story_type', 'project',
+                    'campaign', 'shoot_plan']
+
+    @validations.each do |column|
+      @tracker.send(:"#{ column }=", '   ')
+      assert_not @tracker.valid?
+      @tracker.send(:"#{ column }=", 'random')
+      assert @tracker.valid?
+    end
+
+    @tracker.story_pitch_date = "    "
     assert_not @tracker.valid?
   end
 end
