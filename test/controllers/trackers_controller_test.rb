@@ -13,7 +13,7 @@ class TrackersControllerTest < ActionController::TestCase
   end
 
   test "should get new" do
-    get :new
+    get :new, state_name: 'California'
     assert_response :success
   end
 

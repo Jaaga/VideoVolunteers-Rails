@@ -2,10 +2,8 @@
 = simple_form_for @tracker do |f|
   = f.error_notification
   - if @context == 'new'
-    -# = f.association :state, collection: State.all.order('name'), value_method: :id
-    -# = f.association :cc, collection: Cc.all.order('name'), value_method: :id
-    = f.input :state_name
-    = f.input :cc_name
+    = f.association :tracker_details, collection: @state.ccs.order('last_name'),
+      value_method: :id, label_method: :full_name, label: 'CC'
   - @columns[section].each do |column|
     - if column.include? "_date"
       = f.input :"#{ column }", label: tracker_name_modifier(column), include_blank: true
