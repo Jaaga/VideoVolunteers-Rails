@@ -1,5 +1,7 @@
 class Tracker < ActiveRecord::Base
 
+  belongs_to :tracker_details, polymorphic: true
+
   validates :uid, presence: true, length: { maximum: 10 },
              uniqueness: { case_sensitive: false }
   validates_presence_of :state_name

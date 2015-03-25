@@ -1,5 +1,6 @@
 class State < ActiveRecord::Base
   has_many :ccs
+  has_many :trackers, as: :tracker_details
 
   validates :name, presence: true, length: { maximum: 50 },
              uniqueness: { case_sensitive: false }
