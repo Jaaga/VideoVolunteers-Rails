@@ -3,11 +3,37 @@ class TrackersController < ApplicationController
   def index
     if params[:recent]
       @trackers = Tracker.where(updated_at: Date.today-14...Date.today+1).order("updated_at DESC").paginate(page: params[:page], per_page: 40)
+      @title = "Recent Trackers"
     elsif !params[:state_name].blank?
       @state = State.find_by(name: params[:state_name])
       @trackers = @state.trackers.order("uid DESC").paginate(page: params[:page], per_page: 40)
+      @title = "#{ @state.name }'s Trackers"
+    elsif !params[:view].blank?
+      if [params[:view]].any? { |x| ['edit', 'finalize'].include?(x) }
+        @title = 'Editor View'
+        if params[:view] == 'edit'
+          @trackers = Tracker.where("editor_currently_in_charge = ? AND cleared_for_edit = ?", "#{params[:name]}", 'yes').order("updated_at DESC").paginate(page: params[:page], per_page: 40)
+          @title_header = "Cleared For Edit"
+        elsif params[:view] == 'finalize'
+          @trackers = Tracker.where("editor_currently_in_charge = ? AND finalized_date IS NOT NULL", "#{params[:name]}").order("updated_at DESC").paginate(page: params[:page], per_page: 40)
+          @title_header = "Has Been Finalized"
+        end
+      elsif [params[:view]].any? { |x| ['pitched', 'pending', 'hold'].include?(x) }
+        @title = 'State Coordinator View'
+        if params[:view] == 'pitched'
+          @trackers = Tracker.where("state_name = ? AND story_pitch_date IS NOT NULL AND backup_received_date IS NULL", "#{params[:name]}").order("updated_at DESC").paginate(page: params[:page], per_page: 40)
+          @title_header = "Has been Pitched But Has No Footage"
+        elsif params[:view] == 'pending'
+          @trackers = Tracker.where("state_name = ? AND raw_footage_review_date IS NULL AND footage_location = ?", "#{params[:name]}", 'State').order("updated_at DESC").paginate(page: params[:page], per_page: 40)
+          @title_header = "Raw Footage Has Not Been Reviewed and Footage is in State"
+        elsif params[:view] == 'hold'
+          @trackers = Tracker.where("state_name = ? AND proceed_with_edit_and_payment = ?", "#{params[:name]}", 'On hold').order("updated_at DESC").paginate(page: params[:page], per_page: 40)
+          @title_header = "Edit and Payment is on Hold"
+        end
+      end
     else
       @trackers = Tracker.all.paginate(page: params[:page], per_page: 40)
+      @title = "All Trackers"
     end
 
     @columns = Tracker.column_names - ['id', 'tracker_details_id',

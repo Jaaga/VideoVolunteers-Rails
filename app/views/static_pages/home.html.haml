@@ -2,3 +2,22 @@
 
 %h1.text-center Today's Statistics
 %br/
+
+%p.home
+  Total number of stories: #{ @track.count }
+  %br
+  Number of flagged stories: #{ @flag }
+  %br
+  Number of stories pitched that have no footage yet: #{ @pitch.count }
+  %br
+  Number of rough cuts that have not been finalized yet: #{ @rough.count }
+  %br
+  Number of impacts achieved: #{ @impact.count }
+  %br
+  Number of videos in the Goa bank: #{ @goa_bank.count }
+  %br
+  Number of videos in the State bank: #{ @state_bank.count }
+  %br
+  Number of videos on hold for edit and payment: #{ @hold.count }
+  %br
+  Number of videos upoaded to youtube: #{ @youtube.count }
