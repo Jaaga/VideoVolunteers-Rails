@@ -2,18 +2,40 @@
 
 %h1.text-center All Trackers
 
+%h4 #{@trackers.count} trackers
+
+.checks
+  %p
+    %span.glyphicon.glyphicon-th-list
+    Change Columns
+  %ul.hide-list
+    - @default_columns.each_with_index do |column, key|
+      %li
+        %input{ class: key, type: 'checkbox', checked: true }= tracker_name_modifier(column)
+    - x = 8
+    - @non_default_columns.each do |index, column|
+      %li
+        %input{ class: index, type: 'checkbox' }= column
+        - x += 1
+
+= will_paginate @trackers
 .table-responsive
   %table.table.table-bordered.table-striped
     %thead
       %tr
+        - x = 0 # To set the column class for hiding/showing/sorting the columns
         - @columns.each do |column|
-          %th
-            = tracker_name_modifier(column)
+          %th{ class: "col#{ x }" }= tracker_name_modifier(column)
+          - x += 1
     %tbody
       - @trackers.each do |tracker|
         %tr
+          - x = 1
           - @columns.each do |column|
             - if column == 'uid'
-              %td= link_to tracker.uid, tracker
+              %td.col0= link_to tracker.uid, tracker
             - else
-              %td= tracker.send(:"#{ column }")
+              %td{ class: "col#{ x }" }= tracker.send(:"#{ column }")
+              - x += 1
+
+= will_paginate @trackers

@@ -1,6 +1,6 @@
 class CcsController < ApplicationController
   def index
-    @ccs = Cc.all.order("last_name ASC")
+    @ccs = Cc.all.order("last_name ASC").paginate(page: params[:page], per_page: 40)
     @columns = Cc.column_names - ['id', 'first_name', 'last_name',
                                   'state_name', 'state_id', 'notes']
   end

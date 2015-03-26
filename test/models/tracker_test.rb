@@ -4,7 +4,7 @@ class TrackerTest < ActiveSupport::TestCase
 
   def setup
     @tracker = Tracker.new(uid: 'test_456',
-                           cc_name: 'Ouan',
+                           cc_name: 'Ouan Sarawut',
                            state_name: 'Thailand',
                            iu_theme: 'Corruption',
                            description: 'Politicians taking bribes. Again.',

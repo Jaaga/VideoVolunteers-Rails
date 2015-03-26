@@ -8,6 +8,25 @@ $gray-medium-light: #eaeaea;
   margin-top: 15px;
 }
 
+/* Index checkboxes */
+
+.hide-list {
+  display: none;
+}
+
+.checks {
+  margin-bottom: 30px;
+
+  ul {
+    margin-left: -25px;
+  }
+
+  li {
+    display: inline-block;
+  }
+}
+
+
 /* Footer */
 
 .footer {

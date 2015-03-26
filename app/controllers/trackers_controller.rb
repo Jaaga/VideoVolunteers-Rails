@@ -2,16 +2,18 @@ class TrackersController < ApplicationController
 
   def index
     if params[:recent]
-      @trackers = Tracker.where(updated_at: Date.today-14...Date.today+1).order("updated_at DESC")
+      @trackers = Tracker.where(updated_at: Date.today-14...Date.today+1).order("updated_at DESC").paginate(page: params[:page], per_page: 40)
     elsif !params[:state_name].blank?
       @state = State.find_by(name: params[:state_name])
-      @trackers = @state.trackers.order("uid DESC")
+      @trackers = @state.trackers.order("uid DESC").paginate(page: params[:page], per_page: 40)
     else
-      @trackers = Tracker.all
+      @trackers = Tracker.all.paginate(page: params[:page], per_page: 40)
     end
 
     @columns = Tracker.column_names - ['id', 'tracker_details_id',
                                          'tracker_details_type']
+    @default_columns = @columns[0..7]
+    @non_default_columns = view_context.checkbox_label(@columns)
   end
 
   def show

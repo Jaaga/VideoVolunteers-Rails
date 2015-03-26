@@ -6,3 +6,12 @@ minister:
   state_abb: SG
   district: Raffles
   mentor: Cambridge
+
+boss:
+  full_name: Ouan Sarawut
+  first_name: Ouan
+  last_name: Sarawut
+  state_name: Thailand
+  state_abb: TL
+  district: Krung Thep
+  mentor: Thanet

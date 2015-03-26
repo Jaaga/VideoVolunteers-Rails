@@ -1,7 +1,7 @@
 class StatesController < ApplicationController
 
   def index
-    @states = State.all
+    @states = State.all.paginate(page: params[:page], per_page: 40)
     @columns = State.column_names - ['id']
   end
 

@@ -2,6 +2,7 @@
 
 %h1.text-center All Correspondents
 
+= will_paginate @ccs
 .table-responsive
   %table.table.table-bordered.table-striped
     %thead
@@ -17,3 +18,5 @@
               %td= link_to cc.full_name, cc
             - else
               %td= cc.send(:"#{ column }")
+
+= will_paginate @ccs

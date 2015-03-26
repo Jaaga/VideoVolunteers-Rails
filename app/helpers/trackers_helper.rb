@@ -42,6 +42,19 @@ module TrackersHelper
     track.save
   end
 
+
+  def checkbox_label(columns)
+    a = Hash[columns.map.with_index { |value, index| [index, tracker_name_modifier(value)] }]
+    a = Hash[a.sort_by{|k, v| v}]
+
+    8.times do |t|
+      a.delete(t)
+    end
+
+    return a
+  end
+
+
   # Used to capitalize each segment of names and other words along with column
   # names. If the column name won't do for display, a custom one is given in the
   # state_label method.

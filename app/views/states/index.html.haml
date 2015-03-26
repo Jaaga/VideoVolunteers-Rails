@@ -2,6 +2,7 @@
 
 %h1.text-center All States
 
+= will_paginate @states
 .table-responsive
   %table.table.table-bordered.table-striped
     %thead
@@ -14,3 +15,5 @@
         %tr
           %td.col-sm-4= link_to state.name, state
           %td.col-sm-4= state.state_abb
+
+= will_paginate @states
