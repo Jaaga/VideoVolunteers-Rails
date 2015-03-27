@@ -8,6 +8,10 @@ $gray-medium-light: #eaeaea;
   margin-top: 15px;
 }
 
+.double-border {
+  border-top: 10px double $gray-medium-light;
+}
+
 /* Index checkboxes */
 
 .hide-list {

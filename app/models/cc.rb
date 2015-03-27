@@ -3,13 +3,14 @@ class Cc < ActiveRecord::Base
   include CcsHelper
 
   belongs_to :state
-  has_many :trackers, as: :tracker_details
+  has_many :trackers
 
   validates :first_name, presence: true, length: { maximum: 50 }
   validates :last_name, presence: true, length: { maximum: 50 }
   validates :state_name, presence: true
   validates :district, presence: true, length: { maximum: 50 }
-  validates :phone, length: { maximum: 15 }
+  # So that max five phone numbers can be saved with commas and whitespace
+  validates :phone, length: { maximum: 60 }
   validates :mentor, presence: true, length: { maximum: 50 }
 
   before_save :capitalize_data
@@ -35,6 +36,6 @@ class Cc < ActiveRecord::Base
     # Removes any characters that aren't digits from 0-9 from the
     # given phone number.
     def phone_set
-      self.phone = phone.gsub(/[^0-9]/, "") unless self.phone.nil?
+      self.phone = phone.gsub(/[^0-9\,\s]/, "") unless self.phone.nil?
     end
 end

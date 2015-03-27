@@ -1,6 +1,7 @@
 class Tracker < ActiveRecord::Base
 
-  belongs_to :tracker_details, polymorphic: true
+  belongs_to :state
+  belongs_to :cc
 
   validates :uid, presence: true, length: { maximum: 16 },
              uniqueness: { case_sensitive: false }

@@ -46,7 +46,7 @@ class TrackersController < ApplicationController
     @tracker = Tracker.find(params[:id])
     @columns = view_context.array_set
 
-    if @tracker.uid.include?('_impact') && !@tracker.original_uid.blank?
+    unless @tracker.uid.include?('_impact')
       @columns.except!(:impact_planning, :impact_achieved, :impact_video)
     end
 
@@ -114,8 +114,8 @@ class TrackersController < ApplicationController
     if @tracker.save
       @tracker.update_attribute(:updated_by,
                               "#{ Date.today }: Someone created this tracker.")
-      @tracker.update_attribute(:tracker_details, @cc)
-      @tracker.update_attribute(:tracker_details, @state)
+      @tracker.update_attribute(:state, @state)
+      @tracker.update_attribute(:cc, @cc)
       flash[:success] = "Tracker successfully created."
       redirect_to @tracker
     else

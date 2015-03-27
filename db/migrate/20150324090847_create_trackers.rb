@@ -96,8 +96,8 @@ class CreateTrackers < ActiveRecord::Migration
       t.string   :footage_location
       t.boolean  :is_impact
 
-      t.integer  :tracker_details_id
-      t.string   :tracker_details_type
+      t.integer  :state_id
+      t.integer  :cc_id
 
       t.timestamps  null: true
     end

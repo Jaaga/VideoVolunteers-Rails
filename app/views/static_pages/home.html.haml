@@ -1,10 +1,10 @@
 = provide(:title, "Home")
 
-%h1.text-center Today's Statistics
+%h1.text-center Statistics as of Today
 %br/
 
 %p.home
-  Total number of stories: #{ @track.count }
+  Total number of UID's: #{ @track.count }
   %br
   Number of flagged stories: #{ @flag }
   %br
@@ -21,3 +21,109 @@
   Number of videos on hold for edit and payment: #{ @hold.count }
   %br
   Number of videos upoaded to youtube: #{ @youtube.count }
+
+.table-responsive
+  %table.table.table-bordered.table-striped
+    %thead
+      %tr
+        - @table_head.each do |head|
+          %th= head
+    %tbody
+      %tr
+        %td No. of story ideas pitched
+        %td= @stats[0]
+      -# %tr
+      -#   %td No. of CCs who pitched story ideas
+      -#   %td
+      -# %tr
+      -#   %td No. of CCs who made issue videos
+      -#   %td
+      -# %tr
+      -#   %td No. of inactive CCs who made issue videos this quarter
+      -#   %td
+      -# %tr.double-border
+      -#   %td No. of story ideas pitched so far this calendar month
+      -#   %td
+      -# %tr
+      -#   %td No. of story ideas pitched in the last 3 months
+      -#   %td
+      -# -# %tr
+      -# -#   %td No. of CC's who pitched a story this month
+      -# -#   %td
+      -# -# %tr
+      -# -#   %td No. of CC's who pitched a story in the last 3 months
+      -# -#   %td
+      -# %tr.double-border
+      -#   %td No. of issue videos made so far this month
+      -#   %td
+      -# %tr
+      -#   %td No. of issue videos made in the last 3 months
+      -#   %td
+      -# -# %tr
+      -# -#   %td No. of CC's who made an issue video this month
+      -# -#   %td
+      -# -# %tr
+      -# -#   %td No. of CC's who made an issue video in the last three months
+      -# -#   %td
+      -# %tr.double-border
+      -#   %td No. of impacts achived this month
+      -#   %td
+      -# -# %tr
+      -# -#   %td No. of CC's who achieved an impact this month
+      -# -#   %td
+      -# %tr
+      -#   %td No. of impacts achieved in the last 3 months
+      -#   %td
+      -# %tr
+      -#   %td No. of CC's who achieved an impact in the last 3 months
+      -#   %td
+
+%h3 In State
+.table-responsive
+  %table.table.table-bordered.table-striped
+    %thead
+      %tr
+        - @table_head.each do |head|
+          %th= head
+    %tbody
+      %tr
+        %td Videos on hold
+        %td= @stats[1]
+      %tr
+        %td State Edit Bank: total approved videos whose edits haven't reached goa
+        %td= @stats[2]
+      %tr
+        %td Approved videos
+        %td= @stats[3]
+
+%h3 In Goa
+.table-responsive
+  %table.table.table-bordered.table-striped
+    %thead
+      %tr
+        - @table_head.each do |head|
+          %th= head
+    %tbody
+      %tr
+        %td Videos on hold
+        %td= @stats[4]
+      %tr
+        %td Goa Edit Bank:videos that are in Goa and need to be edited, reviewed & uploaded
+        %td= @stats[5]
+      %tr
+        %td Goa cleaning bank: videos whose rough cuts have arrived from a state office and need to be cleaned, reviewed and uploaded
+        %td= @stats[6]
+
+.table-responsive
+  %table.table.table-bordered.table-striped
+    %thead
+      %tr
+        - @table_head.each do |head|
+          %th= head
+    %tbody
+      %tr
+        %td Total UID's
+        %td= @stats[7]
+      %tr
+        %td Total videos uploaded to YT
+        %td= @stats[8]
