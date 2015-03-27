@@ -34,6 +34,8 @@ gem 'cancancan'
 # Paginate will add pages for index; bootstrap compatible
 gem 'will_paginate'
 gem 'bootstrap-will_paginate'
+# Paginate alphabetically (for CC's index)
+gem 'alphabetical_paginate'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

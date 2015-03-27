@@ -16,6 +16,7 @@ class Cc < ActiveRecord::Base
   before_save :capitalize_data
   before_save :full_name_set
   before_save :phone_set
+  before_save :modify_associations
 
   private
 
@@ -37,5 +38,18 @@ class Cc < ActiveRecord::Base
     # given phone number.
     def phone_set
       self.phone = phone.gsub(/[^0-9\,\s]/, "") unless self.phone.nil?
+    end
+
+    def modify_associations
+      unless self.trackers.blank?
+        self.trackers.each do |tracker|
+          tracker.update_attribute(:cc_name, self.full_name)
+        end
+
+        if self.changed.include? 'state_name'
+          state = State.find_by(name: self.state_name)
+          self.assign_attributes(state: state)
+        end
+      end
     end
 end

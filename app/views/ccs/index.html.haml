@@ -2,21 +2,22 @@
 
 %h1.text-center All Correspondents
 
-= will_paginate @ccs
-.table-responsive
-  %table.table.table-bordered.table-striped
-    %thead
-      %tr
-        - @columns.each do |column|
-          %th
-            = cc_name_modifier(column)
-    %tbody
-      - @ccs.each do |cc|
+= alphabetical_paginate @alphaParams
+#pagination_table
+  .table-responsive
+    %table.table.table-bordered.table-striped
+      %thead
         %tr
           - @columns.each do |column|
-            - if column == 'full_name'
-              %td= link_to cc.full_name, cc
-            - else
-              %td= cc.send(:"#{ column }")
+            %th
+              = cc_name_modifier(column)
+      %tbody
+        - @ccs.each do |cc|
+          %tr
+            - @columns.each do |column|
+              - if column == 'full_name'
+                %td= link_to cc.full_name, cc
+              - else
+                %td= cc.send(:"#{ column }")
 
-= will_paginate @ccs
+= alphabetical_paginate @alphaParams

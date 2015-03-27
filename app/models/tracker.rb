@@ -17,7 +17,7 @@ class Tracker < ActiveRecord::Base
 
 
     def set_district_and_mentor
-      cc = Cc.find_by(full_name: self.cc_name)
+      cc = self.cc
       self.district = cc.district
       self.mentor = cc.mentor
     end
