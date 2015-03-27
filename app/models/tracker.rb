@@ -11,6 +11,7 @@ class Tracker < ActiveRecord::Base
 
   before_save :set_district_and_mentor
 
+  before_destroy :unlink_impact
 
   private
 
@@ -19,5 +20,15 @@ class Tracker < ActiveRecord::Base
       cc = Cc.find_by(full_name: self.cc_name)
       self.district = cc.district
       self.mentor = cc.mentor
+    end
+
+    def unlink_impact
+      if !self.impact_uid.blank? && !self.uid.include?('_impact')
+        linked_tracker = Tracker.find_by(uid: self.impact_uid)
+        linked_tracker.update_attribute(:original_uid, nil)
+      elsif !self.original_uid.blank? && self.uid.include?('_impact')
+        linked_tracker = Tracker.find_by(uid: self.original_uid)
+        linked_tracker.update_attribute(:impact_uid, nil)
+      end
     end
 end

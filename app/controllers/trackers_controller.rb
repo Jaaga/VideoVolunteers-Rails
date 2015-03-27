@@ -126,14 +126,15 @@ class TrackersController < ApplicationController
   def edit
     @tracker = Tracker.find(params[:id])
     @columns = view_context.array_set
-    @sections = @columns.keys
-    @sections -= [:extra]
-    @unique = view_context.unique_set
-    @context = "edit"
 
     if @tracker.uid.include?('_impact') && !@tracker.original_uid.blank?
       @columns.except!(:impact_planning, :impact_achieved, :impact_video)
     end
+
+    @sections = @columns.keys
+    @sections -= [:extra]
+    @unique = view_context.unique_set
+    @context = "edit"
   end
 
   def update
@@ -190,7 +191,7 @@ class TrackersController < ApplicationController
     @tracker = Tracker.find(params[:id])
     @tracker.destroy
     flash[:success] = "Tracker successfully deleted."
-    redirect_to trackers_path
+    redirect_to trackers_path(recent: true)
   end
 
   private
@@ -212,4 +213,6 @@ class TrackersController < ApplicationController
       @context = "new"
       render :new, state_name: params[:tracker][:state_name]
     end
+
+    
 end

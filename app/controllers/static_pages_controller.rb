@@ -17,9 +17,9 @@ class StaticPagesController < ApplicationController
       # No. of story ideas pitched
       @stats.push(state.trackers.where("story_pitch_date IS NOT NULL AND backup_received_date IS NULL").count)
       # No. of story ideas pitched so far this calendar month
-      # @stats.push(state.trackers.where(story_pitch_date: Date.today-14...Date.today+1))
+      @stats.push(state.trackers.where("story_pitch_date > ? AND story_pitch_date < ?", Time.now.beginning_of_month.to_date, Time.now.end_of_month.to_date).count)
       # no of story ideas pitched in the last 3 months
-      # @stats.push()
+      @stats.push(state.trackers.where("story_pitch_date > ? AND story_pitch_date < ?", Time.now.months_ago(3).to_date, Time.now.to_date).count)
 
       ### State
       # videos on hold

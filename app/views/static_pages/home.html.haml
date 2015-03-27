@@ -34,19 +34,19 @@
         %td= @stats[0]
       -# %tr
       -#   %td No. of CCs who pitched story ideas
-      -#   %td
+      -#   %td= @stats[1]
       -# %tr
       -#   %td No. of CCs who made issue videos
-      -#   %td
+      -#   %td= @stats[2]
       -# %tr
       -#   %td No. of inactive CCs who made issue videos this quarter
       -#   %td
-      -# %tr.double-border
-      -#   %td No. of story ideas pitched so far this calendar month
-      -#   %td
-      -# %tr
-      -#   %td No. of story ideas pitched in the last 3 months
-      -#   %td
+      %tr.double-border
+        %td No. of story ideas pitched so far this calendar month
+        %td= @stats[1]
+      %tr
+        %td No. of story ideas pitched in the last 3 months
+        %td= @stats[2]
       -# -# %tr
       -# -#   %td No. of CC's who pitched a story this month
       -# -#   %td
@@ -88,13 +88,13 @@
     %tbody
       %tr
         %td Videos on hold
-        %td= @stats[1]
+        %td= @stats[3]
       %tr
         %td State Edit Bank: total approved videos whose edits haven't reached goa
-        %td= @stats[2]
+        %td= @stats[4]
       %tr
         %td Approved videos
-        %td= @stats[3]
+        %td= @stats[5]
 
 %h3 In Goa
 .table-responsive
@@ -106,13 +106,13 @@
     %tbody
       %tr
         %td Videos on hold
-        %td= @stats[4]
+        %td= @stats[6]
       %tr
         %td Goa Edit Bank:videos that are in Goa and need to be edited, reviewed & uploaded
-        %td= @stats[5]
+        %td= @stats[7]
       %tr
         %td Goa cleaning bank: videos whose rough cuts have arrived from a state office and need to be cleaned, reviewed and uploaded
-        %td= @stats[6]
+        %td= @stats[8]
 
 .table-responsive
   %table.table.table-bordered.table-striped
@@ -123,7 +123,7 @@
     %tbody
       %tr
         %td Total UID's
-        %td= @stats[7]
+        %td= @stats[9]
       %tr
         %td Total videos uploaded to YT
-        %td= @stats[8]
+        %td= @stats[10]
