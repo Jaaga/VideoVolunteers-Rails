@@ -127,10 +127,19 @@ class TrackersController < ApplicationController
     @tracker = Tracker.find(params[:id])
     @columns = view_context.array_set
 
-    if @tracker.uid.include?('_impact') && !@tracker.original_uid.blank?
+    unless @tracker.uid.include?('_impact') && !@tracker.original_uid.blank?
       @columns.except!(:impact_planning, :impact_achieved, :impact_video)
     end
 
+    @state = @tracker.state
+    @state_videos = @state.trackers.where("impact_uid IS NULL AND uid NOT
+                                          LIKE '%_impact'").map {|x| x.uid}
+
+    @state_videos -= [@tracker.uid]
+    unless @tracker.original_uid.blank?
+      original = Tracker.find_by(uid: @tracker.original_uid)
+      @state_videos += [original.uid]
+    end
     @sections = @columns.keys
     @sections -= [:extra]
     @unique = view_context.unique_set
@@ -139,19 +148,44 @@ class TrackersController < ApplicationController
 
   def update
     @tracker = Tracker.find(params[:id])
+
+    @linked_uid = @tracker.original_uid
     @tracker.assign_attributes(tracker_params)
     @tracker.updated_by.prepend("#{ Date.today }: this tracker was edited.\n")
+
+    # For checking if this tracker is an impact tracker
+    if params[:tracker][:is_impact] == "1"
+      if params[:tracker][:original_uid].blank? && params[:tracker][:no_original_uid].blank? && !@tracker.uid.include?('_impact')
+        flash.now[:error] = "Need an original_uid or a reason for not having one if
+                         this is an impact video"
+        @tracker.is_impact = nil
+        failed_form_create_edit
+        return
+      elsif !params[:tracker][:original_uid].blank? && !params[:tracker][:no_original_uid].blank?
+        flash.now[:error] = "You don't need a reason for not having an original
+                             uid if you have selected an original uid."
+        @tracker.is_impact = nil
+        failed_form_create_edit
+        return
+      else
+        view_context.impact_edit_system(@tracker)
+      end
+    elsif params[:tracker][:is_impact] == "0"
+      unless params[:tracker][:original_uid].blank? && params[:tracker][:no_original_uid].blank?
+        flash.now[:error] = "The 'is impact' checkbox needs to be checked if it
+                             is an impact video."
+        failed_form_create_edit
+        return
+      else
+        view_context.remove_impact_edit_system(@tracker, @linked_uid)
+      end
+    end
 
     if @tracker.save
       flash[:success] = "Tracker successfully edited."
       redirect_to @tracker
     else
-      @columns = view_context.array_set
-      @sections = @columns.keys
-      @sections -= [:extra]
-      @unique = view_context.unique_set
-      @context = "edit"
-      render :edit
+      failed_form_create_edit
     end
   end
 
@@ -214,5 +248,21 @@ class TrackersController < ApplicationController
       render :new, state_name: params[:tracker][:state_name]
     end
 
-    
+    def failed_form_create_edit
+      @columns = view_context.array_set
+      @state = @tracker.state
+      @state_videos = @state.trackers.where("impact_uid IS NULL AND uid NOT
+                                            LIKE '%_impact'").map {|x| x.uid}
+
+      @state_videos -= [@tracker.uid]
+      unless @tracker.original_uid.blank?
+        original = Tracker.find_by(uid: @tracker.original_uid)
+        @state_videos += [original.uid]
+      end
+      @sections = @columns.keys
+      @sections -= [:extra]
+      @unique = view_context.unique_set
+      @context = "edit"
+      render :edit
+    end
 end

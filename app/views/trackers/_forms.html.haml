@@ -30,6 +30,5 @@
     = f.input :is_impact, label: tracker_name_modifier('is_impact')
     = f.input :original_uid, as: :select, collection: @state_videos,
       label: tracker_name_modifier('original_uid')
-    -# , value_method: :uid, label_method: :uid
     = f.input :no_original_uid, label: tracker_name_modifier('no_original_uid')
   = f.submit 'Save', class: 'btn btn-primary btn-block'

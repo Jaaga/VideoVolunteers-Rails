@@ -42,6 +42,22 @@ module TrackersHelper
     track.save
   end
 
+  def impact_edit_system(tracker)
+    unless tracker.uid.include? '_impact'
+      tracker.update_attribute(:uid, "#{ tracker.uid }_impact")
+    end
+    other_tracker = Tracker.find_by(uid: tracker.original_uid)
+    other_tracker.update_attribute(:impact_uid, tracker.uid)
+  end
+
+  def remove_impact_edit_system(tracker, original_uid)
+    if tracker.uid.include? '_impact'
+      tracker.update_attribute(:uid, tracker.uid.sub('_impact', ''))
+      tracker.update_attribute(:original_uid, nil)
+      other_tracker = Tracker.find_by(uid: original_uid)
+      other_tracker.update_attribute(:impact_uid, nil)
+    end
+  end
 
   def checkbox_label(columns)
     a = Hash[columns.map.with_index { |value, index| [index, tracker_name_modifier(value)] }]
