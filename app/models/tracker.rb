@@ -1,5 +1,7 @@
 class Tracker < ActiveRecord::Base
 
+  YESNO = %w(yes no)
+
   belongs_to :state
   belongs_to :cc
 
@@ -8,6 +10,25 @@ class Tracker < ActiveRecord::Base
   validates_presence_of :state_name, :cc_name, :iu_theme, :description,
                         :story_type, :project, :campaign, :shoot_plan,
                         :story_pitch_date
+
+  validates_numericality_of :people_involved, only_integer: true,
+                            allow_blank: true
+  validates_numericality_of :people_impacted, only_integer: true,
+                            allow_blank: true
+  validates_numericality_of :villages_impacted, only_integer: true,
+                            allow_blank: true
+  validates_numericality_of :screening_headcount, only_integer: true,
+                            allow_blank: true
+  validates_numericality_of :officials_at_screening_number, only_integer: true,
+                            allow_blank: true
+
+  validates :high_potential, inclusion: YESNO, allow_blank: true
+  validates :impact_possible, inclusion: YESNO, allow_blank: true
+  validates :impact_achieved, inclusion: YESNO, allow_blank: true
+  validates :screening_done, inclusion: YESNO, allow_blank: true
+  validates :officials_at_screening, inclusion: YESNO, allow_blank: true
+  validates :cleared_for_edit, inclusion: YESNO, allow_blank: true
+  validates :impact_video_approved, inclusion: YESNO, allow_blank: true
 
   before_save :set_district_and_mentor
 

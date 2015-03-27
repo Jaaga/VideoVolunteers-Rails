@@ -7,7 +7,10 @@
     = f.input :state_name, as: :hidden, :input_html => { :value => @state.name }
   - @columns[section].each do |column|
     - if column.include? "_date"
-      = f.input :"#{ column }", label: tracker_name_modifier(column), include_blank: true
+      -# Not putting limits on dates because the imported data can be from
+      -# years ago.
+      = f.input :"#{ column }", label: tracker_name_modifier(column),
+        include_blank: true
     - elsif column.include? "_rating"
       = f.input :"#{ column }", as: :select,
         collection: ratings_collection,
@@ -17,8 +20,7 @@
         collection: find_collection(column),
         label: tracker_name_modifier(column)
     - elsif @unique[:yesno].include? column
-      = f.input :"#{ column }", as: :select,
-        collection: [['yes', :yes], ['no', :no]],
+      = f.input :"#{ column }", as: :select, collection: Tracker::YESNO,
         label: tracker_name_modifier(column)
     - elsif @unique[:numbers].include? column
       = f.input :"#{ column }", as: :integer, label: tracker_name_modifier(column)
