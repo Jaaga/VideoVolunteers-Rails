@@ -109,13 +109,12 @@ class TrackersController < ApplicationController
       @tracker.state_name = @state.name
       @tracker.uid = view_context.set_uid(@state.trackers, @cc.state_abb,
                                           @tracker, @is_impact)
+      @tracker.assign_attributes(state: @state, cc: @cc)
     end
 
     if @tracker.save
       @tracker.update_attribute(:updated_by,
                               "#{ Date.today }: Someone created this tracker.")
-      @tracker.update_attribute(:state, @state)
-      @tracker.update_attribute(:cc, @cc)
       flash[:success] = "Tracker successfully created."
       redirect_to @tracker
     else

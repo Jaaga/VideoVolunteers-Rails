@@ -12,6 +12,11 @@ $gray-medium-light: #eaeaea;
   border-top: 10px double $gray-medium-light;
 }
 
+/* For links to page anchors */
+ul.btn-group-justified li a {
+  display: block;
+}
+
 /* Index checkboxes */
 
 .hide-list {

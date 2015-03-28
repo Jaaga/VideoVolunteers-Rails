@@ -1,7 +1,7 @@
 - story_columns = ['uid', 'state_name', 'cc_name', 'district', 'mentor']
 
 %h2= tracker_name_modifier(section.to_s)
-.table-responsive
+.table-responsive{ style: "clear: both;" }
   %table.table.table-bordered.table-striped#view-margin
     - if section == :story
       - story_columns.each do |column|

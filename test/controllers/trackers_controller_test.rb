@@ -28,8 +28,8 @@ class TrackersControllerTest < ActionController::TestCase
     assert_select 'td', 'IU Theme'
   end
 
-  # test "should get note_form" do
-  #   get :note_form, id: @tracker
-  #   assert_response :success
-  # end
+  test "should get note_form" do
+    get :note_form, id: @tracker
+    assert_response :success
+  end
 end

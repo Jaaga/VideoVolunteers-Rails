@@ -21,11 +21,12 @@
 %h3.text-justify #{ @tracker.description }
 %br
 
-%ul.btn-group.btn-group-sm{ role: "group" }
-  - @sections.each do |section|
-    %li.btn.btn-default
-      = link_to tracker_name_modifier(section.to_s),
-        tracker_path(@tracker, anchor: section)
+- @sections.each_slice(5).to_a.each do |sections|
+  %ul.btn-group.btn-group-sm.btn-group-justified{ role: "group" }
+    - sections.each do |section|
+      %li.btn.btn-default
+        = link_to tracker_name_modifier(section.to_s),
+          tracker_path(@tracker, anchor: section)
 
 %p.show-buttons
   = link_to 'Edit', edit_tracker_path(@tracker), class: 'btn btn-default'
