@@ -57,10 +57,10 @@ module ArraySettingHelper
                'editor_currently_in_charge', 'impact_verified_by',
                'impact_video_approved_by', 'reviewer_name']
     yesno   =  ['high_potential', 'impact_possible',
-               'impact_achieved', 'screening_done', 'officials_at_screening',
-               'cleared_for_edit', 'impact_video_approved']
+                'impact_achieved', 'screening_done', 'officials_at_screening',
+                'cleared_for_edit', 'impact_video_approved']
     numbers =  ['people_involved', 'people_impacted', 'villages_impacted',
-               'screening_headcount', 'officials_at_screening_number']
+                'screening_headcount', 'officials_at_screening_number']
 
     return { special: special, yesno: yesno, numbers: numbers }
   end
@@ -71,7 +71,7 @@ module ArraySettingHelper
 
     editor = editors_collection
     editor.collect! { |x| x[0]}
-    
+
     return {sc: sc, editor: editor}
   end
 

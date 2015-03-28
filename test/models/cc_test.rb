@@ -8,7 +8,10 @@ class CcTest < ActiveSupport::TestCase
                  state_name: 'California',
                  state_abb: 'CA',
                  district: 'Atherton',
-                 mentor: 'Zen')
+                 mentor: 'Zen',
+                 state: states(:california))
+
+    @minister = ccs(:minister)
   end
 
   test "should be valid" do
@@ -48,7 +51,7 @@ class CcTest < ActiveSupport::TestCase
   end
 
   test "cc phone should have a maximum length" do
-    @cc.phone = 'a' * 16
+    @cc.phone = 'a' * 61
     assert_not @cc.valid?
   end
 
@@ -79,8 +82,17 @@ class CcTest < ActiveSupport::TestCase
   end
 
   test "phone should just be numbers" do
-    @cc.assign_attributes(phone: "(221)-123-43.54")
+    @cc.assign_attributes(phone: "+e(221)-123-43.54")
     @cc.save
     assert @cc.phone == "2211234354"
+  end
+
+  test "updating information should also update associations" do
+    @minister.update_attributes(first_name: "Kuan", last_name: "Yee",
+                                state_name: "California")
+    @minister.trackers.each do |trackers|
+      assert trackers.cc_name == "Kuan Yee"
+    end
+    assert @minister.state.name == "California"
   end
 end

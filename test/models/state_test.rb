@@ -3,6 +3,7 @@ require 'test_helper'
 class StateTest < ActiveSupport::TestCase
   def setup
     @state = State.new(name: "Oregon", state_abb: "OR")
+    @singapore = states(:singapore)
   end
 
   test "should be valid" do
@@ -48,5 +49,16 @@ class StateTest < ActiveSupport::TestCase
     @state.save
     assert @state.name == "Oregon"
     assert @state.state_abb == "OR"
+  end
+
+  test "updating information should also update associations" do
+    @singapore.update_attributes(name: "Xsingapore", state_abb: "XS")
+    @singapore.ccs.each do |cc|
+      assert cc.state_name == "Xsingapore"
+      assert cc.state_abb == "XS"
+    end
+    @singapore.trackers.each do |tracker|
+      tracker.state_name == "Xsingapore"
+    end
   end
 end

@@ -27,7 +27,7 @@ class State < ActiveRecord::Base
         end
 
         # Decided not to modify UID prefix as that can cause a lot of tracking
-        # issues (for example if the UID's are being used as references on
+        # issues (for example, if the UID's are being used as references with
         # outside sources).
         self.trackers.each do |tracker|
           tracker.update_attribute(:state_name, self.name)

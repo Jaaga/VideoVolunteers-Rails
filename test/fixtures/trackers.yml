@@ -1,5 +1,5 @@
-test_123:
-  uid: test_123
+TE_123:
+  uid: TE_123
   state_name: California
   cc_name: Brice
   iu_theme: Corruption
@@ -9,3 +9,21 @@ test_123:
   campaign: Forced Evictions
   shoot_plan: Make video.
   story_pitch_date: 2012-12-12
+  impact_uid: TE_123_impact
+  cc: minister
+  state: singapore
+
+TE_123_impact:
+  uid: TE_123_impact
+  state_name: California
+  cc_name: Brice
+  iu_theme: Corruption
+  description: Politicians taking bribes more discreetly.
+  story_type: Entitlement Violation
+  project: Oak
+  campaign: Forced Evictions
+  shoot_plan: Make video.
+  story_pitch_date: 2012-12-12
+  original_uid: TE_123
+  cc: minister
+  state: singapore

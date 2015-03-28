@@ -46,7 +46,8 @@ class Tracker < ActiveRecord::Base
     def unlink_impact
       if !self.impact_uid.blank? && !self.uid.include?('_impact')
         linked_tracker = Tracker.find_by(uid: self.impact_uid)
-        linked_tracker.update_attribute(:original_uid, nil)
+        linked_tracker.update_attributes(original_uid: nil,
+                                      no_original_uid: 'Original was deleted.')
       elsif !self.original_uid.blank? && self.uid.include?('_impact')
         linked_tracker = Tracker.find_by(uid: self.original_uid)
         linked_tracker.update_attribute(:impact_uid, nil)

@@ -6,6 +6,7 @@ minister:
   state_abb: SG
   district: Raffles
   mentor: Cambridge
+  state: singapore
 
 boss:
   full_name: Ouan Sarawut
@@ -15,3 +16,4 @@ boss:
   state_abb: TL
   district: Krung Thep
   mentor: Thanet
+  state: california
