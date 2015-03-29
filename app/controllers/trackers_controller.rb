@@ -102,8 +102,8 @@ class TrackersController < ApplicationController
     # This condition exists just in case somebody submits a tracker with an
     # empty 'CC Name'. This way, simple_form will pick up on the model
     # validations.
-    unless params[:tracker][:cc_name].blank?
-      @cc = Cc.find(params[:tracker][:cc_name])
+    unless params[:tracker][:cc_id].blank?
+      @cc = Cc.find(params[:tracker][:cc_id])
       @tracker.cc_name = @cc.full_name
       @state = @cc.state
       @tracker.state_name = @state.name
@@ -233,8 +233,7 @@ class TrackersController < ApplicationController
       columns = Tracker.column_names - ['id', 'uid', 'created_at',
                                         'updated_at', 'flag', 'flag_notes',
                                         'flag_date', 'note',
-                                        'updated_by', 'tracker_details_type',
-                                        'tracker_details_id']
+                                        'updated_by', 'state_id']
       params.require(:tracker).permit(columns)
     end
 

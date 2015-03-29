@@ -5,6 +5,11 @@ class Cc < ActiveRecord::Base
   belongs_to :state
   has_many :trackers
 
+  before_save :capitalize_data
+  before_save :full_name_set
+  before_save :phone_set
+  before_save :modify_associations
+
   validates :first_name, presence: true, length: { maximum: 50 }
   validates :last_name, presence: true, length: { maximum: 50 }
   validates :state_name, presence: true
@@ -12,11 +17,6 @@ class Cc < ActiveRecord::Base
   # So that max five phone numbers can be saved with commas and whitespace
   validates :phone, length: { maximum: 60 }
   validates :mentor, presence: true, length: { maximum: 50 }
-
-  before_save :capitalize_data
-  before_save :full_name_set
-  before_save :phone_set
-  before_save :modify_associations
 
   private
 
@@ -40,16 +40,22 @@ class Cc < ActiveRecord::Base
       self.phone = phone.gsub(/[^0-9\,\s]/, "") unless self.phone.nil?
     end
 
+    # Re-associates CC and changes the data of its associations if its name
+    # or state changes.
     def modify_associations
       unless self.trackers.blank?
         self.trackers.each do |tracker|
-          tracker.assign_attributes(cc_name: self.full_name)
+          tracker.assign_attributes(cc_name: self.full_name,
+                                    district: self.district,
+                                    mentor: self.mentor)
         end
       end
 
-      if self.state_name_changed?
-        state = State.find_by(name: self.state_name)
-        self.assign_attributes(state: state)
+      if self.state_id_changed?
+        state = State.find(self.state_id)
+        self.assign_attributes(state: state,
+                               state_name: state.name,
+                               state_abb: state.state_abb)
       end
     end
 end

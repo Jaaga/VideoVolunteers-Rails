@@ -89,10 +89,13 @@ class CcTest < ActiveSupport::TestCase
 
   test "updating information should also update associations" do
     @minister.update_attributes(first_name: "Kuan", last_name: "Yee",
-                                state_name: "California")
+                                district: 'Test', mentor: 'Mentor Test',
+                                state_id: State.find_by(name: 'California').id)
 
     @minister.trackers.each do |tracker|
       assert tracker.cc_name == "Kuan Yee"
+      assert tracker.district == "Test"
+      assert tracker.mentor == "Mentor Test"
     end
 
     assert @minister.state.name == "California"

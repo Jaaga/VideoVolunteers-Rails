@@ -3,7 +3,7 @@ require 'test_helper'
 class AssociationsTest < ActionDispatch::IntegrationTest
 
   test "trackers are associated to a CC and a State" do
-    post trackers_path, tracker: { cc_name: '1056859706',
+    post trackers_path, tracker: { cc_id: Cc.last.id,
                                    iu_theme: 'Corruption',
                                    description: 'Politicians taking bribes. Again.',
                                    story_type: 'Entitlement Violation',
@@ -19,7 +19,7 @@ class AssociationsTest < ActionDispatch::IntegrationTest
   test "CCs are associated with a state" do
     post ccs_path, cc: { first_name: 'Test',
                          last_name: 'Lee',
-                         state_id: '46965933',
+                         state_id: State.first.id,
                          district: 'Raffles',
                          mentor: 'Cambridge' }
     cc = assigns(:cc)

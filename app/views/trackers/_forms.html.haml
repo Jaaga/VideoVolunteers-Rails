@@ -2,7 +2,7 @@
 = simple_form_for @tracker do |f|
   = f.error_notification
   - if @context == 'new'
-    = f.input :cc_name, as: :select, collection: @state.ccs.order('full_name'),
+    = f.input :cc, as: :select, collection: @state.ccs.order('full_name'),
       value_method: :id, label_method: :full_name, label: 'CC Name'
     = f.input :state_name, as: :hidden, :input_html => { :value => @state.name }
   - @columns[section].each do |column|

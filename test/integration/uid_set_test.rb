@@ -6,7 +6,7 @@ class UidSetTest < ActionDispatch::IntegrationTest
 
   test "non-impact uid is set" do
     assert_equal Tracker.last.uid, 'CA_123'
-    post trackers_path, tracker: { cc_name: '1056859706',
+    post trackers_path, tracker: { cc_id: Cc.last.id,
                                    iu_theme: 'Corruption',
                                    description: 'Politicians taking bribes. Again.',
                                    story_type: 'Entitlement Violation',
@@ -21,7 +21,7 @@ class UidSetTest < ActionDispatch::IntegrationTest
   # test "new impact uid set"
 
   test "impact uid is set" do
-    post trackers_path, tracker: { cc_name: '1056859706',
+    post trackers_path, tracker: { cc_id: Cc.last.id,
                                    iu_theme: 'Corruption',
                                    description: 'Politicians taking bribes. Again.',
                                    story_type: 'Entitlement Violation',

@@ -32,11 +32,8 @@ class CcsController < ApplicationController
   end
 
   def update
-    @state = State.find(params[:cc][:state_id])
     @cc = Cc.find(params[:id])
     @cc.assign_attributes(cc_params)
-    @cc.state_name = @state.name
-    @cc.state_abb = @state.state_abb
     if @cc.save
       flash[:success] = "CC successfully edited."
       redirect_to @cc

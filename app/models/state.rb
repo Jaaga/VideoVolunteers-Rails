@@ -2,13 +2,13 @@ class State < ActiveRecord::Base
   has_many :ccs
   has_many :trackers
 
+  before_save :capitalize_data
+  before_save :modify_associations
+
   validates :name, presence: true, length: { maximum: 50 },
              uniqueness: { case_sensitive: false }
   validates :state_abb, presence: true, length: { maximum: 2 },
              uniqueness: { case_sensitive: false }
-
-  before_save :capitalize_data
-  before_save :modify_associations
 
 
   private
@@ -19,6 +19,8 @@ class State < ActiveRecord::Base
       self.state_abb = state_abb.upcase
     end
 
+    # Modifies the associated CCs and trackers with the modified information
+    # of the state
     def modify_associations
       unless self.ccs.blank?
         self.ccs.each do |cc|

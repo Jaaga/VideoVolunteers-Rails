@@ -5,6 +5,9 @@ class Tracker < ActiveRecord::Base
   belongs_to :state
   belongs_to :cc
 
+  before_save :set_district_and_mentor
+  before_destroy :unlink_impact
+
   validates :uid, presence: true, length: { maximum: 16 },
              uniqueness: { case_sensitive: false }
   validates_presence_of :state_name, :cc_name, :iu_theme, :description,
@@ -30,9 +33,6 @@ class Tracker < ActiveRecord::Base
   validates :cleared_for_edit, inclusion: YESNO, allow_blank: true
   validates :impact_video_approved, inclusion: YESNO, allow_blank: true
 
-  before_save :set_district_and_mentor
-
-  before_destroy :unlink_impact
 
   private
 

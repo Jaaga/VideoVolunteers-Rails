@@ -5,7 +5,7 @@ class ImpactLinksTest < ActionDispatch::IntegrationTest
   def setup
     @tracker_120 = trackers(:CA_120)
     @tracker_120.save
-    post trackers_path, tracker: { cc_name: '1056859706',
+    post trackers_path, tracker: { cc_id: '1056859706',
                                    iu_theme: 'Corruption',
                                    description: 'Politicians taking bribes. Again.',
                                    story_type: 'Entitlement Violation',
