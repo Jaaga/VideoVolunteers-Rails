@@ -3,7 +3,7 @@ require 'test_helper'
 class TrackersControllerTest < ActionController::TestCase
 
   def setup
-    @tracker = trackers(:TE_123)
+    @tracker = trackers(:CA_123)
   end
 
   test "should get index" do

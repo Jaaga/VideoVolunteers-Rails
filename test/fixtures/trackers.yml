@@ -1,5 +1,5 @@
-TE_123:
-  uid: TE_123
+CA_123:
+  uid: CA_123
   state_name: California
   cc_name: Brice
   iu_theme: Corruption
@@ -9,12 +9,12 @@ TE_123:
   campaign: Forced Evictions
   shoot_plan: Make video.
   story_pitch_date: 2012-12-12
-  impact_uid: TE_123_impact
-  cc: minister
-  state: singapore
+  impact_uid: CA_123_impact
+  cc: boss
+  state: california
 
-TE_123_impact:
-  uid: TE_123_impact
+CA_123_impact:
+  uid: CA_123_impact
   state_name: California
   cc_name: Brice
   iu_theme: Corruption
@@ -24,6 +24,6 @@ TE_123_impact:
   campaign: Forced Evictions
   shoot_plan: Make video.
   story_pitch_date: 2012-12-12
-  original_uid: TE_123
-  cc: minister
-  state: singapore
+  original_uid: CA_123
+  cc: boss
+  state: california

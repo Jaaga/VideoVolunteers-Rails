@@ -43,13 +43,13 @@ class Cc < ActiveRecord::Base
     def modify_associations
       unless self.trackers.blank?
         self.trackers.each do |tracker|
-          tracker.update_attribute(:cc_name, self.full_name)
+          tracker.assign_attributes(cc_name: self.full_name)
         end
+      end
 
-        if self.changed.include? 'state_name'
-          state = State.find_by(name: self.state_name)
-          self.assign_attributes(state: state)
-        end
+      if self.state_name_changed?
+        state = State.find_by(name: self.state_name)
+        self.assign_attributes(state: state)
       end
     end
 end

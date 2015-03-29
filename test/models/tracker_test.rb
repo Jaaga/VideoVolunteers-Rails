@@ -3,9 +3,9 @@ require 'test_helper'
 class TrackerTest < ActiveSupport::TestCase
 
   def setup
-    @tracker = Tracker.new(uid: 'TE_456',
+    @tracker = Tracker.new(uid: 'CA_456',
                            cc_name: 'Ouan Sarawut',
-                           state_name: 'Thailand',
+                           state_name: 'California',
                            iu_theme: 'Corruption',
                            description: 'Politicians taking bribes. Again.',
                            story_type: 'Entitlement Violation',
@@ -13,9 +13,9 @@ class TrackerTest < ActiveSupport::TestCase
                            campaign: 'Forced Evictions',
                            shoot_plan: 'Make video.',
                            story_pitch_date: '2012-12-12',
-                           cc: ccs(:minister))
-    @other_tracker = trackers(:TE_123)
-    @other_tracker_impact = trackers(:TE_123_impact)
+                           cc: ccs(:boss))
+    @other_tracker = trackers(:CA_123)
+    @other_tracker_impact = trackers(:CA_123_impact)
   end
 
   test "should be valid" do
