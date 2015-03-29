@@ -1,3 +1,33 @@
+CA_120:
+  uid: CA_120
+  state_name: California
+  cc_name: Brice
+  iu_theme: Corruption
+  description: Politicians taking bribes. Again.
+  story_type: Entitlement Violation
+  project: Oak
+  campaign: Forced Evictions
+  shoot_plan: Make video.
+  story_pitch_date: 2012-12-12
+  updated_by: #{ Date.today }: Someone created this tracker.
+  cc: boss
+  state: california
+
+CA_121:
+  uid: CA_121
+  state_name: California
+  cc_name: Brice
+  iu_theme: Corruption
+  description: Politicians taking bribes. Again.
+  story_type: Entitlement Violation
+  project: Oak
+  campaign: Forced Evictions
+  shoot_plan: Make video.
+  story_pitch_date: 2012-12-12
+  updated_by: #{ Date.today }: Someone created this tracker.
+  cc: boss
+  state: california
+
 CA_123:
   uid: CA_123
   state_name: California

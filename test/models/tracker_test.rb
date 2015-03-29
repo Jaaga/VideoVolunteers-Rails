@@ -93,6 +93,12 @@ class TrackerTest < ActiveSupport::TestCase
     end
   end
 
+  test "district and mentor should be set" do
+    @tracker.save
+    assert_equal @tracker.district, @tracker.cc.district
+    assert_equal @tracker.mentor, @tracker.cc.mentor
+  end
+
   test "linked videos are unlinked before destroy (issue video)" do
     assert @other_tracker.valid?
     assert @other_tracker_impact.valid?
