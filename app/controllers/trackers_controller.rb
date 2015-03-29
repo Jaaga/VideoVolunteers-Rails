@@ -150,7 +150,7 @@ class TrackersController < ApplicationController
 
     @linked_uid = @tracker.original_uid
     @tracker.assign_attributes(tracker_params)
-    @tracker.updated_by.prepend("#{ Date.today }: this tracker was edited.\n")
+    @tracker.updated_by = "#{ Date.today }: this tracker was edited.\n"
 
     # For checking if this tracker is an impact tracker
     if params[:tracker][:is_impact] == "1"
@@ -205,11 +205,10 @@ class TrackersController < ApplicationController
         @tracker.notes = "#{ Date.today }: #{ params[:tracker][:notes] }"
       else
         old_notes = @tracker.notes
-        @tracker.notes = "#{ Date.today }:
-                          #{ params[:tracker][:notes] }\n#{ old_notes }"
+        @tracker.notes = "#{ Date.today }: #{ params[:tracker][:notes] }\n#{ old_notes }"
       end
 
-      @tracker.updated_by.prepend("#{ Date.today }: Someone added a note.\n")
+      @tracker.updated_by = "#{ Date.today }: Someone added a note.\n"
 
       if @tracker.save
         flash[:success] = "Note successfully added."

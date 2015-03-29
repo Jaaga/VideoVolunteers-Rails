@@ -32,4 +32,11 @@ class TrackersControllerTest < ActionController::TestCase
     get :note_form, id: @tracker
     assert_response :success
   end
+
+  test "updated_by should be updated" do
+    old_updated_by = @tracker.updated_by
+    @tracker.update_attribute(:description, 'Different')
+    assert_equal @tracker.description, 'Different'
+    assert_not diff(@tracker.updated_by, old_updated_by) == nil
+  end
 end
