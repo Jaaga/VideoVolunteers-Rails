@@ -16,6 +16,61 @@ class ImpactLinksTest < ActionDispatch::IntegrationTest
     @tracker_121 = assigns(:tracker)
   end
 
+  test "errors while setting impact link(1)" do
+    patch tracker_path(@tracker_121), tracker: { is_impact: '1',
+                                                 original_uid: @tracker_120.uid,
+                                                 no_original_uid: 'Test' }
+    assert_not flash.empty?
+    assert_template 'trackers/_forms'
+    assert @tracker_121.is_impact == nil
+    assert @tracker_121.original_uid == nil
+    assert @tracker_121.no_original_uid == nil
+  end
+
+  test "errors while setting impact link(2)" do
+    patch tracker_path(@tracker_121), tracker: { is_impact: '1',
+                                                 original_uid: nil,
+                                                 no_original_uid: nil }
+    assert_not flash.empty?
+    assert_template 'trackers/_forms'
+    assert @tracker_121.is_impact == nil
+    assert @tracker_121.original_uid == nil
+    assert @tracker_121.no_original_uid == nil
+  end
+
+  test "errors while setting impact link(3)" do
+    patch tracker_path(@tracker_121), tracker: { is_impact: '0',
+                                                 original_uid: @tracker_120.uid,
+                                                 no_original_uid: 'Test' }
+    assert_not flash.empty?
+    assert_template 'trackers/_forms'
+    assert @tracker_121.is_impact == nil
+    assert @tracker_121.original_uid == nil
+    assert @tracker_121.no_original_uid == nil
+  end
+
+  test "errors while setting impact link(4)" do
+    patch tracker_path(@tracker_121), tracker: { is_impact: '0',
+                                                 original_uid: nil,
+                                                 no_original_uid: 'Test' }
+    assert_not flash.empty?
+    assert_template 'trackers/_forms'
+    assert @tracker_121.is_impact == nil
+    assert @tracker_121.original_uid == nil
+    assert @tracker_121.no_original_uid == nil
+  end
+
+  test "errors while setting impact link(5)" do
+    patch tracker_path(@tracker_121), tracker: { is_impact: '0',
+                                                 original_uid: @tracker_120.uid,
+                                                 no_original_uid: nil }
+    assert_not flash.empty?
+    assert_template 'trackers/_forms'
+    assert @tracker_121.is_impact == nil
+    assert @tracker_121.original_uid == nil
+    assert @tracker_121.no_original_uid == nil
+  end
+
   test "set impact link" do
     assert_not @tracker_121.uid.include? '_impact'
     assert @tracker_120.impact_uid == nil

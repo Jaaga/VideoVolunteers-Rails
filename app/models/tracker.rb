@@ -6,6 +6,7 @@ class Tracker < ActiveRecord::Base
   belongs_to :cc
 
   before_save :set_district_and_mentor
+  before_save :impact_errors
   before_destroy :unlink_impact
 
   validates :uid, presence: true, length: { maximum: 16 },
@@ -36,6 +37,25 @@ class Tracker < ActiveRecord::Base
 
   private
 
+    def impact_errors
+      def nil_set
+        self.is_impact = nil
+        self.original_uid = nil
+        self.no_original_uid = nil
+      end
+
+      if self.is_impact == '1' && self.no_original_uid.blank? && self.original_uid.blank?
+        nil_set
+      elsif self.is_impact == '0' && !self.no_original_uid.blank? && !self.original_uid.blank?
+        nil_set
+      elsif self.is_impact == '1' && !self.no_original_uid.blank? && !self.original_uid.blank?
+        nil_set
+      elsif self.is_impact == '0' && !self.no_original_uid.blank? && self.original_uid.blank?
+        nil_set
+      elsif self.is_impact == '0' && self.no_original_uid.blank? && !self.original_uid.blank?
+        nil_set
+      end
+    end
 
     def set_district_and_mentor
       cc = self.cc

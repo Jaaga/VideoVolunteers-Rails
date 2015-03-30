@@ -2,8 +2,8 @@
 = simple_form_for @tracker do |f|
   = f.error_notification
   - if @context == 'new'
-    = f.input :cc, as: :select, collection: @state.ccs.order('full_name'),
-      value_method: :id, label_method: :full_name, label: 'CC Name'
+    = f.input :cc_id, as: :select, collection: @state.ccs.order('full_name'),
+      value_method: :id, label_method: :full_name, label: 'CC Name', required: true
     = f.input :state_name, as: :hidden, :input_html => { :value => @state.name }
   - @columns[section].each do |column|
     - if column.include? "_date"
