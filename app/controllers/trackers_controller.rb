@@ -24,7 +24,7 @@ class TrackersController < ApplicationController
           @trackers = Tracker.where("state_name = ? AND story_pitch_date IS NOT NULL AND backup_received_date IS NULL", "#{params[:name]}").order("updated_at DESC").paginate(page: params[:page], per_page: 40)
           @title_header = "Has been Pitched But Has No Footage"
         elsif params[:view] == 'pending'
-          @trackers = Tracker.where("state_name = ? AND raw_footage_review_date IS NULL AND footage_location = ?", "#{params[:name]}", 'State').order("updated_at DESC").paginate(page: params[:page], per_page: 40)
+          @trackers = Tracker.where("state_name = ? AND raw_footage_review_date IS NULL AND office_responsible = ?", "#{params[:name]}", 'State').order("updated_at DESC").paginate(page: params[:page], per_page: 40)
           @title_header = "Raw Footage Has Not Been Reviewed and Footage is in State"
         elsif params[:view] == 'hold'
           @trackers = Tracker.where("state_name = ? AND proceed_with_edit_and_payment = ?", "#{params[:name]}", 'On hold').order("updated_at DESC").paginate(page: params[:page], per_page: 40)

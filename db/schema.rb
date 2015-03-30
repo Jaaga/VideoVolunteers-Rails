@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150324090847) do
+ActiveRecord::Schema.define(version: 20150330130914) do
 
   create_table "ccs", force: :cascade do |t|
     t.string  "full_name",  null: false
@@ -124,12 +124,13 @@ ActiveRecord::Schema.define(version: 20150324090847) do
     t.string   "impact_video_approved"
     t.string   "impact_video_approved_by"
     t.text     "call_to_action_review"
-    t.string   "footage_location"
+    t.string   "office_responsible"
     t.boolean  "is_impact"
     t.integer  "state_id"
     t.integer  "cc_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "edit_status"
   end
 
   add_index "trackers", ["uid"], name: "index_trackers_on_uid", unique: true

@@ -23,20 +23,20 @@ class StaticPagesController < ApplicationController
 
       ### State
       # videos on hold
-      @stats.push(state.trackers.where("footage_location = ? AND proceed_with_edit_and_payment = ?", 'State', 'On hold').count)
+      @stats.push(state.trackers.where("office_responsible = ? AND proceed_with_edit_and_payment = ?", 'State', 'On hold').count)
       # State Edit Bank: total approved videos whose edits haven't reached goa (for states with regional editors only) (including on hold)
       # Is this redundant?
       @stats.push(state.trackers.where("edit_received_in_goa_date IS NULL AND proceed_with_edit_and_payment = ?", 'On hold').count)
       # approved videos
-      @stats.push(state.trackers.where("footage_location = ? AND proceed_with_edit_and_payment = ?", 'State', 'Cleared').count)
+      @stats.push(state.trackers.where("office_responsible = ? AND proceed_with_edit_and_payment = ?", 'State', 'Cleared').count)
 
       ### Goa
       # videos on hold
-      @stats.push(state.trackers.where("footage_location = ? AND proceed_with_edit_and_payment = ?", 'Goa', 'On hold').count)
+      @stats.push(state.trackers.where("office_responsible = ? AND proceed_with_edit_and_payment = ?", 'Goa', 'On hold').count)
       # videos that are in Goa and need to be edited, reviewed & uploaded
-      @stats.push(state.trackers.where("edit_received_in_goa_date IS NOT NULL AND footage_location = ?", 'Goa').count)
+      @stats.push(state.trackers.where("edit_received_in_goa_date IS NOT NULL AND office_responsible = ?", 'Goa').count)
       # videos whose rough cuts have arrived from a state office and need to be cleaned, reviewed and uploaded
-      @stats.push(state.trackers.where("footage_location = ? AND review_date IS NOT NULL", 'Goa').count)
+      @stats.push(state.trackers.where("office_responsible = ? AND review_date IS NOT NULL", 'Goa').count)
 
       # Total UID's
       @stats.push(state.trackers.count)

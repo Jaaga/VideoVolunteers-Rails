@@ -5,7 +5,7 @@ module ArraySettingHelper
   def array_set
     story = ['iu_theme', 'subcategory', 'description', 'story_type', 'project',
              'campaign', 'shoot_plan', 'story_pitch_date']
-    status = ['footage_location', 'footage_received_from_cc_date',
+    status = ['edit_status', 'office_responsible', 'footage_received_from_cc_date',
               'raw_footage_review_date', 'state_edit_date',
               'edit_received_in_goa_date', 'rough_cut_edit_date',
               'review_date', 'finalized_date', 'youtube_date',
@@ -49,8 +49,8 @@ module ArraySettingHelper
   end
 
   def unique_set
-    special = ['footage_location', 'iu_theme', 'subcategory', 'story_type',
-               'project', 'campaign',
+    special = ['edit_status', 'office_responsible', 'iu_theme', 'subcategory',
+               'story_type', 'project', 'campaign',
                'proceed_with_edit_and_payment', 'payment_status',
                'subtitle_info', 'editor_changes_needed', 'translation_info',
                'screened_on', 'impact_video_status',

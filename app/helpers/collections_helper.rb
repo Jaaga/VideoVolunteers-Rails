@@ -15,7 +15,9 @@ module CollectionsHelper
       return staff_collection
     elsif column == 'project'
       return [['None', :None], ['Oak', :Oak], ['Pacs', :Pacs]]
-    elsif column == 'footage_location'
+    elsif column == 'edit_status'
+      return edit_status_collection
+    elsif column == 'office_responsible'
       return [['State', :State], ['Goa', :Goa]]
     elsif column == 'proceed_with_edit_and_payment'
       return [['Cleared', :Cleared], ['On hold', :'On hold']]
@@ -103,6 +105,16 @@ module CollectionsHelper
      ["Anshuman Singh", :"Anshuman Singh"], ["Anand Pagare", :"Anand Pagare"],
      ["Vidyadhar Ketkar", :"Vidyadhar Ketkar"],
      ["Sajad Rasool", :"Sajad Rasool"]].sort
+  end
+
+  def edit_status_collection
+    [["story idea only - no footage received", :"story idea only - no footage received"],
+     ["video under edit", :"video under edit"],
+     ["video under review", :"video under review"],
+     ["video to be finalised and uploaded (i.e. after review)", :"video to be finalised and uploaded (i.e. after review)"],
+     ["video published", :"video published"],
+     ["problem video - see notes", :"problem video - see notes"],
+     ["on hold", :"on hold"]]
   end
 
   def subtitle_collection

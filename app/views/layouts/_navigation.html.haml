@@ -15,7 +15,7 @@
               - State.all.order(:name).each do |state|
                 %li= link_to state.name, trackers_path(state_name: "#{state.name}")
           %li.dropdown-submenu
-            %a{ href: "#" } New
+            %a{ href: "#" } New Video Entry
             %ul.dropdown-menu
               - State.all.order(:name).each do |state|
                 %li= link_to state.name, new_tracker_path(state_name: "#{state.name}")
