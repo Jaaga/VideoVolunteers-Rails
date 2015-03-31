@@ -16,10 +16,29 @@ class StaticPagesController < ApplicationController
     @active_states.each do |state|
       # No. of story ideas pitched
       @stats[0].push(state.trackers.where("story_pitch_date IS NOT NULL AND backup_received_date IS NULL").count)
+      # No. of CCs who pitched story ideas
+      @stats[1].push(state.ccs.where("last_pitched_story_idea_date IS NOT NULL").count)
+      # No. of CCs who made issue videos
+      @stats[2].push(state.ccs.where("last_issue_video_made_date IS NOT NULL").count)
+      # No. of inactive CCs who made issue videos this quarter
+      @stats[3].push(state.trackers.where("story_pitch_date IS NOT NULL AND backup_received_date IS NULL").count)
+
       # No. of story ideas pitched so far this calendar month
-      @stats[1].push(state.trackers.where("story_pitch_date > ? AND story_pitch_date < ?", Time.now.beginning_of_month.to_date, Time.now.end_of_month.to_date).count)
+      @stats[4].push(state.trackers.where("story_pitch_date > ? AND story_pitch_date < ?", Time.now.beginning_of_month.to_date, Time.now.end_of_month.to_date).count)
       # no of story ideas pitched in the last 3 months
-      @stats[2].push(state.trackers.where("story_pitch_date > ? AND story_pitch_date < ?", Time.now.months_ago(3).to_date, Time.now.to_date).count)
+      @stats[5].push(state.trackers.where("story_pitch_date > ? AND story_pitch_date < ?", Time.now.months_ago(3).to_date, Time.now.to_date).count)
+      # no of CC's who pitched a story this month
+      # no of CC's who pitched a story in the last 3 months
+
+      # No of issue videos made so far this month  ie raw footage received in state office
+      # no of issue videos made I the last 3 months ie raw footage received in state office
+      # no of CC's who made an issue video this monthie raw footage received in state office
+      # no of CC's who made an issue video in the last three months ie raw footage received in state office
+
+      # no of impacts achived this month
+      # no of CC's who achieved an impact this month
+      # no of impacts achieved in the last 3 months
+      # no of CC's who achieved an impact in the last 3 months
 
       ### State
       # videos on hold

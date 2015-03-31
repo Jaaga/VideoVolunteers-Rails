@@ -92,6 +92,7 @@ class CcsController < ApplicationController
 
 
     def cc_params
-      params.require(:cc).permit(:first_name, :last_name, :district, :phone, :mentor, :state_id)
+      params.require(:cc).permit(:first_name, :last_name, :district, :phone,
+                                 :mentor, :state_id, :is_inactive)
     end
 end

@@ -4,7 +4,7 @@
 
 %h1.text-center #{ @cc.full_name }
 
-%p
+%p.show-buttons
   = link_to 'Edit', edit_cc_path(@cc), class: 'btn btn-default'
   = link_to 'Add Note', note_form_cc_path(@cc), class: 'btn btn-default'
   = link_to 'Delete', cc_path(@cc), method: :delete, class: 'btn btn-default',

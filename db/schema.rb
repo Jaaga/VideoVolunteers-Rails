@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 20150331055815) do
     t.date    "last_issue_video_sent_date"
     t.date    "last_impact_video_made_date"
     t.date    "last_impact_action_date"
+    t.boolean "is_inactive"
   end
 
   create_table "states", force: :cascade do |t|
