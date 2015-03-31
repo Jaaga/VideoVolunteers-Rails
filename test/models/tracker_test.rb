@@ -115,4 +115,22 @@ class TrackerTest < ActiveSupport::TestCase
     @other_tracker_impact.destroy
     assert @other_tracker.reload.impact_uid.blank?
   end
+
+  test "CC dates should be set" do
+    column_dates = Cc.column_names.select{ |x| x.include?('_date') }.map{ |x| x }
+    # Because last_impact_action_date is not set through the model
+    column_dates -= ['last_impact_action_date']
+    column_dates.each do |date|
+      assert @other_tracker.cc.send(:"#{ date }").blank?
+    end
+    x = Date.today
+    @other_tracker.update_attributes(story_pitch_date: x,
+                                     raw_footage_review_date: x,
+                                     footage_received_from_cc_date: x,
+                                     impact_achieved: 'yes',
+                                     impact_video_status: 'Completed')
+    column_dates.each do |date|
+      assert_not @other_tracker.cc.send(:"#{ date }").blank?
+    end
+  end
 end
