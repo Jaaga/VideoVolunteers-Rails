@@ -37,6 +37,9 @@ gem 'bootstrap-will_paginate'
 # Paginate alphabetically (for CC's index)
 gem 'alphabetical_paginate'
 
+# Replaces webrick
+gem 'puma'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
@@ -65,7 +68,4 @@ group :production do
 
   # Needed for heroku
   gem 'rails_12factor'
-
-  # Use puma over webbrick for faster server
-  gem 'puma'
 end
