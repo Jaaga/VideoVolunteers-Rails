@@ -134,6 +134,8 @@ class TrackersController < ApplicationController
 
     # Method for dealing with making and linking impact videos
     is_impact?('edit')
+    # Method for updating the CC's last impact action date
+    update_cc_action_date
 
     if @tracker.save
       unless performed? then flash[:success] = "Tracker successfully edited." end
@@ -192,6 +194,7 @@ class TrackersController < ApplicationController
       params.require(:tracker).permit(columns)
     end
 
+    # Method for making sure that impact trackers are currently made.
     def is_impact?(caller)
       # For checking if this tracker is an impact tracker
       if params[:tracker][:is_impact] == "1"
@@ -228,6 +231,7 @@ class TrackersController < ApplicationController
       end
     end
 
+    # Method for re-rendering the forms page if there is an error.
     def is_impact_error(caller)
       if caller == 'new'
         failed_form_create
@@ -237,6 +241,15 @@ class TrackersController < ApplicationController
       end
     end
 
+    # Updates a CC's last impact action date if the impact action checkbox in
+    # the tracker's form was checked.
+    def update_cc_action_date
+      if params[:tracker][:cc_impact_action] == '1'
+        @tracker.cc.last_impact_action_date = Date.today
+      end
+    end
+
+    # Method for re-rendering 'new' if an error was found.
     def failed_form_create
       @columns = view_context.array_set
       @unique = view_context.unique_set
@@ -248,6 +261,7 @@ class TrackersController < ApplicationController
       render :new, state_name: params[:tracker][:state_name]
     end
 
+    # Method for re-rendering 'edit' if an error was found.
     def failed_form_create_edit
       @columns = view_context.array_set
       @state = @tracker.state
