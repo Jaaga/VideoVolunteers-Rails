@@ -68,4 +68,7 @@ group :production do
 
   # Needed for heroku
   gem 'rails_12factor'
+
+  # For Heroku addon new-relic to keep the dyno alive
+  gem 'newrelic_rpm'
 end
