@@ -79,7 +79,7 @@ module TrackersHelper
 
   # Used to capitalize each segment of names and other words along with column
   # names. If the column name won't do for display, a custom one is given in the
-  # state_label method.
+  # tracker_label method.
   def tracker_name_modifier(x)
     !tracker_label(x).nil? ? tracker_label(x) : x.split('_').map(&:capitalize).join(' ')
   end
@@ -116,7 +116,8 @@ module TrackersHelper
       'impact_video_notes' => 'Other impact video notes',
       'state_edit_date' => 'State edit date (only if there’s a state editor)',
       'rough_cut_edit_date' => 'Goa Rough Cut Edit Date (only if the raw
-        footage is edited in Goa)' }
+        footage is edited in Goa)',
+      'cc_impact_action' => 'Has the CC made an impact action?'}
 
     !labels[x].nil? ? labels[x] : nil
   end
