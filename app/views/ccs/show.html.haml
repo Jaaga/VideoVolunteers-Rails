@@ -10,13 +10,33 @@
   = link_to 'Delete', cc_path(@cc), method: :delete, class: 'btn btn-default',
     data: { confirm: "Are you sure you want to delete #{ @cc.full_name }?" }
 
+%h2 Stats
+%h4 (A cell without a date means the action hasn't been done yet.)
+.table-responsive
+  %table.table.table-bordered.table-striped#view-margin
+    - @column_dates.each do |column|
+      %tr
+        %td.col-md-6
+          %strong= cc_name_modifier(column)
+        %td.col-md-6
+          = @cc.send(:"#{ column }")
+
+%h2 Video Trackers
+.table-responsive
+  %table.table.table-bordered.table-striped#view-margin
+    - @cc.trackers.order('uid DESC').each do |tracker|
+      %tr
+        %td.col-md-6
+          = link_to tracker.uid, tracker_path(tracker)
+
+%h2 Information
 .table-responsive
   %table.table.table-bordered.table-striped#view-margin
     - @columns.each do |column|
       %tr
-        %td.col-sm-6
+        %td.col-md-6
           %strong= cc_name_modifier(column)
-        %td.col-sm-6
+        %td.col-md-6
           - if column == 'notes'
             = simple_format(@cc.notes)
           - else

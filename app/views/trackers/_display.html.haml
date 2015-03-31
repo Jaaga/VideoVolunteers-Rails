@@ -6,15 +6,15 @@
     - if section == :story
       - story_columns.each do |column|
         %tr
-          %td.col-sm-6
+          %td.col-md-6
             %strong= tracker_name_modifier(column)
-          %td.col-sm-6
+          %td.col-md-6
             = @tracker.send(:"#{ column }")
     - @columns[section].each do |column|
       %tr
-        %td.col-sm-6
+        %td.col-md-6
           %strong= tracker_name_modifier(column)
-        %td.col-sm-6
+        %td.col-md-6
           - if column == 'notes'
             = simple_format(@tracker.notes)
           - elsif column == 'updated_by'

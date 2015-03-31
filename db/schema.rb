@@ -11,19 +11,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150330130914) do
+ActiveRecord::Schema.define(version: 20150331055815) do
 
   create_table "ccs", force: :cascade do |t|
-    t.string  "full_name",  null: false
-    t.string  "first_name", null: false
-    t.string  "last_name",  null: false
-    t.string  "state_name", null: false
-    t.string  "state_abb",  null: false
-    t.string  "district",   null: false
+    t.string  "full_name",                    null: false
+    t.string  "first_name",                   null: false
+    t.string  "last_name",                    null: false
+    t.string  "state_name",                   null: false
+    t.string  "state_abb",                    null: false
+    t.string  "district",                     null: false
     t.string  "phone"
-    t.string  "mentor",     null: false
+    t.string  "mentor",                       null: false
     t.text    "notes"
     t.integer "state_id"
+    t.date    "last_pitched_story_idea_date"
+    t.date    "last_impact_achieved_date"
+    t.date    "last_issue_video_made_date"
+    t.date    "last_issue_video_sent_date"
+    t.date    "last_impact_video_made_date"
+    t.date    "last_impact_action_date"
   end
 
   create_table "states", force: :cascade do |t|

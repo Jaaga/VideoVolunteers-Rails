@@ -5,8 +5,8 @@
 %p= link_to 'Back to recent trackers', trackers_path(recent: true)
 
 %h1.text-center
-  #{ @tracker.uid.split('_').join(' ') } by #{ @tracker.cc_name } -
-  #{ @tracker.iu_theme }
+  #{ @tracker.uid.split('_').join(' ') } by
+  #{ link_to @tracker.cc_name, cc_path(@tracker.cc) } - #{ @tracker.iu_theme }
 - unless @tracker.impact_uid.blank? || @tracker.uid.include?('_impact')
   %h2.text-center
     This video had an impact! See

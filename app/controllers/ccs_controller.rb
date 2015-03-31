@@ -1,6 +1,7 @@
 class CcsController < ApplicationController
   def index
-    @ccs, @alphaParams = Cc.all.order("full_name ASC").alpha_paginate(params[:letter], {:bootstrap3 => true}){|cc| cc.full_name}
+    @ccs, @alphaParams = Cc.all.order("full_name ASC").alpha_paginate(params[:letter],
+                         {:bootstrap3 => true}){|cc| cc.full_name}
     @columns = Cc.column_names - ['id', 'first_name', 'last_name',
                                   'state_name', 'state_id', 'notes']
   end
@@ -8,10 +9,17 @@ class CcsController < ApplicationController
   def show
     @cc = Cc.find(params[:id])
     @columns = Cc.column_names - ['id', 'full_name', 'state_id']
+    # Using select to get rid of the nil values.
+    @column_dates = Cc.column_names.select{ |x| x.include?('_date') }.map{ |x| x }
+    @columns -= @column_dates
   end
 
   def new
     @cc = Cc.new
+    @columns = Cc.column_names - ['id', 'full_name', 'state_id']
+    # Using select to get rid of the nil values.
+    @column_dates = Cc.column_names.select{ |x| x.include?('_date') }.map{ |x| x }
+    @columns -= @column_dates
   end
 
   def create
@@ -29,6 +37,9 @@ class CcsController < ApplicationController
 
   def edit
     @cc = Cc.find(params[:id])
+    @columns = Cc.column_names - ['id', 'full_name', 'state_abb', 'notes', 'state_id']
+    column_dates = Cc.column_names.select{ |x| x.include?('_date') }.map{ |x| x }
+    @columns -= column_dates
   end
 
   def update

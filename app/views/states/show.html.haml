@@ -13,9 +13,9 @@
   %table.table.table-bordered.table-striped#view-margin
     - @columns.each do |column|
       %tr
-        %td.col-sm-6
+        %td.col-md-6
           %strong= state_name_modifier(column)
-        %td.col-sm-6
+        %td.col-md-6
           = @state.send(:"#{ column }")
 
 %p= link_to 'Back to all states', states_path

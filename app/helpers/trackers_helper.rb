@@ -46,16 +46,22 @@ module TrackersHelper
     unless tracker.uid.include? '_impact'
       tracker.update_attribute(:uid, "#{ tracker.uid }_impact")
     end
-    other_tracker = Tracker.find_by(uid: tracker.original_uid)
-    other_tracker.update_attribute(:impact_uid, tracker.uid)
+    unless tracker.original_uid.blank?
+      other_tracker = Tracker.find_by(uid: tracker.original_uid)
+      other_tracker.update_attribute(:impact_uid, tracker.uid)
+    end
   end
 
   def remove_impact_edit_system(tracker, original_uid)
     if tracker.uid.include? '_impact'
       tracker.update_attribute(:uid, tracker.uid.sub('_impact', ''))
       tracker.update_attribute(:original_uid, nil)
-      other_tracker = Tracker.find_by(uid: original_uid)
-      other_tracker.update_attribute(:impact_uid, nil)
+      unless original_uid.blank?
+        other_tracker = Tracker.find_by(uid: original_uid)
+        other_tracker.update_attribute(:impact_uid, nil)
+      else
+        tracker.update_attribute(:no_original_uid, nil)
+      end
     end
   end
 

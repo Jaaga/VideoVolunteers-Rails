@@ -69,6 +69,7 @@ class TrackersController < ApplicationController
     @columns = view_context.array_set
     @unique = view_context.unique_set
     @context = "new"
+    @sections = [:story]
   end
 
   def create
@@ -104,7 +105,8 @@ class TrackersController < ApplicationController
     @tracker = Tracker.find(params[:id])
     @columns = view_context.array_set
 
-    unless @tracker.uid.include?('_impact') && !@tracker.original_uid.blank?
+    unless @tracker.uid.include?('_impact') && !@tracker.original_uid.blank? ||
+    !@tracker.no_original_uid.blank?
       @columns.except!(:impact_planning, :impact_achieved, :impact_video)
     end
 

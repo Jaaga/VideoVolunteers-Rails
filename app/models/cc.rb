@@ -24,7 +24,7 @@ class Cc < ActiveRecord::Base
     def capitalize_data
       capitalize = ['first_name', 'last_name', 'district', 'mentor']
       capitalize.each do |column|
-        self.send(:"#{ column }=", cc_name_modifier(self.send(:"#{ column }")))
+        self.send(:"#{ column }=", cc_value_capitalization(self.send(:"#{ column }")))
       end
     end
 

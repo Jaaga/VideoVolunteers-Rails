@@ -11,11 +11,7 @@
       = link_to tracker_name_modifier(section.to_s),
         edit_tracker_path(@tracker, anchor: section)
 
-- @sections.each do |section|
-  %a{ id: "#{ section }" }
-  = render "trackers/forms", section: section
-  %br
-  = link_to '^ back to top ^', edit_tracker_path(@tracker, anchor: 'top')
+= render "trackers/forms", sections: @sections  
 
 - if @tracker.impact_uid.blank?
   = simple_form_for @tracker do |f|

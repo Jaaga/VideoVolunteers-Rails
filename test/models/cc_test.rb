@@ -67,12 +67,12 @@ class CcTest < ActiveSupport::TestCase
 
   test "data should be in the right case" do
     @cc.assign_attributes(first_name: "stEve", last_name: "joBs",
-                          district: "atHertoN", mentor: "zen")
+                          district: "atHertoN awd", mentor: "zen awd")
     @cc.save
     assert @cc.first_name == "Steve"
     assert @cc.last_name == "Jobs"
-    assert @cc.district == "Atherton"
-    assert @cc.mentor == "Zen"
+    assert @cc.district == "Atherton Awd"
+    assert @cc.mentor == "Zen Awd"
   end
 
   test "full name should be set" do
