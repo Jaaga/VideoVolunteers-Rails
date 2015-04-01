@@ -1,5 +1,6 @@
 class CcsController < ApplicationController
   before_filter :authenticate_user!, :except => [:show, :index]
+  before_filter :is_admin?, :only => [:destroy]
 
   def index
     @ccs, @alphaParams = Cc.all.order("full_name ASC").alpha_paginate(params[:letter],
@@ -96,5 +97,14 @@ class CcsController < ApplicationController
     def cc_params
       params.require(:cc).permit(:first_name, :last_name, :district, :phone,
                                  :mentor, :state_id, :is_inactive)
+    end
+
+    def is_admin?
+      if current_user.try(:admin?)
+        true
+      else
+        flash[:error] = "Need to be an admin for this."
+        redirect_to root_path
+      end
     end
 end

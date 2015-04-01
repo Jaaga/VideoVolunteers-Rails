@@ -7,8 +7,9 @@
 %p.show-buttons
   = link_to 'Edit', edit_cc_path(@cc), class: 'btn btn-default'
   = link_to 'Add Note', note_form_cc_path(@cc), class: 'btn btn-default'
-  = link_to 'Delete', cc_path(@cc), method: :delete, class: 'btn btn-default',
-    data: { confirm: "Are you sure you want to delete #{ @cc.full_name }?" }
+  - if current_user.try(:admin?)
+    = link_to 'Delete', cc_path(@cc), method: :delete, class: 'btn btn-default',
+      data: { confirm: "Are you sure you want to delete #{ @cc.full_name }?" }
 
 %h2 Stats
 %h4 (A cell without a date means the action hasn't been done yet.)

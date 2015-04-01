@@ -1,5 +1,6 @@
 class TrackersController < ApplicationController
   before_filter :authenticate_user!, :except => [:show, :index]
+  before_filter :is_admin?, :only => [:destroy]
 
   def index
     if params[:recent]
@@ -279,5 +280,14 @@ class TrackersController < ApplicationController
       @unique = view_context.unique_set
       @context = "edit"
       render :edit
+    end
+
+    def is_admin?
+      if current_user.try(:admin?)
+        true
+      else
+        flash[:error] = "Need to be an admin for this."
+        redirect_to root_path
+      end
     end
 end

@@ -1,5 +1,6 @@
 class StatesController < ApplicationController
   before_filter :authenticate_user!, :except => [:show, :index]
+  before_filter :is_admin?, :only => [:destroy]
 
   def index
     @states = State.all.paginate(page: params[:page], per_page: 40)
@@ -52,5 +53,14 @@ class StatesController < ApplicationController
 
     def state_params
       params.require(:state).permit(:name, :state_abb)
+    end
+
+    def is_admin?
+      if current_user.try(:admin?)
+        true
+      else
+        flash[:error] = "Need to be an admin for this."
+        redirect_to root_path
+      end
     end
 end
