@@ -1,4 +1,6 @@
 class CcsController < ApplicationController
+  before_filter :authenticate_user!, :except => [:show, :index]
+
   def index
     @ccs, @alphaParams = Cc.all.order("full_name ASC").alpha_paginate(params[:letter],
                          {:bootstrap3 => true}){|cc| cc.full_name}

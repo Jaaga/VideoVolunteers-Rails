@@ -1,4 +1,5 @@
 class TrackersController < ApplicationController
+  before_filter :authenticate_user!, :except => [:show, :index]
 
   def index
     if params[:recent]
@@ -256,7 +257,7 @@ class TrackersController < ApplicationController
       @state = State.find_by(name: params[:tracker][:state_name])
       @state_videos = @state.trackers.where("impact_uid IS NULL AND uid NOT
                                             LIKE '%_impact'").map {|x| x.uid}
-
+      @sections = [:story]
       @context = "new"
       render :new, state_name: params[:tracker][:state_name]
     end

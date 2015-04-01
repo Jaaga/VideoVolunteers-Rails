@@ -1,4 +1,5 @@
 class StatesController < ApplicationController
+  before_filter :authenticate_user!, :except => [:show, :index]
 
   def index
     @states = State.all.paginate(page: params[:page], per_page: 40)

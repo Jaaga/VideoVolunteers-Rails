@@ -1,0 +1,22 @@
+= provide(:title, "Users")
+
+%h1.text-center All Users
+
+= will_paginate @users
+.table-responsive
+  %table.table.table-bordered.table-striped
+    %thead
+      %tr
+        %th Email
+        %th Division
+        %th Verified?
+        %th Admin?
+    %tbody
+      - @users.each do |user|
+        %tr
+          %td.col-sm-4= link_to user.email, user
+          %td.col-sm-4= user.division
+          %td.col-sm-4= user.approved
+          %td.col-sm-4= user.admin
+
+= will_paginate @users

@@ -1,0 +1,18 @@
+!!!
+%html
+  %head
+    %title= yield(:title)
+    = stylesheet_link_tag    "application", media: "all"
+    = javascript_include_tag "application", :'data-turbolinks-track' => true
+    = csrf_meta_tags
+  %body
+    = render 'layouts/navigation'
+    .container
+      .row
+        .col-md-4
+        .col-md-4
+          = render 'layouts/messages'
+          = yield
+        .col-md-4
+
+    =render 'layouts/footer'

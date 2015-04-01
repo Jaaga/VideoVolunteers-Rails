@@ -11,7 +11,7 @@ module ArraySettingHelper
               'review_date', 'finalized_date', 'youtube_date',
               'iu_publish_date', 'backup_received_date',
               'extra_footage_received_date']
-    raw_review = ['community_participation_description', 'broll', 'interview',
+    raw_footage_review = ['community_participation_description', 'broll', 'interview',
               'voice_over', 'video_diary', 'p2c', 'translation_info',
               'proceed_with_edit_and_payment', 'cc_last_steps_for_payment',
               'call_to_action_review']
@@ -42,8 +42,8 @@ module ArraySettingHelper
     extra = ['impact_uid', 'original_uid', 'no_original_uid', 'notes', 'flag',
              'flag_notes', 'flag_date', 'updated_by', 'created_at', 'updated_at']
 
-    return { story: story, status: status, footage_edit: footage_edit,
-             footage_review: footage_review, raw_review: raw_review,
+    return { story: story, status: status, raw_footage_review: raw_footage_review,
+             footage_edit: footage_edit, footage_review: footage_review,
              impact_planning: impact_planning, impact_achieved: impact_achieved,
              impact_video: impact_video , screening: screening, payment: payment,
              ratings: ratings, extra: extra }

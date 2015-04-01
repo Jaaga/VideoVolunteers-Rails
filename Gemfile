@@ -29,8 +29,6 @@ gem 'bootstrap-sass', '~> 3.3.4'
 gem 'simple_form'
 # Use Devise for user authentication system
 gem 'devise'
-# Use Cancancan for user access priveleges
-gem 'cancancan'
 # Paginate will add pages for index; bootstrap compatible
 gem 'will_paginate'
 gem 'bootstrap-will_paginate'
@@ -52,6 +50,9 @@ group :development, :test do
 
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3'
+
+  # Use mailcatcher to test sending verification emails
+  gem 'mailcatcher'
 end
 
 group :test do
