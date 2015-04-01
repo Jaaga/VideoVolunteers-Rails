@@ -143,4 +143,11 @@ module CollectionsHelper
      ["Completed", :"Completed"],
      ["CC not planning to make", :"CC not planning to make"]]
   end
+
+  def divisions_collection
+    [["State Coordinator", :"State Coordinator"],
+     ["Training & Mentoring", :"Training & Mentoring"],
+     ["Communications", :"Communications"], ["Production", :"Production"],
+     ["Executive Directors", :"Executive Directors"]]
+  end
 end

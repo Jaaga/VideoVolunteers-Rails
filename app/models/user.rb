@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
-  # after_create :send_admin_mail
+  after_create :send_admin_mail
 
   def active_for_authentication?
     super && approved?
@@ -29,6 +29,6 @@ class User < ActiveRecord::Base
   end
 
   def send_admin_mail
-    UserMailer.new_user_waiting_for_approval(self).deliver
+    UserMailer.new_user_approval(self).deliver
   end
 end
