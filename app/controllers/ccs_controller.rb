@@ -19,21 +19,37 @@ class CcsController < ApplicationController
 
   def new
     @cc = Cc.new
-    @columns = Cc.column_names - ['id', 'full_name', 'state_id']
+    @columns = Cc.column_names - ['id', 'full_name', 'state_id', 'state_abb']
     # Using select to get rid of the nil values.
     @column_dates = Cc.column_names.select{ |x| x.include?('_date') }.map{ |x| x }
     @columns -= @column_dates
   end
 
   def create
-    @state = State.find(params[:cc][:state_id])
-    @cc = @state.ccs.new(cc_params)
-    @cc.state_name = @state.name
-    @cc.state_abb = @state.state_abb
-    if @cc.save
-      flash[:success] = "CC successfully created."
-      redirect_to @cc
+    unless params[:cc][:state_id].blank?
+      @state = State.find(params[:cc][:state_id])
+      @cc = @state.ccs.new(cc_params)
+      @cc.state_name = @state.name
+      @cc.state_abb = @state.state_abb
+      if @cc.save
+        flash[:success] = "CC successfully created."
+        redirect_to @cc
+      else
+        flash[:error] = "All fields with an * need to be filled."
+        @cc = Cc.new
+        @columns = Cc.column_names - ['id', 'full_name', 'state_id', 'state_abb']
+        # Using select to get rid of the nil values.
+        @column_dates = Cc.column_names.select{ |x| x.include?('_date') }.map{ |x| x }
+        @columns -= @column_dates
+        render :new
+      end
     else
+      flash[:error] = "Need to choose a state."
+      @cc = Cc.new
+      @columns = Cc.column_names - ['id', 'full_name', 'state_id', 'state_abb']
+      # Using select to get rid of the nil values.
+      @column_dates = Cc.column_names.select{ |x| x.include?('_date') }.map{ |x| x }
+      @columns -= @column_dates
       render :new
     end
   end
@@ -52,6 +68,10 @@ class CcsController < ApplicationController
       flash[:success] = "CC successfully edited."
       redirect_to @cc
     else
+      @cc = Cc.find(params[:id])
+      @columns = Cc.column_names - ['id', 'full_name', 'state_abb', 'notes', 'state_id']
+      column_dates = Cc.column_names.select{ |x| x.include?('_date') }.map{ |x| x }
+      @columns -= column_dates
       render :edit
     end
   end
