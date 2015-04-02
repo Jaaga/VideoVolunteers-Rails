@@ -2,7 +2,7 @@
 
 %a#top
 
-%p= link_to 'Back to recent trackers', trackers_path(recent: true)
+%p= link_to 'Back to recent video forms', trackers_path(recent: true)
 
 %h1.text-center
   #{ @tracker.uid.split('_').join(' ') } by
@@ -40,4 +40,4 @@
   = render "trackers/display", section: section
   = link_to '^ back to top ^', tracker_path(@tracker, anchor: 'top')
 
-%p{ style: "margin-top: 20px;" }= link_to 'Back to recent trackers', trackers_path(recent: true)
+%p{ style: "margin-top: 20px;" }= link_to 'Back to recent video forms', trackers_path(recent: true)

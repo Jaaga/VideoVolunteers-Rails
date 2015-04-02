@@ -22,7 +22,7 @@
         %td.col-md-6
           = @cc.send(:"#{ column }")
 
-%h2 Video Trackers
+%h2 Video Video Forms
 .table-responsive
   %table.table.table-bordered.table-striped#view-margin
     - @cc.trackers.order('uid DESC').each do |tracker|
