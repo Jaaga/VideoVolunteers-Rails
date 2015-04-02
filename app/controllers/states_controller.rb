@@ -51,7 +51,7 @@ class StatesController < ApplicationController
 
 
     def state_params
-      params.require(:state).permit(:name, :state_abb)
+      params.require(:state).permit(:name, :state_abb, :roi)
     end
 
     def is_admin?

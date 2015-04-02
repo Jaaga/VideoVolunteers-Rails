@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150401100549) do
+ActiveRecord::Schema.define(version: 20150402100323) do
 
   create_table "ccs", force: :cascade do |t|
     t.string  "full_name",                    null: false
@@ -34,8 +34,9 @@ ActiveRecord::Schema.define(version: 20150401100549) do
   end
 
   create_table "states", force: :cascade do |t|
-    t.string "name",      null: false
-    t.string "state_abb", null: false
+    t.string  "name",                      null: false
+    t.string  "state_abb",                 null: false
+    t.boolean "roi",       default: false
   end
 
   create_table "trackers", force: :cascade do |t|

@@ -7,10 +7,10 @@ Rails.application.routes.draw do
   get   'home'    =>   'static_pages#home'
   get   'about'   =>   'static_pages#about'
   get   'contact' =>   'static_pages#contact'
-  resources :states
+  resources :states, except: :destroy
   resources :users
 
-  resources :ccs do
+  resources :ccs, except: :destroy do
     member do
       get :note_form
       patch :note

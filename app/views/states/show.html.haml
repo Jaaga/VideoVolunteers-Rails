@@ -6,16 +6,19 @@
 
 %p
   = link_to 'Edit', edit_state_path(@state), class: 'btn btn-default'
-  - if current_user.try(:admin?)
-    = link_to 'Delete', state_path(@state), method: :delete, class: 'btn btn-default',
-      data: { confirm: "Are you sure you want to delete #{ @state.name }?" }
+  -# - if current_user.try(:admin?)
+  -#   = link_to 'Delete', state_path(@state), method: :delete, class: 'btn btn-default',
+  -#     data: { confirm: "Are you sure you want to delete #{ @state.name }?" }
 
 .table-responsive
   %table.table.table-bordered.table-striped#view-margin
     - @columns.each do |column|
       %tr
         %td.col-md-6
-          %strong= state_name_modifier(column)
+          - if column == 'roi'
+            %strong ROI
+          - else
+            %strong= state_name_modifier(column)
         %td.col-md-6
           = @state.send(:"#{ column }")
 

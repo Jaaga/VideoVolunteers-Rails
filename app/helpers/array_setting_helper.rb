@@ -14,14 +14,14 @@ module ArraySettingHelper
     raw_footage_review = ['community_participation_description', 'broll', 'interview',
               'voice_over', 'video_diary', 'p2c', 'translation_info',
               'proceed_with_edit_and_payment', 'cc_last_steps_for_payment',
-              'call_to_action_review']
+              'call_to_action_review', 'cleared_for_edit']
     footage_edit = ['editor_currently_in_charge', 'folder_title',
                     'instructions_for_editor_edit', 'editor_notes']
     footage_review = ['reviewer_name', 'editor_changes_needed',
                       'instructions_for_editor_final',
                       'publishing_suggestions', 'cc_feedback',
                       'subtitle_info', 'high_potential',
-                      'youtube_url', 'video_title', 'cleared_for_edit']
+                      'youtube_url', 'video_title']
     impact_planning = ['impact_possible', 'call_to_action', 'desired_change',
                        'impact_plan', 'target_official',
                        'target_official_email', 'target_official_phone',
@@ -67,8 +67,8 @@ module ArraySettingHelper
   end
 
   def employee_set
-    sc = ['Uttar Pradesh', 'Orissa', 'Bihar', 'Jharkhand',
-          'Maharashtra', 'Jammu and Kashmir', 'Chattisgarh', 'Madhya Pradesh']
+    sc = ['Uttar Pradesh', 'Orissa', 'Bihar', 'Jharkhand', 'Maharashtra',
+          'Jammu and Kashmir', 'Chattisgarh', 'Madhya Pradesh']
 
     editor = editors_collection
     editor.collect! { |x| x[0]}
