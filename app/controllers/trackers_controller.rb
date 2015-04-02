@@ -21,20 +21,34 @@ class TrackersController < ApplicationController
         end
       elsif [params[:view]].any? { |x| ['pitched', 'pending', 'hold'].include?(x) }
         @title = 'State Coordinator View'
-        if params[:view] == 'pitched'
-          @trackers = Tracker.where("state_name = ? AND story_pitch_date IS NOT NULL AND backup_received_date IS NULL", "#{params[:name]}").order("updated_at DESC").paginate(page: params[:page], per_page: 40)
-          @title_header = "Has been Pitched But Has No Footage"
-        elsif params[:view] == 'pending'
-          @trackers = Tracker.where("state_name = ? AND raw_footage_review_date IS NULL AND office_responsible = ?", "#{params[:name]}", 'State').order("updated_at DESC").paginate(page: params[:page], per_page: 40)
-          @title_header = "Raw Footage Has Not Been Reviewed and Footage is in State"
-        elsif params[:view] == 'hold'
-          @trackers = Tracker.where("state_name = ? AND proceed_with_edit_and_payment = ?", "#{params[:name]}", 'On hold').order("updated_at DESC").paginate(page: params[:page], per_page: 40)
-          @title_header = "Edit and Payment is on Hold"
+        if params[:roi] == 'true'
+          # Need to figure out how to get these for all the ROI states.
+          if params[:view] == 'pitched'
+            @trackers = Tracker.where("state_name = ? AND story_pitch_date IS NOT NULL AND backup_received_date IS NULL", "#{params[:name]}").order("updated_at DESC").paginate(page: params[:page], per_page: 40)
+            @title_header = "Has been Pitched But Has No Footage"
+          elsif params[:view] == 'pending'
+            @trackers = Tracker.where("state_name = ? AND raw_footage_review_date IS NULL AND office_responsible = ?", "#{params[:name]}", 'State').order("updated_at DESC").paginate(page: params[:page], per_page: 40)
+            @title_header = "Raw Footage Has Not Been Reviewed and Footage is in State"
+          elsif params[:view] == 'hold'
+            @trackers = Tracker.where("state_name = ? AND proceed_with_edit_and_payment = ?", "#{params[:name]}", 'On hold').order("updated_at DESC").paginate(page: params[:page], per_page: 40)
+            @title_header = "Edit and Payment is on Hold"
+          end
+        else
+          if params[:view] == 'pitched'
+            @trackers = Tracker.where("state_name = ? AND story_pitch_date IS NOT NULL AND backup_received_date IS NULL", "#{params[:name]}").order("updated_at DESC").paginate(page: params[:page], per_page: 40)
+            @title_header = "Has been Pitched But Has No Footage"
+          elsif params[:view] == 'pending'
+            @trackers = Tracker.where("state_name = ? AND raw_footage_review_date IS NULL AND office_responsible = ?", "#{params[:name]}", 'State').order("updated_at DESC").paginate(page: params[:page], per_page: 40)
+            @title_header = "Raw Footage Has Not Been Reviewed and Footage is in State"
+          elsif params[:view] == 'hold'
+            @trackers = Tracker.where("state_name = ? AND proceed_with_edit_and_payment = ?", "#{params[:name]}", 'On hold').order("updated_at DESC").paginate(page: params[:page], per_page: 40)
+            @title_header = "Edit and Payment is on Hold"
+          end
         end
       end
     else
       @trackers = Tracker.all.paginate(page: params[:page], per_page: 40)
-      @title = "All Trackers"
+      @title = "All Video Forms"
     end
 
     @columns = Tracker.column_names - ['id', 'tracker_details_id',

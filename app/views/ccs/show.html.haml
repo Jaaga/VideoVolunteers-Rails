@@ -22,13 +22,19 @@
         %td.col-md-6
           = @cc.send(:"#{ column }")
 
-%h2 Video Video Forms
+%h2 Video Forms
 .table-responsive
   %table.table.table-bordered.table-striped#view-margin
     - @cc.trackers.order('uid DESC').each do |tracker|
       %tr
-        %td.col-md-6
+        %td.col-md-1
           = link_to tracker.uid, tracker_path(tracker)
+        %td.col-md-7
+          = tracker.description
+        %td.col-md-4
+          %a{ href: tracker.youtube_url, target: "_newtab" }
+            #{tracker.youtube_url}
+
 
 %h2 Information
 .table-responsive

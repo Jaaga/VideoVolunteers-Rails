@@ -3,8 +3,10 @@ class UsersController < ApplicationController
 
   def index
     if params[:approved] == 'false'
+      @title = 'Unverified Users'
       @users = User.where(approved: false).paginate(page: params[:page], per_page: 40)
     else
+      @title = 'All Users'
       @users = User.all.paginate(page: params[:page], per_page: 40)
     end
   end
