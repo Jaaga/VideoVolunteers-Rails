@@ -1,5 +1,4 @@
 class TrackersController < ApplicationController
-  before_filter :authenticate_user!, :except => [:show, :index]
   before_filter :is_admin?, :only => [:destroy]
 
   def index

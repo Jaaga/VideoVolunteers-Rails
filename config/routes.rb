@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   devise_for :users
-  root                 'static_pages#home'
+  devise_scope :user do
+    root to: "devise/sessions#new"
+  end
+
+  get   'home'    =>   'static_pages#home'
   get   'about'   =>   'static_pages#about'
   get   'contact' =>   'static_pages#contact'
   resources :states
