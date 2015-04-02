@@ -95,7 +95,7 @@ class TrackersController < ApplicationController
 
     if @tracker.save
       @tracker.update_attribute(:updated_by,
-                              "#{ Date.today }: Someone created this tracker.")
+              "#{ Date.today }: #{ current_user.email } created this tracker.")
       unless performed? then flash[:success] = "Tracker successfully created." end
       redirect_to @tracker unless performed?
     else
@@ -132,7 +132,7 @@ class TrackersController < ApplicationController
 
     @linked_uid = @tracker.original_uid
     @tracker.assign_attributes(tracker_params)
-    @tracker.updated_by = "#{ Date.today }: this tracker was edited.\n"
+    @tracker.updated_by = "#{ Date.today }: #{ current_user.email } edited this tracker.\n"
 
     # Method for dealing with making and linking impact videos
     is_impact?('edit')
@@ -167,7 +167,7 @@ class TrackersController < ApplicationController
         @tracker.notes = "#{ Date.today }: #{ params[:tracker][:notes] }\n#{ old_notes }"
       end
 
-      @tracker.updated_by = "#{ Date.today }: Someone added a note.\n"
+      @tracker.updated_by = "#{ Date.today }: #{ current_user.email } added a note.\n"
 
       if @tracker.save
         flash[:success] = "Note successfully added."

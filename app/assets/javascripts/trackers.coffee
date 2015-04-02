@@ -1,51 +1,45 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
+#
+# JQuery for results.haml
+#
 
-`
-//
-// JQuery for results.haml
-//
-var ready = function() {
-  // Code to toggle display of checkboxes
-  $(".glyphicon-th-list").click(function() {
-    $(".checks ul").toggleClass("hide-list");
-  });
+ready = ->
 
-  // Checboxes for column display
-  $("input:checkbox:not(:checked)").each(function() {
-    var column = $(".col" + this.className);
-    $(column).hide();
-  });
+  comparer = (index) ->
+    (a, b) ->
+      valA = getCellValue(a, index)
+      valB = getCellValue(b, index)
+      if $.isNumeric(valA) and $.isNumeric(valB) then valA - valB else valA.localeCompare(valB)
 
-  $("input:checkbox").click(function(){
-    $(this).removeClass("user-success")
-    var column = $(".col" + this.className);
-    $(column).toggle();
-  });
+  getCellValue = (row, index) ->
+    $(row).children('td').eq(index).html()
 
-  // Table sorting
-  $('th').click(function(){
-    var table = $(this).parents('table').eq(0)
-    var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
-    this.asc = !this.asc
-    if (!this.asc){rows = rows.reverse()}
-    for (var i = 0; i < rows.length; i++){table.append(rows[i])}
-  });
+  # Code to toggle display of checkboxes
+  $('.glyphicon-th-list').click ->
+    $('.checks ul').toggleClass 'hide-list'
+    return
+  # Checboxes for column display
+  $('input:checkbox:not(:checked)').each ->
+    column = $('.col' + @className)
+    $(column).hide()
+    return
+  $('input:checkbox').click ->
+    $(this).removeClass 'user-success'
+    column = $('.col' + @className)
+    $(column).toggle()
+    return
+  # Table sorting
+  $('th').click ->
+    table = $(this).parents('table').eq(0)
+    rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
+    @asc = !@asc
+    if !@asc
+      rows = rows.reverse()
+    i = 0
+    while i < rows.length
+      table.append rows[i]
+      i++
+    return
+  return
 
-  function comparer(index) {
-    return function(a, b) {
-        var valA = getCellValue(a, index), valB = getCellValue(b, index)
-        return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.localeCompare(valB)
-    }
-  }
-
-  function getCellValue(row, index){
-    return $(row).children('td').eq(index).html()
-  }
-};
-
-$(document).ready(ready);
-$(document).on('page:load', ready);
-
-`
+$(document).ready ready
+$(document).on 'page:load', ready
