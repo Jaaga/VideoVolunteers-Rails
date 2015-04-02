@@ -1,0 +1,5 @@
+test:
+  email: test@example.com
+  encrypted_password: <%= Devise.bcrypt(User, 'password') %>
+  confirmed_at: <%= Time.now %>
+  approved: true

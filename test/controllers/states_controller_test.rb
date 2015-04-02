@@ -4,6 +4,7 @@ class StatesControllerTest < ActionController::TestCase
 
   def setup
     @state = states(:california)
+    sign_in users(:test)
   end
 
   test "should get index" do

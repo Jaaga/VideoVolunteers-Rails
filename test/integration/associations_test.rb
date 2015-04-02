@@ -2,6 +2,13 @@ require 'test_helper'
 
 class AssociationsTest < ActionDispatch::IntegrationTest
 
+  def setup
+    post new_user_session_path, user: { email: 'test@example.com',
+                                        password: 'password',
+                                        confirmed_at: Time.now,
+                                        approved: true }
+  end
+
   test "trackers are associated to a CC and a State" do
     post trackers_path, tracker: { cc_id: Cc.last.id,
                                    iu_theme: 'Corruption',

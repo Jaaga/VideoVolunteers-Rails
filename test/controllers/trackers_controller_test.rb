@@ -4,6 +4,7 @@ class TrackersControllerTest < ActionController::TestCase
 
   def setup
     @tracker = trackers(:CA_123)
+    sign_in users(:test)
   end
 
   test "should get index" do

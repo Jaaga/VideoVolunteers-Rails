@@ -3,6 +3,10 @@ require 'test_helper'
 class ImpactLinksTest < ActionDispatch::IntegrationTest
 
   def setup
+    post new_user_session_path, user: { email: 'test@example.com',
+                                        password: 'password',
+                                        confirmed_at: Time.now,
+                                        approved: true }
     @tracker_120 = trackers(:CA_120)
     @tracker_120.save
     post trackers_path, tracker: { cc_id: '1056859706',

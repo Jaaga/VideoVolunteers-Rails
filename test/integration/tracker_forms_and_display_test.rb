@@ -3,6 +3,10 @@ require 'test_helper'
 class TrackerFormsAndDisplayTest < ActionDispatch::IntegrationTest
 
   def setup
+    post new_user_session_path, user: { email: 'test@example.com',
+                                        password: 'password',
+                                        confirmed_at: Time.now,
+                                        approved: true }
     @tracker = trackers(:CA_123)
     @tracker_impact = trackers(:CA_123_impact)
   end

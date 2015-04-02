@@ -4,6 +4,7 @@ class CcsControllerTest < ActionController::TestCase
 
   def setup
     @cc = ccs(:minister)
+    sign_in users(:test)
   end
 
   test "should get index" do

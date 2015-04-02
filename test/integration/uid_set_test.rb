@@ -2,7 +2,12 @@ require 'test_helper'
 
 class UidSetTest < ActionDispatch::IntegrationTest
 
-  # test "new non-impact uid is set"
+  def setup
+    post new_user_session_path, user: { email: 'test@example.com',
+                                        password: 'password',
+                                        confirmed_at: Time.now,
+                                        approved: true }
+  end
 
   test "non-impact uid is set" do
     assert_equal Tracker.last.uid, 'CA_123'

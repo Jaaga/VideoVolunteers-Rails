@@ -13,6 +13,7 @@ class Cc < ActiveRecord::Base
   validates :first_name, presence: true, length: { maximum: 50 }
   validates :last_name, presence: true, length: { maximum: 50 }
   validates :state_id, presence: true
+  validates :state_name, presence: true
   validates :district, presence: true, length: { maximum: 50 }
   # So that max five phone numbers can be saved with commas and whitespace
   validates :phone, length: { maximum: 60 }
