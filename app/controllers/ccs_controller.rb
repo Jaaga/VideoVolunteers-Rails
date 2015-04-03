@@ -103,12 +103,12 @@ class CcsController < ApplicationController
     end
   end
 
-  def destroy
-    @cc = Cc.find(params[:id])
-    @cc.destroy
-    flash[:success] = "CC successfully deleted."
-    redirect_to ccs_path
-  end
+  # def destroy
+  #   @cc = Cc.find(params[:id])
+  #   @cc.destroy
+  #   flash[:success] = "CC successfully deleted."
+  #   redirect_to ccs_path
+  # end
 
   private
 

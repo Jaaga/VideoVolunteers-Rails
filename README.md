@@ -6,7 +6,7 @@ This is based on the unfinished Sinatra version (see https://github.com/Jaaga/Vi
 
 ## Instructions to run after cloning
 
-Note: the sql files are not included in the repository.
+Note: the sql files needed for this to work are not included in the repository.
 
 > $ bundle install
 

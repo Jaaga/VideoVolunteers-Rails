@@ -40,12 +40,12 @@ class StatesController < ApplicationController
     end
   end
 
-  def destroy
-    @state = State.find(params[:id])
-    @state.destroy
-    flash[:success] = "State successfully deleted."
-    redirect_to states_path
-  end
+  # def destroy
+  #   @state = State.find(params[:id])
+  #   @state.destroy
+  #   flash[:success] = "State successfully deleted."
+  #   redirect_to states_path
+  # end
 
   private
 

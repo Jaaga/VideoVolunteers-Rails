@@ -13,14 +13,32 @@ class TrackersControllerTest < ActionController::TestCase
     assert_select 'td', 'Brice'
   end
 
+  test "should not get index when logged out" do
+    sign_out users(:test)
+    get :index
+    assert_redirected_to new_user_session_path
+  end
+
   test "should get new" do
     get :new, state_name: 'California'
     assert_response :success
   end
 
+  test "should not get new when logged out" do
+    sign_out users(:test)
+    get :new, state_name: 'California'
+    assert_redirected_to new_user_session_path
+  end
+
   test "should get edit" do
     get :edit, id: @tracker
     assert_response :success
+  end
+
+  test "should not get edit when logged out" do
+    sign_out users(:test)
+    get :edit, id: @tracker
+    assert_redirected_to new_user_session_path
   end
 
   test "should get show" do
@@ -29,9 +47,21 @@ class TrackersControllerTest < ActionController::TestCase
     assert_select 'td', 'IU Theme'
   end
 
+  test "should not get show when logged out" do
+    sign_out users(:test)
+    get :show, id: @tracker
+    assert_redirected_to new_user_session_path
+  end
+
   test "should get note_form" do
     get :note_form, id: @tracker
     assert_response :success
+  end
+
+  test "should not get note_form when logged out" do
+    sign_out users(:test)
+    get :note_form, id: @tracker
+    assert_redirected_to new_user_session_path
   end
 
   test "updated_by should be updated" do

@@ -3,3 +3,10 @@ test:
   encrypted_password: <%= Devise.bcrypt(User, 'password') %>
   confirmed_at: <%= Time.now %>
   approved: true
+
+admin:
+  email: test2@example.com
+  encrypted_password: <%= Devise.bcrypt(User, 'password') %>
+  confirmed_at: <%= Time.now %>
+  approved: true
+  admin: true
