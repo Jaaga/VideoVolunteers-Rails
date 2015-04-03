@@ -29,6 +29,6 @@ class User < ActiveRecord::Base
   end
 
   def send_admin_mail
-    UserMailer.new_user_approval(self).deliver
+    UserMailer.new_user_approval(self).deliver_now
   end
 end

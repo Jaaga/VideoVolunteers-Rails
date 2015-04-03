@@ -10,3 +10,10 @@ admin:
   confirmed_at: <%= Time.now %>
   approved: true
   admin: true
+
+mail_admin:
+  email: jessica@videovolunteers.org
+  encrypted_password: <%= Devise.bcrypt(User, 'password') %>
+  confirmed_at: <%= Time.now %>
+  approved: true
+  admin: true

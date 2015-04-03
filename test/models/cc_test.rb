@@ -35,6 +35,11 @@ class CcTest < ActiveSupport::TestCase
     assert_not @cc.valid?
   end
 
+  test "state id should exist" do
+    @cc.state_id = "     "
+    assert_not @cc.valid?
+  end
+
   test "state name should exist" do
     @cc.state_name = "     "
     assert_not @cc.valid?
