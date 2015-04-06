@@ -22,7 +22,7 @@
                   %li= link_to state.name, new_tracker_path(state_name: "#{state.name}")
         %li.dropdown
           %a.dropdown-toggle{ href: '#', :'data-toggle' => 'dropdown', role: 'button' }
-            Views
+            Editors View
             %span.caret
           %ul.dropdown-menu{ role: 'menu' }
             %h4.text-center Editors
@@ -33,7 +33,11 @@
                 %ul.dropdown-menu
                   %li= link_to 'To Edit', trackers_path(view: "edit", name: "#{ employee }")
                   %li= link_to 'To Finalize', trackers_path(view: "finalize", name: "#{ employee }")
-            %hr
+        %li.dropdown
+          %a.dropdown-toggle{ href: '#', :'data-toggle' => 'dropdown', role: 'button' }
+            Coordinators View
+            %span.caret
+          %ul.dropdown-menu{ role: 'menu' }
             %h4.text-center Coordinators
             - employees[:sc].each do |employee|
               %li.dropdown-submenu

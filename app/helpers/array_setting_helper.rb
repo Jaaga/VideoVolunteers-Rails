@@ -68,7 +68,7 @@ module ArraySettingHelper
 
   def employee_set
     sc = ['Uttar Pradesh', 'Orissa', 'Bihar', 'Jharkhand', 'Maharashtra',
-          'Jammu and Kashmir', 'Chattisgarh', 'Madhya Pradesh']
+          'Jammu and Kashmir', 'Chattisgarh', 'Madhya Pradesh', 'ROI']
 
     editor = editors_collection
     editor.collect! { |x| x[0]}
