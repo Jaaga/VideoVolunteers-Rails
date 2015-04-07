@@ -87,7 +87,10 @@ module TrackersHelper
   # Gives custom labels to the column names in the labels hash.
   def tracker_label(x)
     labels =  { 'uid' => 'UID', 'iu_theme' => 'IU Theme',
-      'description' => 'Description (one-liner and later youtube blurb)',
+      'description' => 'ONE LINER (and later youtube blurb) - WHO WHEN WHERE WHAT',
+      'shoot_plan' => 'Shoot Plan (notes of creative discussion with the CC; filled by SC/Mentors)',
+      'raw_footage_review_date' => 'Footage Check Date',
+      'edit_received_in_goa_date' => 'Rough Cut Received in Goa Date',
       'screening' => 'Screening (for impact only)',
       'no_original_uid' => 'Reason for not having original UID',
       'cc_feedback' => 'Feedback to give to CC',

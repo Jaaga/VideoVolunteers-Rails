@@ -8,7 +8,7 @@ class TrackersController < ApplicationController
     elsif !params[:state_name].blank?
       @state = State.find_by(name: params[:state_name])
       @trackers = @state.trackers.order("uid DESC").paginate(page: params[:page], per_page: 40)
-      @title = "#{ @state.name }'s Trackers"
+      @title = "#{ @state.name }'s Videos"
     elsif !params[:view].blank?
       if [params[:view]].any? { |x| ['edit', 'finalize'].include?(x) }
         @title = 'Editor View'

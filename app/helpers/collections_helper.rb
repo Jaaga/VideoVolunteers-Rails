@@ -9,16 +9,16 @@ module CollectionsHelper
       return campaigns_collection
     elsif column == 'screened_on'
       return screens_collection
-    elsif column == 'editor_currently_in_charge' || column == 'reviewer_name'
+    elsif column == 'editor_currently_in_charge'
       return editors_collection
     elsif column == 'impact_verified_by' || column == 'impact_video_approved_by'
       return staff_collection
     elsif column == 'project'
-      return [['None', :None], ['Oak', :Oak], ['Pacs', :Pacs]]
+      return [['None', :None], ['Oak', :Oak], ['PACS', :PACS]]
     elsif column == 'edit_status'
       return edit_status_collection
     elsif column == 'office_responsible'
-      return [['State', :State], ['Goa', :Goa]]
+      return [['State', :State], ['HQ', :HQ]]
     elsif column == 'proceed_with_edit_and_payment'
       return [['Cleared', :Cleared], ['On hold', :'On hold']]
     elsif column == 'payment_status'
@@ -57,21 +57,22 @@ module CollectionsHelper
      ["Power and Energy", :"Power and Energy"], ["Mining", :Mining],
      ["State Repression", :"State Repression"],
      ["Forced Evictions", :"Forced Evictions"], ["Sanitation", :Sanitation],
-     ["Natural Disaster", :"Natural Disaster"], ["Impact", :Impact]].sort
+     ["Natural Disaster", :"Natural Disaster"]].sort
   end
 
   def types_collection
     [["Entitlement Violation", :"Entitlement Violation"],
-     ["Newsworthy", :Newsworthy], ["Human Interest", :"Human Interest"],
+     ["Human Interest", :"Human Interest"],
      ["Human Rights Violation", :"Human Rights Violation"],
      ["CC Profile", :"CC Profile"], ["Community Profile", :"Community Profile"],
-     ["Mini-doc", :"Mini-doc"], ["Special Video", :"Special Video"],
-     ["Success", :Success]].sort
+     ["Mini-doc", :"Mini-doc"], ["Success", :Success]].sort
   end
 
   def campaigns_collection
-    [["None", :None], ["Anti-Untouchability", :"Anti-Untouchability"],
-     ["RTE", :RTE], ["Forced Evictions", :"Forced Evictions"],
+    [["None", :None], ["ARTICLE17", :"ARTICLE17"],
+     ["Anti-Untouchability", :"Anti-Untouchability"],
+     ["RTE-Pass ya Fail", :"RTE-Pass ya Fail"],
+     ["Forced Evictions", :"Forced Evictions"],
      ["Maternal Health", :"Maternal Health"],
      ["Violence Against Women", :"Violence Against Women"]]
   end

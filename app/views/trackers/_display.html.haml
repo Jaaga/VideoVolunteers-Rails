@@ -19,5 +19,8 @@
             = simple_format(@tracker.notes)
           - elsif column == 'updated_by'
             = simple_format(@tracker.updated_by)
+          - elsif column == 'youtube_url'
+            %a{ href: @tracker.youtube_url, target: "_newtab" }
+              #{@tracker.youtube_url}
           - else
             = @tracker.send(:"#{ column }")

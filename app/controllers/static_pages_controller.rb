@@ -60,13 +60,13 @@ class StaticPagesController < ApplicationController
 
       ### Goa
       # videos on hold
-      @stats[19].push(state.trackers.where("office_responsible = ? AND edit_status = ?", 'Goa', 'on hold').count)
+      @stats[19].push(state.trackers.where("office_responsible = ? AND edit_status = ?", 'HQ', 'on hold').count)
       # videos to be edited
-      @stats[20].push(state.trackers.where("office_responsible = ? AND edit_status = ?", 'Goa', 'video under edit').count)
+      @stats[20].push(state.trackers.where("office_responsible = ? AND edit_status = ?", 'HQ', 'video under edit').count)
       # videos to be reviewed
-      @stats[21].push(state.trackers.where("office_responsible = ? AND edit_status = ?", 'Goa', 'video under review').count)
+      @stats[21].push(state.trackers.where("office_responsible = ? AND edit_status = ?", 'HQ', 'video under review').count)
       # videos to be finalized and uploaded
-      @stats[22].push(state.trackers.where("office_responsible = ? AND edit_status = ?", 'Goa', 'video to be finalised and uploaded (i.e. after review)').count)
+      @stats[22].push(state.trackers.where("office_responsible = ? AND edit_status = ?", 'HQ', 'video to be finalised and uploaded (i.e. after review)').count)
 
       # Total UID's
       @stats[23].push(state.trackers.count)
