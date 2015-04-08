@@ -188,7 +188,9 @@ class TrackersController < ApplicationController
         flash[:success] = "Note successfully added."
         redirect_to @tracker
       else
-        render :note
+        flash[:error] = "This form is not complete. Please complete it before
+          saving a note."
+        redirect_to edit_tracker_path(@tracker)
       end
     end
   end

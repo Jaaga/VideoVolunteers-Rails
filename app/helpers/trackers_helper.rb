@@ -65,6 +65,7 @@ module TrackersHelper
     end
   end
 
+  # Sorts checkbox labels (in index) based on labels given to column names.
   def checkbox_label(columns)
     a = Hash[columns.map.with_index { |value, index| [index, tracker_name_modifier(value)] }]
     a = Hash[a.sort_by{|k, v| v}]
