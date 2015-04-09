@@ -74,7 +74,6 @@ class TrackersController < ApplicationController
     end
 
     @sections = @columns.keys
-    @sections -= [:special, :yesno, :numbers]
   end
 
   def new
