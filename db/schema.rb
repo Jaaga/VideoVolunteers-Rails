@@ -11,17 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150410051323) do
+ActiveRecord::Schema.define(version: 20150410070445) do
 
   create_table "ccs", force: :cascade do |t|
-    t.string  "full_name",                    null: false
-    t.string  "first_name",                   null: false
-    t.string  "last_name",                    null: false
-    t.string  "state_name",                   null: false
-    t.string  "state_abb",                    null: false
-    t.string  "district",                     null: false
+    t.string  "full_name",                                           null: false
+    t.string  "first_name",                                          null: false
+    t.string  "last_name",                                           null: false
+    t.string  "state_name",                                          null: false
+    t.string  "state_abb",                                           null: false
+    t.string  "district",                                            null: false
     t.string  "phone"
-    t.string  "mentor",                       null: false
+    t.string  "mentor",                                              null: false
     t.text    "notes"
     t.integer "state_id"
     t.date    "last_pitched_story_idea_date"
@@ -31,6 +31,64 @@ ActiveRecord::Schema.define(version: 20150410051323) do
     t.date    "last_impact_video_made_date"
     t.date    "last_impact_action_date"
     t.boolean "is_inactive"
+    t.date    "dob"
+    t.string  "gender"
+    t.text    "address"
+    t.string  "block"
+    t.integer "pincode"
+    t.string  "email"
+    t.string  "educational_qualifications"
+    t.string  "occupation"
+    t.integer "personal_monthly_earning"
+    t.string  "parents_occupation"
+    t.integer "monthly_household_income"
+    t.integer "no_of_people_in_household"
+    t.integer "avg_income_per_person"
+    t.string  "social_category"
+    t.string  "name_of_category"
+    t.string  "religion"
+    t.string  "social_organization_associated_with"
+    t.string  "role_in_organization"
+    t.string  "issue_concerned"
+    t.string  "opinion_on_media"
+    t.boolean "operate_still_camera",                default: false
+    t.boolean "opearte_video_camera",                default: false
+    t.string  "experience_with_camera"
+    t.boolean "have_mobile_phone",                   default: false
+    t.boolean "phone_has_camera",                    default: false
+    t.boolean "basic_computer_skill",                default: false
+    t.boolean "knows_word_processing",               default: false
+    t.boolean "knows_excel_processing",              default: false
+    t.boolean "knows_internet",                      default: false
+    t.boolean "knows_email",                         default: false
+    t.boolean "knows_video_editing",                 default: false
+    t.boolean "knows_graphics_multimedia",           default: false
+    t.string  "access_to_internet"
+    t.float   "internet_access_distance"
+    t.string  "speaking_languages"
+    t.string  "reading_languages"
+    t.string  "first_refrence_first_name"
+    t.string  "first_refrence_last_name"
+    t.string  "first_refrence_organization"
+    t.integer "first_refrence_phone"
+    t.string  "first_refrence_email"
+    t.string  "second_refrence_second_name"
+    t.string  "second_refrence_last_name"
+    t.string  "second_refrence_organization"
+    t.integer "second_refrence_phone"
+    t.string  "second_refrence_email"
+    t.boolean "fellowship_payment_accept",           default: true
+    t.text    "how_you_know_india_unheard"
+    t.boolean "can_do_a_video_a_month",              default: true
+    t.boolean "can_attend_training",                 default: true
+    t.boolean "can_attend_regular_training",         default: true
+    t.boolean "can_attend_quarterly_meet",           default: true
+    t.date    "date_applied"
+    t.text    "program_coordinator_note"
+    t.text    "director_note"
+    t.string  "accepted"
+    t.string  "status"
+    t.text    "sac_notes"
   end
 
   create_table "states", force: :cascade do |t|

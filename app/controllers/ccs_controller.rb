@@ -114,8 +114,8 @@ class CcsController < ApplicationController
 
 
     def cc_params
-      params.require(:cc).permit(:first_name, :last_name, :district, :phone,
-                                 :mentor, :state_id, :is_inactive)
+      columns = Cc.column_names - ['full_name', 'state_name', 'state_abb']
+      params.require(:cc).permit(columns)
     end
 
     def is_admin?
@@ -127,3 +127,5 @@ class CcsController < ApplicationController
       end
     end
 end
+
+

@@ -79,8 +79,8 @@ class Tracker < ActiveRecord::Base
         if story_pitch_date_changed?
           self.cc.assign_attributes(last_pitched_story_idea_date: story_pitch_date)
         end
-        if raw_footage_review_date_changed?
-          self.cc.assign_attributes(last_issue_video_made_date: raw_footage_review_date)
+        if footage_check_date?
+          self.cc.assign_attributes(last_issue_video_made_date: footage_check_date)
         end
         if impact_achieved_changed? && impact_achieved == 'yes'
           self.cc.assign_attributes(last_impact_achieved_date: Date.today)
