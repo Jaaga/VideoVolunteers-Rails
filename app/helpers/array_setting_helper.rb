@@ -3,7 +3,7 @@ module ArraySettingHelper
   # Return a hash of all the column names, except for 'uid', 'state_name', and
   # 'cc_name'
   def array_set
-    story = ['story_pitch_date', 'iu_theme', 'subcategory', 'description',
+    general_info = ['story_pitch_date', 'iu_theme', 'subcategory', 'description',
              'story_type', 'project', 'campaign', 'shoot_plan']
     status = ['edit_status', 'office_responsible', 'footage_received_from_cc_date',
               'raw_footage_review_date', 'state_edit_date',
@@ -20,7 +20,7 @@ module ArraySettingHelper
     footage_check = ['reviewer_name', 'editor_changes_needed',
                       'instructions_for_editor_final',
                       'publishing_suggestions', 'cc_feedback',
-                      'subtitle_info', 'high_potential', 'video_title']
+                      'subtitle_info', 'high_potential']
     impact_planning = ['impact_possible', 'call_to_action', 'desired_change',
                        'impact_plan', 'target_official',
                        'target_official_email', 'target_official_phone',
@@ -38,15 +38,17 @@ module ArraySettingHelper
                  'officials_involved', 'screening_details']
     payment = ['payment_status']
     ratings = ['footage_rating', 'final_video_rating']
+    final_video_title = ['video_title']
     url = ['youtube_url']
     extra = ['impact_uid', 'original_uid', 'no_original_uid', 'notes', 'flag',
              'flag_notes', 'flag_date', 'updated_by', 'created_at', 'updated_at']
 
-    return { story: story, status: status, rough_cut_review: rough_cut_review,
-             edit: edit, footage_check: footage_check,
+    return { general_info: general_info, status: status,
+             rough_cut_review: rough_cut_review, edit: edit, footage_check: footage_check,
              impact_planning: impact_planning, impact_achieved: impact_achieved,
              impact_video: impact_video , screening: screening, payment: payment,
-             ratings: ratings, url: url, extra: extra }
+             ratings: ratings, final_video_title: final_video_title, url: url,
+             extra: extra }
   end
 
   def unique_set
