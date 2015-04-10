@@ -109,13 +109,16 @@ module CollectionsHelper
   end
 
   def edit_status_collection
-    [["story idea only - no footage received", :"story idea only - no footage received"],
-     ["video under edit", :"video under edit"],
-     ["video under review", :"video under review"],
-     ["video to be finalised and uploaded (i.e. after review)", :"video to be finalised and uploaded (i.e. after review)"],
-     ["video published", :"video published"],
-     ["problem video - see notes", :"problem video - see notes"],
-     ["on hold", :"on hold"]]
+    [["story pitched (no footage yet)", :"story pitched (no footage yet)"],
+     ["footage received", :"footage received"],
+     ["footage rated and approved for payment", :"footage rated and approved for payment"],
+     ["footage on hold", :"footage on hold"],
+     ["footage to edit’", :"footage to edit’"],
+     ["‘rough cuts to clean’", :"‘rough cuts to clean’"],
+     ["rough cuts to review", :"rough cuts to review"],
+     ["to finalize and upload", :"to finalize and upload"],
+     ["uploaded", :uploaded], ["edit on hold", :"edit on hold"],
+     ["problem video", :"problem video"]]
   end
 
   def subtitle_collection

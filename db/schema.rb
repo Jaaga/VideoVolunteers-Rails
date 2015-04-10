@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150402100323) do
+ActiveRecord::Schema.define(version: 20150410051323) do
 
   create_table "ccs", force: :cascade do |t|
     t.string  "full_name",                    null: false
@@ -75,12 +75,11 @@ ActiveRecord::Schema.define(version: 20150402100323) do
     t.string   "final_video_rating"
     t.date     "footage_received_from_cc_date"
     t.date     "story_date"
-    t.date     "raw_footage_review_date"
-    t.date     "backup_received_date"
+    t.date     "footage_check_date"
     t.date     "state_edit_date"
     t.date     "edit_received_in_goa_date"
     t.date     "rough_cut_edit_date"
-    t.date     "review_date"
+    t.date     "rough_cut_review_date"
     t.date     "finalized_date"
     t.date     "youtube_date"
     t.date     "iu_publish_date"
@@ -123,7 +122,6 @@ ActiveRecord::Schema.define(version: 20150402100323) do
     t.string   "no_original_uid"
     t.string   "screened_on"
     t.text     "editor_notes"
-    t.string   "cleared_for_edit"
     t.string   "impact_progress"
     t.string   "cc_last_steps_for_payment"
     t.string   "instructions_for_editor_final"
@@ -138,7 +136,9 @@ ActiveRecord::Schema.define(version: 20150402100323) do
     t.integer  "cc_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "edit_status"
+    t.string   "production_status"
+    t.text     "training_suggestion"
+    t.string   "raw_footage_copy_goa"
   end
 
   add_index "trackers", ["uid"], name: "index_trackers_on_uid", unique: true

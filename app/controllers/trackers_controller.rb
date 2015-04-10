@@ -74,7 +74,6 @@ class TrackersController < ApplicationController
     end
 
     @sections = @columns.keys
-    @sections -= [:special, :yesno, :numbers]
   end
 
   def new
@@ -122,8 +121,7 @@ class TrackersController < ApplicationController
     @tracker = Tracker.find(params[:id])
     @columns = view_context.array_set
 
-    unless @tracker.uid.include?('_impact') && !@tracker.original_uid.blank? ||
-    !@tracker.no_original_uid.blank?
+    unless @tracker.uid.include?('_impact')
       @columns.except!(:impact_planning, :impact_achieved, :impact_video)
     end
 
@@ -188,7 +186,9 @@ class TrackersController < ApplicationController
         flash[:success] = "Note successfully added."
         redirect_to @tracker
       else
-        render :note
+        flash[:error] = "This form is not complete. Please complete it before
+          saving a note."
+        redirect_to edit_tracker_path(@tracker)
       end
     end
   end
