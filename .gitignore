@@ -11,6 +11,13 @@ capybara-*.html
 rerun.txt
 pickle-email-*.html
 
+db/ccs.sql
+db/jk-final.sql
+db/link_script.rb
+db/states.sql
+db/user.sql
+development.sqlite3
+
 # TODO Comment out these rules if you are OK with secrets being uploaded to the repo
 config/initializers/secret_token.rb
 config/secrets.yml
