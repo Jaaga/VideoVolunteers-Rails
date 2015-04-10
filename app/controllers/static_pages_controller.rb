@@ -33,9 +33,9 @@ class StaticPagesController < ApplicationController
       @stats[7].push(state.ccs.where("last_pitched_story_idea_date > ? AND last_pitched_story_idea_date < ?", Time.now.months_ago(3).to_date, Time.now.to_date).count)
 
       # No of issue videos made so far this month ie raw footage received in state office
-      @stats[8].push(state.trackers.where("raw_footage_review_date > ? AND raw_footage_review_date < ?", Time.now.beginning_of_month.to_date, Time.now.end_of_month.to_date).count)
+      @stats[8].push(state.trackers.where("footage_check_date > ? AND footage_check_date < ?", Time.now.beginning_of_month.to_date, Time.now.end_of_month.to_date).count)
       # no of issue videos made I the last 3 months ie raw footage received in state office
-      @stats[9].push(state.trackers.where("raw_footage_review_date > ? AND raw_footage_review_date < ?", Time.now.months_ago(3).to_date, Time.now.to_date).count)
+      @stats[9].push(state.trackers.where("footage_check_date > ? AND footage_check_date < ?", Time.now.months_ago(3).to_date, Time.now.to_date).count)
       # no of CC's who made an issue video this month ie raw footage received in state office
       @stats[10].push(state.ccs.where("last_issue_video_made_date > ? AND last_issue_video_made_date < ?", Time.now.beginning_of_month.to_date, Time.now.end_of_month.to_date).count)
       # no of CC's who made an issue video in the last three months ie raw footage received in state office
@@ -52,21 +52,21 @@ class StaticPagesController < ApplicationController
 
       ### State
       # videos on hold
-      @stats[16].push(state.trackers.where("office_responsible = ? AND edit_status = ?", 'State', 'on hold').count)
+      @stats[16].push(state.trackers.where("office_responsible = ? AND production_status = ?", 'State', 'on hold').count)
       # State Edit Bank: total approved videos whose edits haven't reached goa (for states with regional editors only) (including on hold)
-      @stats[17].push(state.trackers.where("office_responsible = ? AND edit_status != ?", 'State', 'video under edit').count)
+      @stats[17].push(state.trackers.where("office_responsible = ? AND production_status != ?", 'State', 'video under edit').count)
       # approved videos (everything not on hold)
-      @stats[18].push(state.trackers.where("office_responsible = ? AND edit_status = ?", 'State', 'on hold').count)
+      @stats[18].push(state.trackers.where("office_responsible = ? AND production_status = ?", 'State', 'on hold').count)
 
       ### Goa
       # videos on hold
-      @stats[19].push(state.trackers.where("office_responsible = ? AND edit_status = ?", 'HQ', 'on hold').count)
+      @stats[19].push(state.trackers.where("office_responsible = ? AND production_status = ?", 'HQ', 'on hold').count)
       # videos to be edited
-      @stats[20].push(state.trackers.where("office_responsible = ? AND edit_status = ?", 'HQ', 'video under edit').count)
+      @stats[20].push(state.trackers.where("office_responsible = ? AND production_status = ?", 'HQ', 'video under edit').count)
       # videos to be reviewed
-      @stats[21].push(state.trackers.where("office_responsible = ? AND edit_status = ?", 'HQ', 'video under review').count)
+      @stats[21].push(state.trackers.where("office_responsible = ? AND production_status = ?", 'HQ', 'video under review').count)
       # videos to be finalized and uploaded
-      @stats[22].push(state.trackers.where("office_responsible = ? AND edit_status = ?", 'HQ', 'video to be finalised and uploaded (i.e. after review)').count)
+      @stats[22].push(state.trackers.where("office_responsible = ? AND production_status = ?", 'HQ', 'video to be finalised and uploaded (i.e. after review)').count)
 
       # Total UID's
       @stats[23].push(state.trackers.count)
