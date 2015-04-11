@@ -1,9 +1,10 @@
 = simple_form_for @tracker do |f|
   - @sections.each do |section|
+    - puts section
     %a{ id: "#{ section }" }
 
     %h2= tracker_name_modifier(section.to_s)
-    = f.error_notification
+    = f.error_notification  
     - if @context == 'new'
       = f.input :cc_id, as: :select, collection: @state.ccs.order('full_name'),
         value_method: :id, label_method: :full_name, label: 'CC Name', required: true

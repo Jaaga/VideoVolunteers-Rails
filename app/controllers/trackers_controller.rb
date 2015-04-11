@@ -13,7 +13,7 @@ class TrackersController < ApplicationController
       if [params[:view]].any? { |x| ['edit', 'finalize'].include?(x) }
         @title = 'Editor View'
         if params[:view] == 'edit'
-          @trackers = Tracker.where("editor_currently_in_charge = ? AND cleared_for_edit = ?", "#{params[:name]}", 'yes').order("updated_at DESC").paginate(page: params[:page], per_page: 40)
+          @trackers = Tracker.where("editor_currently_in_charge = ?", "#{params[:name]}").order("updated_at DESC").paginate(page: params[:page], per_page: 40)
           @title_header = "Cleared For Edit"
         elsif params[:view] == 'finalize'
           @trackers = Tracker.where("editor_currently_in_charge = ? AND finalized_date IS NOT NULL", "#{params[:name]}").order("updated_at DESC").paginate(page: params[:page], per_page: 40)
@@ -26,7 +26,7 @@ class TrackersController < ApplicationController
           @states = State.where(roi: true)
           roi_states = @states.map{ |state| state.id }.to_a
           if params[:view] == 'pitched'
-            @trackers = Tracker.where("state_id IN (?) AND story_pitch_date IS NOT NULL AND backup_received_date IS NULL", roi_states).order("updated_at DESC").paginate(page: params[:page], per_page: 40)
+            @trackers = Tracker.where("state_id IN (?) AND story_pitch_date IS NOT NULL", roi_states).order("updated_at DESC").paginate(page: params[:page], per_page: 40)
             @title_header = "Has been Pitched But Has No Footage"
           elsif params[:view] == 'pending'
             @trackers = Tracker.where("state_id IN (?) AND footage_check_date IS NULL AND office_responsible = ?", roi_states, 'State').order("updated_at DESC").paginate(page: params[:page], per_page: 40)
@@ -37,7 +37,7 @@ class TrackersController < ApplicationController
           end
         else
           if params[:view] == 'pitched'
-            @trackers = Tracker.where("state_name = ? AND story_pitch_date IS NOT NULL AND backup_received_date IS NULL", "#{params[:name]}").order("updated_at DESC").paginate(page: params[:page], per_page: 40)
+            @trackers = Tracker.where("state_name = ? AND story_pitch_date IS NOT NULL", "#{params[:name]}").order("updated_at DESC").paginate(page: params[:page], per_page: 40)
             @title_header = "Has been Pitched But Has No Footage"
           elsif params[:view] == 'pending'
             @trackers = Tracker.where("state_name = ? AND footage_check_date IS NULL AND office_responsible = ?", "#{params[:name]}", 'State').order("updated_at DESC").paginate(page: params[:page], per_page: 40)
@@ -85,7 +85,7 @@ class TrackersController < ApplicationController
     @columns = view_context.array_set
     @unique = view_context.unique_set
     @context = "new"
-    @sections = [:story]
+    @sections = [:general_info]
   end
 
   def create
