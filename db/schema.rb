@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150410070445) do
+ActiveRecord::Schema.define(version: 20150411110642) do
 
   create_table "ccs", force: :cascade do |t|
     t.string  "full_name",                                           null: false
@@ -98,9 +98,9 @@ ActiveRecord::Schema.define(version: 20150410070445) do
   end
 
   create_table "trackers", force: :cascade do |t|
-    t.string   "uid",                                 null: false
-    t.string   "state_name",                          null: false
-    t.string   "cc_name",                             null: false
+    t.string   "uid",                                                   null: false
+    t.string   "state_name",                                            null: false
+    t.string   "cc_name",                                               null: false
     t.string   "district"
     t.string   "mentor"
     t.string   "iu_theme"
@@ -197,6 +197,8 @@ ActiveRecord::Schema.define(version: 20150410070445) do
     t.string   "production_status"
     t.text     "training_suggestion"
     t.string   "raw_footage_copy_goa"
+    t.string   "tracker_type",                        default: "Story"
+    t.boolean  "footage_recieved"
   end
 
   add_index "trackers", ["uid"], name: "index_trackers_on_uid", unique: true

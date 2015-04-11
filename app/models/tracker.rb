@@ -7,7 +7,7 @@ class Tracker < ActiveRecord::Base
   belongs_to :cc
 
   before_save :set_district_and_mentor
-  before_save :impact_errors
+  before_save :impact_errors, :proper_uid
   after_save  :set_cc_dates
   before_destroy :unlink_impact
 
@@ -107,4 +107,21 @@ class Tracker < ActiveRecord::Base
         linked_tracker.update_attribute(:impact_uid, nil)
       end
     end
+
+    def proper_uid
+      if (self.is_impact == nil || self.is_impact == false) 
+        if self.footage_recieved == true 
+          self.tracker_type = "Issue"
+          self.uid = "#{self.state.state_abb}_"+self.uid.gsub(/[^0-9]/,"")
+        else
+          self.tracker_type = "Story"
+          self.uid = "#{self.state.state_abb}_"+self.uid.gsub(/[^0-9]/,"")+"_story"
+        end
+      else
+        self.tracker_type = "Impact"
+        self.uid = "#{self.state.state_abb}_"+self.uid.gsub(/[^0-9]/,"")+"_impact"
+      end
+    end
+
 end
+

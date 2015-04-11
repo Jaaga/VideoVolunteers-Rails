@@ -6,7 +6,7 @@ module ArraySettingHelper
   def array_set
     general_info = ['cc_name', 'story_pitch_date', 'iu_theme', 'subcategory', 'description',
                     'story_type', 'project', 'campaign', 'shoot_plan',
-                    'training_suggestion']
+                    'training_suggestion', 'footage_recieved', 'footage_received_from_cc_date']
     status = ['production_status', 'office_responsible', 'footage_received_from_cc_date',
               'raw_footage_copy_goa', 'footage_check_date', 'state_edit_date',
               'edit_received_in_goa_date', 'rough_cut_edit_date',

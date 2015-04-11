@@ -1,6 +1,6 @@
 module TrackersHelper
 
-  def set_uid(in_state, state_abb, tracker, is_impact = false)
+  def set_uid(in_state, state_abb, tracker, is_issue = false, is_impact = false)
     if !in_state.empty?
       # Save each UID in an array
       uids_from_state = Array.new
@@ -22,9 +22,11 @@ module TrackersHelper
           impact_uid_set(tracker.original_uid)
         end
         return "#{ state_abb }_#{ id.to_s }_impact"
-      else
+      elsif is_issue == true
         # Make unique UID from state abbreviation and newly created number
         return "#{ state_abb }_#{ id.to_s }"
+      else
+        return "#{ state_abb }_#{ id.to_s }_story"
       end
     else
       if is_impact == true

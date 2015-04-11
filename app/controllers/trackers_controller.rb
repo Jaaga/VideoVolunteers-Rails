@@ -93,7 +93,18 @@ class TrackersController < ApplicationController
 
     # Method for dealing with making and linking impact videos
     @is_impact = is_impact?('new')
-
+    if params[:tracker][:is_impact] == false
+      if params[:tracker][:footage_recieved] == true 
+        @tracker.tracker_type = "Issue"
+        @is_issue = true
+      else
+        @tracker.tracker_type = "Story"
+        @is_issue = false
+      end
+    else
+      @tracker.tracker_type = "Impact"
+      @is_issue = false
+    end
     # This condition exists just in case somebody submits a tracker with an
     # empty 'CC Name'. This way, simple_form will pick up on the model
     # validations.
@@ -103,7 +114,7 @@ class TrackersController < ApplicationController
       @state = @cc.state
       @tracker.state_name = @state.name
       @tracker.uid = view_context.set_uid(@state.trackers, @cc.state_abb,
-                                          @tracker, @is_impact)
+                                          @tracker, @is_issue, @is_impact)
       @tracker.assign_attributes(state: @state, cc: @cc)
     end
 
@@ -149,6 +160,7 @@ class TrackersController < ApplicationController
 
     # Method for dealing with making and linking impact videos
     is_impact?('edit')
+
     # Method for updating the CC's last impact action date
     update_cc_action_date
 
