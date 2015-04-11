@@ -1,7 +1,7 @@
 class Tracker < ActiveRecord::Base
   attr_accessor :cc_impact_action
 
-  YESNO = %w(yes no)
+  YESNO = %w(Yes No)
 
   belongs_to :state
   belongs_to :cc

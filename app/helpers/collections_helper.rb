@@ -62,15 +62,14 @@ module CollectionsHelper
 
   def types_collection
     [["Entitlement Violation", :"Entitlement Violation"],
-     ["Human Interest", :"Human Interest"],
+     ["Inspirational Videos", :"Inspirational Videos"],
      ["Human Rights Violation", :"Human Rights Violation"],
      ["CC Profile", :"CC Profile"], ["Community Profile", :"Community Profile"],
      ["Mini-doc", :"Mini-doc"], ["Success", :Success]].sort
   end
 
   def campaigns_collection
-    [["None", :None], ["ARTICLE17", :"ARTICLE17"],
-     ["Anti-Untouchability", :"Anti-Untouchability"],
+    [["None", :None], ["ARTICLE17 (Anti-Untouchability)", :"ARTICLE17 (Anti-Untouchability)"],
      ["RTE-Pass ya Fail", :"RTE-Pass ya Fail"],
      ["Forced Evictions", :"Forced Evictions"],
      ["Maternal Health", :"Maternal Health"],

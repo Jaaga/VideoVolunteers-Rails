@@ -85,7 +85,7 @@ class TrackersController < ApplicationController
     @columns = view_context.array_set
     @unique = view_context.unique_set
     @context = "new"
-    @sections = [:general_info]
+    @sections = [:general_info, :impact_planning]
   end
 
   def create

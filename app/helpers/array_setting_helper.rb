@@ -2,8 +2,9 @@ module ArraySettingHelper
 
   # Return a hash of all the column names, except for 'uid', 'state_name', and
   # 'cc_name'
+
   def array_set
-    general_info = ['story_pitch_date', 'iu_theme', 'subcategory', 'description',
+    general_info = ['cc_name', 'story_pitch_date', 'iu_theme', 'subcategory', 'description',
                     'story_type', 'project', 'campaign', 'shoot_plan',
                     'training_suggestion']
     status = ['production_status', 'office_responsible', 'footage_received_from_cc_date',
@@ -11,13 +12,13 @@ module ArraySettingHelper
               'edit_received_in_goa_date', 'rough_cut_edit_date',
               'rough_cut_review_date', 'finalized_date', 'youtube_date',
               'iu_publish_date', 'extra_footage_received_date']
-    rough_cut_review = ['community_participation_description', 'broll', 'interview',
+    footage_check = ['community_participation_description', 'broll', 'interview',
                         'voice_over', 'video_diary', 'p2c', 'translation_info',
                         'proceed_with_edit_and_payment', 'cc_last_steps_for_payment',
                         'call_to_action_review']
     edit = ['editor_currently_in_charge', 'folder_title',
             'instructions_for_editor_edit', 'editor_notes']
-    footage_check = ['reviewer_name', 'editor_changes_needed',
+    rough_cut_review = ['reviewer_name', 'editor_changes_needed',
                       'instructions_for_editor_final',
                       'publishing_suggestions', 'cc_feedback',
                       'subtitle_info', 'high_potential']
