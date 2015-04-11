@@ -33,7 +33,6 @@ class Tracker < ActiveRecord::Base
   validates :impact_achieved, inclusion: YESNO, allow_blank: true
   validates :screening_done, inclusion: YESNO, allow_blank: true
   validates :officials_at_screening, inclusion: YESNO, allow_blank: true
-  validates :cleared_for_edit, inclusion: YESNO, allow_blank: true
   validates :impact_video_approved, inclusion: YESNO, allow_blank: true
 
 
