@@ -148,9 +148,12 @@ module CollectionsHelper
   end
 
   def divisions_collection
-    [["State Coordinator", :"State Coordinator"],
+    [["State Coordinator", :"State Coordinator"], 
+     ["Production Manager", :"Production Manager"],
+     ["Editor", :"Editor"],
+     ["Reviewer", :"Reviewer"],
      ["Training & Mentoring", :"Training & Mentoring"],
-     ["Communications", :"Communications"], ["Production", :"Production"],
-     ["Executive Directors", :"Executive Directors"]]
+     ["Communications", :"Communication"],
+     ["Executive Directors", :"Executive Director"]]
   end
 end

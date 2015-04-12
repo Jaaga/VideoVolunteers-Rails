@@ -1,6 +1,5 @@
 = simple_form_for @tracker do |f|
   - @sections.each do |section|
-    - puts section
     %a{ id: "#{ section }" }
 
     %h2= tracker_name_modifier(section.to_s)

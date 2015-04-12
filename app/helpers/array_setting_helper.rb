@@ -6,13 +6,13 @@ module ArraySettingHelper
   def array_set
     general_info = ['cc_name', 'story_pitch_date', 'iu_theme', 'subcategory', 'description',
                     'story_type', 'project', 'campaign', 'shoot_plan',
-                    'training_suggestion', 'footage_recieved', 'footage_received_from_cc_date']
+                    'training_suggestion']
     status = ['production_status', 'office_responsible', 'footage_received_from_cc_date',
               'raw_footage_copy_goa', 'footage_check_date', 'state_edit_date',
               'edit_received_in_goa_date', 'rough_cut_edit_date',
               'rough_cut_review_date', 'finalized_date', 'youtube_date',
               'iu_publish_date', 'extra_footage_received_date']
-    footage_check = ['community_participation_description', 'broll', 'interview',
+    footage_check = ['footage_recieved', 'footage_received_from_cc_date', 'community_participation_description', 'broll', 'interview',
                         'voice_over', 'video_diary', 'p2c', 'translation_info',
                         'proceed_with_edit_and_payment', 'cc_last_steps_for_payment',
                         'call_to_action_review']
@@ -43,13 +43,14 @@ module ArraySettingHelper
     url = ['youtube_url']
     extra = ['impact_uid', 'original_uid', 'no_original_uid', 'notes', 'flag',
              'flag_notes', 'flag_date', 'updated_by', 'created_at', 'updated_at']
+    is_impact = ['is_impact']
 
     return { general_info: general_info, status: status,
              rough_cut_review: rough_cut_review, edit: edit, footage_check: footage_check,
              impact_planning: impact_planning, impact_achieved: impact_achieved,
              impact_video: impact_video , screening: screening, payment: payment,
              ratings: ratings, final_video_title: final_video_title, url: url,
-             extra: extra }
+             extra: extra, is_impact: is_impact }
   end
 
   def unique_set

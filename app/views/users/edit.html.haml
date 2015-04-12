@@ -5,7 +5,7 @@
 %h1.text-center Edit #{@user.email}
 = simple_form_for @user do |f|
   = f.error_notification
-  = f.input :division, as: :select, collection: divisions_collection
+  = f.input :division, as: :select, collection: divisions_collection, label: "Role"
   = f.input :approved
   = f.input :admin
   = f.submit 'Save', class: 'btn btn-primary btn-block'
