@@ -38,9 +38,8 @@
               %li.dropdown-submenu
                 %a{ href: "#" } #{ employee }
                 %ul.dropdown-menu
-                  %li= link_to 'Pitched', trackers_path(view: "pitched", name: "#{ employee }")
-                  %li= link_to 'Produced', trackers_path(view: "produced", name: "#{ employee }")
-                  %li= link_to 'Hold', trackers_path(view: "hold", name: "#{ employee }")
+                  - find_collection('production_status').each do |key, value|
+                    %li= link_to key, trackers_path(view: value, name: "#{ employee }")
         %li.dropdown
           %a.dropdown-toggle{ href: '#', :'data-toggle' => 'dropdown', role: 'button' }
             CCs

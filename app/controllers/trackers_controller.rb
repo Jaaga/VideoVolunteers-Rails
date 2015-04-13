@@ -15,11 +15,10 @@ class TrackersController < ApplicationController
         @trackers = Tracker.show_to_editor(params[:view], params[:name]).paginate(page: params[:page], per_page: 40)
         titles = {edit: "Cleared For Edit", finalize: "Has Been Finalized"}
         @title_header = titles[:"#{params[:view]}"] 
-      elsif [params[:view]].any? { |x| ['pitched', 'produced', 'hold'].include?(x) }
+      elsif [params[:view]].any? { |x| view_context.find_collection('production_status').map{|y| y[0]}.include?(x) }
         @title = params[:name]+' Coordinator View'
-        titles = {pitched: "Has been Pitched But Has No Footage", produced: "Raw Footage Has Not Been Reviewed and Footage is in State", hold: "Edit and Payment is on Hold"}
-        @title_header = titles[:"#{params[:view]}"] 
-        @trackers = Tracker.show_to_sc(params[:name], params[:view]).paginate(page: params[:page], per_page: 40)
+        @title_header = params[:view]
+        @trackers = Tracker.where(state_name: params[:name], production_status: params[:view]).paginate(page: params[:page], per_page: 40)
       end
     else
       @trackers = Tracker.all.paginate(page: params[:page], per_page: 40)
@@ -37,7 +36,7 @@ class TrackersController < ApplicationController
     @columns = view_context.array_set
 
     unless @tracker.uid.include?('_impact')
-      @columns.except!(:impact_planning, :impact_achieved, :impact_video)
+      @columns.except!(:impact_achieved, :impact_video, :screening)
     end
 
     if @tracker.uid.include?('_impact')
@@ -122,21 +121,20 @@ class TrackersController < ApplicationController
     @tracker = Tracker.find(params[:id])
     @columns = view_context.array_set
 
-    unless @tracker.uid.include?('_impact')
-      @columns.except!(:impact_planning, :impact_achieved, :impact_video)
-    end
-
     @state = @tracker.state
-    @state_videos = @state.trackers.where("impact_uid IS NULL AND uid NOT
-                                          LIKE '%_impact'").map {|x| x.uid}
+    # @state_videos = @state.trackers.where("impact_uid IS NULL AND uid NOT
+    #                                       LIKE '%_impact'").map {|x| x.uid}
+    # @state_videos -= [@tracker.uid]
+    # unless @tracker.original_uid.blank?
+    #   original = Tracker.find_by(uid: @tracker.original_uid)
+    #   @state_videos += [original.uid]
+    # end
+    @sections = [:general_info, :status, :footage_check, :edit, :rough_cut_review, :impact_planning, :payment, :ratings, :final_video_title, :url]
 
-    @state_videos -= [@tracker.uid]
-    unless @tracker.original_uid.blank?
-      original = Tracker.find_by(uid: @tracker.original_uid)
-      @state_videos += [original.uid]
+    if @tracker.uid.include?('_impact')
+      @sections += [:impact_achieved, :impact_video]
+      @sections -= [:impact_planning]
     end
-    @sections = @columns.keys
-    @sections -= [:extra]
     @unique = view_context.unique_set
     @context = "edit"
   end

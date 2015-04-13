@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150411124107) do
+ActiveRecord::Schema.define(version: 20150413073944) do
 
   create_table "ccs", force: :cascade do |t|
     t.string  "full_name",                                           null: false
@@ -219,6 +219,8 @@ ActiveRecord::Schema.define(version: 20150411124107) do
     t.string   "division"
     t.boolean  "admin",                  default: false
     t.boolean  "approved",               default: false, null: false
+    t.string   "name"
+    t.string   "state"
   end
 
   add_index "users", ["approved"], name: "index_users_on_approved"

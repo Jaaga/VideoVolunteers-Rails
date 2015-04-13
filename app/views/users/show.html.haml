@@ -19,9 +19,19 @@
         = @user.email
     %tr
       %td.col-md-6
-        %strong Division
+        %strong Name
+      %td.col-md-6
+        = @user.name
+    %tr
+      %td.col-md-6
+        %strong Role
       %td.col-md-6
         = @user.division
+    %tr
+      %td.col-md-6
+        %strong State
+      %td.col-md-6
+        = @user.state
     %tr
       %td.col-md-6
         %strong Approved?
