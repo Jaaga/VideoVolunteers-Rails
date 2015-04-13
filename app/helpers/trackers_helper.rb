@@ -91,7 +91,7 @@ module TrackersHelper
   def tracker_label(x)
     labels =  { 'uid' => 'UID', 'iu_theme' => 'IU Theme',
       'description' => 'ONE LINER (and later youtube blurb) - WHO WHEN WHERE WHAT',
-      'shoot_plan' => 'Shoot Plan (notes of creative discussion with the CC; filled by SC/Mentors)',
+      'shoot_plan' => 'Shoot plan / Notes / Extra plan',
       'edit_received_in_goa_date' => 'Rough Cut Received in Goa Date',
       'screening' => 'Screening (for impact only)',
       'no_original_uid' => 'Reason for not having original UID',
@@ -123,7 +123,7 @@ module TrackersHelper
       'rough_cut_edit_date' => 'Goa Rough Cut Edit Date (only if the raw
         footage is edited in Goa)',
       'cc_impact_action' => 'Has the CC made an impact action?',
-      'training_suggestion' => 'Training manager suggestion',
+      'training_suggestion' => 'Training Team suggestion',
       'raw_footage_copy_goa' => 'Is there a copy of the raw footage in Goa?',
       'rough_cut_review_date' => 'Rough cut review date in Goa (by SP or Comms Team)' }
 

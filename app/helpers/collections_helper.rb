@@ -15,8 +15,8 @@ module CollectionsHelper
       return staff_collection
     elsif column == 'project'
       return [['None', :None], ['Oak', :Oak], ['PACS', :PACS]]
-    elsif column == 'edit_status'
-      return edit_status_collection
+    elsif column == 'production_status'
+      return production_status_collection
     elsif column == 'office_responsible'
       return [['State', :State], ['HQ', :HQ]]
     elsif column == 'proceed_with_edit_and_payment'
@@ -61,11 +61,14 @@ module CollectionsHelper
   end
 
   def types_collection
-    [["Entitlement Violation", :"Entitlement Violation"],
+    [["Don't Know", :"Don't Know"],
+     ["CC Profile", :"CC Profile"],
+     ["Community Profile", :"Community Profile"],
+     ["Entitlement Violation", :"Entitlement Violation"],
      ["Inspirational Videos", :"Inspirational Videos"],
      ["Human Rights Violation", :"Human Rights Violation"],
-     ["CC Profile", :"CC Profile"], ["Community Profile", :"Community Profile"],
-     ["Mini-doc", :"Mini-doc"], ["Success", :Success]].sort
+     ["Mini-doc", :"Mini-doc"], 
+     ["Success", :Success]]
   end
 
   def campaigns_collection
@@ -107,17 +110,18 @@ module CollectionsHelper
      ["Sajad Rasool", :"Sajad Rasool"]].sort
   end
 
-  def edit_status_collection
-    [["story pitched (no footage yet)", :"story pitched (no footage yet)"],
-     ["footage received", :"footage received"],
-     ["footage rated and approved for payment", :"footage rated and approved for payment"],
-     ["footage on hold", :"footage on hold"],
-     ["footage to edit’", :"footage to edit’"],
-     ["‘rough cuts to clean’", :"‘rough cuts to clean’"],
-     ["rough cuts to review", :"rough cuts to review"],
-     ["to finalize and upload", :"to finalize and upload"],
-     ["uploaded", :uploaded], ["edit on hold", :"edit on hold"],
-     ["problem video", :"problem video"]]
+  def production_status_collection
+    [["Story pitched (no footage yet)", :"Story pitched (no footage yet)"],
+     ["Footage received", :"Footage received"],
+     ["Footage on hold", :"Footage on hold"],
+     ["Footage rated and approved for payment", :"Footage rated and approved for payment"],
+     ["Footage to edit", :"Footage to edit"],
+     ["Edit on hold", :"Edit on hold"],
+     ["Rough cuts to clean", :"Rough cuts to clean"],
+     ["Rough cuts to review", :"Rough cuts to review"],
+     ["To finalize and upload", :"To finalize and upload"],
+     ["Uploaded", :"Uploaded"], 
+     ["Problem video", :"Problem video"]]
   end
 
   def subtitle_collection

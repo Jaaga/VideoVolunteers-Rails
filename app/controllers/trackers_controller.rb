@@ -12,52 +12,25 @@ class TrackersController < ApplicationController
     elsif !params[:view].blank?
       if [params[:view]].any? { |x| ['edit', 'finalize'].include?(x) }
         @title = 'Editor View'
-        if params[:view] == 'edit'
-          @trackers = Tracker.where("editor_currently_in_charge = ?", "#{params[:name]}").order("updated_at DESC").paginate(page: params[:page], per_page: 40)
-          @title_header = "Cleared For Edit"
-        elsif params[:view] == 'finalize'
-          @trackers = Tracker.where("editor_currently_in_charge = ? AND finalized_date IS NOT NULL", "#{params[:name]}").order("updated_at DESC").paginate(page: params[:page], per_page: 40)
-          @title_header = "Has Been Finalized"
-        end
-      elsif [params[:view]].any? { |x| ['pitched', 'pending', 'hold'].include?(x) }
-        @title = 'State Coordinator View'
-        if params[:name] == 'ROI'
-          # Get a list of all ROI state IDs and find the trackers based on this list
-          @states = State.where(roi: true)
-          roi_states = @states.map{ |state| state.id }.to_a
-          if params[:view] == 'pitched'
-            @trackers = Tracker.where("state_id IN (?) AND story_pitch_date IS NOT NULL", roi_states).order("updated_at DESC").paginate(page: params[:page], per_page: 40)
-            @title_header = "Has been Pitched But Has No Footage"
-          elsif params[:view] == 'pending'
-            @trackers = Tracker.where("state_id IN (?) AND footage_check_date IS NULL AND office_responsible = ?", roi_states, 'State').order("updated_at DESC").paginate(page: params[:page], per_page: 40)
-            @title_header = "Raw Footage Has Not Been Reviewed and Footage is in State"
-          elsif params[:view] == 'hold'
-            @trackers = Tracker.where("state_id IN (?) AND proceed_with_edit_and_payment = ?", roi_states, 'On hold').order("updated_at DESC").paginate(page: params[:page], per_page: 40)
-            @title_header = "Edit and Payment is on Hold"
-          end
-        else
-          if params[:view] == 'pitched'
-            @trackers = Tracker.where("state_name = ? AND story_pitch_date IS NOT NULL", "#{params[:name]}").order("updated_at DESC").paginate(page: params[:page], per_page: 40)
-            @title_header = "Has been Pitched But Has No Footage"
-          elsif params[:view] == 'pending'
-            @trackers = Tracker.where("state_name = ? AND footage_check_date IS NULL AND office_responsible = ?", "#{params[:name]}", 'State').order("updated_at DESC").paginate(page: params[:page], per_page: 40)
-            @title_header = "Raw Footage Has Not Been Reviewed and Footage is in State"
-          elsif params[:view] == 'hold'
-            @trackers = Tracker.where("state_name = ? AND proceed_with_edit_and_payment = ?", "#{params[:name]}", 'On hold').order("updated_at DESC").paginate(page: params[:page], per_page: 40)
-            @title_header = "Edit and Payment is on Hold"
-          end
-        end
+        @trackers = Tracker.show_to_editor(params[:view], params[:name]).paginate(page: params[:page], per_page: 40)
+        titles = {edit: "Cleared For Edit", finalize: "Has Been Finalized"}
+        @title_header = titles[:"#{params[:view]}"] 
+      elsif [params[:view]].any? { |x| ['pitched', 'produced', 'hold'].include?(x) }
+        @title = params[:name]+' Coordinator View'
+        titles = {pitched: "Has been Pitched But Has No Footage", produced: "Raw Footage Has Not Been Reviewed and Footage is in State", hold: "Edit and Payment is on Hold"}
+        @title_header = titles[:"#{params[:view]}"] 
+        @trackers = Tracker.show_to_sc(params[:name], params[:view]).paginate(page: params[:page], per_page: 40)
       end
     else
       @trackers = Tracker.all.paginate(page: params[:page], per_page: 40)
       @title = "All Video Forms"
     end
-
     @columns = Tracker.column_names - ['id', 'tracker_details_id',
                                          'tracker_details_type']
     @default_columns = @columns[0..7]
     @non_default_columns = view_context.checkbox_label(@columns)
   end
+
 
   def show
     @tracker = Tracker.find(params[:id])
@@ -334,4 +307,8 @@ class TrackersController < ApplicationController
         redirect_to root_path
       end
     end
+
+
+
+    
 end

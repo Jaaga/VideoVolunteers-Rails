@@ -54,7 +54,7 @@ module ArraySettingHelper
   end
 
   def unique_set
-    special = ['edit_status', 'office_responsible', 'iu_theme', 'subcategory',
+    special = ['production_status', 'office_responsible', 'iu_theme', 'subcategory',
                'story_type', 'project', 'campaign',
                'proceed_with_edit_and_payment', 'payment_status',
                'subtitle_info', 'editor_changes_needed', 'translation_info',
