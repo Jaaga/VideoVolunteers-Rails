@@ -122,7 +122,7 @@ module CollectionsHelper
      ["Footage to edit", :"Footage to edit"],
      ["Edit on hold", :"Edit on hold"],
      ["Edit Done", :"Edit Done"],
-     ["Rough cut sent to Goa", :"Rought cut sent to Goa"],
+     ["Rough cut sent to Goa", :"Rough cut sent to Goa"],
      ["Rough cuts to clean", :"Rough cuts to clean"],
      ["Rough cuts to review", :"Rough cuts to review"],
      ["To finalize and upload", :"To finalize and upload"],

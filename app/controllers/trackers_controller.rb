@@ -28,15 +28,15 @@ class TrackersController < ApplicationController
       @title = "All Video Forms"
     end
     @columns = Tracker.column_names - ['id', 'tracker_details_id',
-                                         'tracker_details_type']
-    @default_columns = @columns[0..7]
+                                         'tracker_details_type', 'subcategory', 'shoot_plan', 'footage_rating', 'story_type']
+    @default_columns = @columns[0..6]
     @non_default_columns = view_context.checkbox_label(@columns)
   end
 
 
   def show
     @tracker = Tracker.find(params[:id])
-    @columns = view_context.array_set
+    @columns = view_context.show_array_set
 
     unless @tracker.uid.include?('_impact')
       @columns.except!(:impact_achieved, :impact_video, :screening)
@@ -47,7 +47,6 @@ class TrackersController < ApplicationController
     else
       @columns[:extra] -= ['original_uid', 'no_original_uid']
     end
-
     @sections = @columns.keys
   end
 
@@ -132,7 +131,9 @@ class TrackersController < ApplicationController
     #   original = Tracker.find_by(uid: @tracker.original_uid)
     #   @state_videos += [original.uid]
     # end
-    @sections = [:general_info, :status, :footage_check, :edit, :rough_cut_review, :impact_planning, :payment, :ratings, :final_video_title, :url]
+    if current_user.division == "State Coordinator"
+      @sections = [:general_info, :impact_planning, :footage_check, :edit, :rought_cut_sent_to_goa]
+    end
 
     if @tracker.uid.include?('_impact')
       @sections += [:impact_achieved, :impact_video]

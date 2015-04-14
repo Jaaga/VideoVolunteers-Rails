@@ -182,7 +182,7 @@ class Tracker < ActiveRecord::Base
       end
       if self.footage_recieved == true && self.edit_status = "Done" && self.rough_cut_sent_to_goa == true
         self.production_status = "Rough cut sent to Goa"
-        self.office_responsible = "Goa"
+        self.office_responsible = "HQ"
       end
       if self.edit_status == true && self.edit_received_in_goa_date.blank? == false
         self.production_status = "Rough cuts to clean"
