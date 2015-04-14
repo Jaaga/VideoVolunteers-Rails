@@ -15,9 +15,9 @@ module ArraySettingHelper
     footage_check = ['footage_recieved', 'footage_received_from_cc_date', 'community_participation_description', 'broll', 'interview',
                         'voice_over', 'video_diary', 'p2c', 'translation_info',
                         'proceed_with_edit_and_payment', 'cc_last_steps_for_payment',
-                        'call_to_action_review']
+                        'call_to_action_review', 'rough_cut_sent_to_goa', 'rough_cut_sent_to_goa_date']
     edit = ['editor_currently_in_charge', 'folder_title',
-            'instructions_for_editor_edit', 'editor_notes']
+            'instructions_for_editor_edit', 'edit_status', 'editor_notes']
     rough_cut_review = ['reviewer_name', 'editor_changes_needed',
                       'instructions_for_editor_final',
                       'publishing_suggestions', 'cc_feedback',
@@ -54,7 +54,7 @@ module ArraySettingHelper
   end
 
   def unique_set
-    special = ['production_status', 'office_responsible', 'iu_theme', 'subcategory',
+    special = ['production_status', 'edit_status', 'office_responsible', 'iu_theme', 'subcategory',
                'story_type', 'project', 'campaign',
                'proceed_with_edit_and_payment', 'payment_status',
                'subtitle_info', 'editor_changes_needed', 'translation_info',

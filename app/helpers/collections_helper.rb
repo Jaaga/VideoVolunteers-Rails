@@ -29,6 +29,10 @@ module CollectionsHelper
       return editor_changes_collection
     elsif column == 'translation_info'
       return translation_collection
+    elsif column == 'edit_status'
+      return edit_status_collection
+    elsif column == 'production_status'
+      return production_status_collection
     elsif column == 'impact_video_status'
       return impact_status_collection
     end
@@ -117,6 +121,7 @@ module CollectionsHelper
      ["Footage approved for payment", :"Footage approved for payment"],
      ["Footage to edit", :"Footage to edit"],
      ["Edit on hold", :"Edit on hold"],
+     ["Edit Done", :"Edit Done"],
      ["Rough cut sent to Goa", :"Rought cut sent to Goa"],
      ["Rough cuts to clean", :"Rough cuts to clean"],
      ["Rough cuts to review", :"Rough cuts to review"],
@@ -161,4 +166,11 @@ module CollectionsHelper
      ["Communications", :"Communication"],
      ["Executive Directors", :"Executive Director"]]
   end
+
+  def edit_status_collection
+    [["On hold", :"On hold"],
+     ["Done", :"Done"],
+     ["Problem video", :"Problem video"]]
+  end
+
 end

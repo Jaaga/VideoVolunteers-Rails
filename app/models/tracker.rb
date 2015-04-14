@@ -7,7 +7,7 @@ class Tracker < ActiveRecord::Base
   belongs_to :cc
 
   before_save :set_district_and_mentor
-  before_save :impact_errors, :proper_uid
+  before_save :impact_errors, :proper_uid, :set_production_status
   after_save  :set_cc_dates
   before_destroy :unlink_impact
 
@@ -144,8 +144,8 @@ class Tracker < ActiveRecord::Base
     end
 
     def proper_uid
-      if (self.is_impact == nil || self.is_impact == false) 
-        if self.footage_recieved == true 
+      if (self.is_impact.blank? || self.is_impact == false) 
+        if self.footage_recieved && self.proceed_with_edit_and_payment == 'Cleared'
           self.tracker_type = "Issue"
           self.uid = "#{self.state.state_abb}_"+self.uid.gsub(/[^0-9]/,"")
         else
@@ -158,5 +158,47 @@ class Tracker < ActiveRecord::Base
       end
     end
 
-end
+    def set_production_status
+      if self.footage_recieved == false
+        self.production_status = "Story pitched (no footage yet)"
+      end
+      if self.footage_recieved == true
+        self.production_status = "Footage received"
+      end
+      if self.footage_recieved == true && self.proceed_with_edit_and_payment == 'On hold'
+        self.production_status = "Footage on hold"
+      end
+      if self.footage_recieved == true && self.proceed_with_edit_and_payment == 'Cleared'
+        self.production_status = "Footage approved for payment"
+      end
+      if self.footage_recieved == true && self.editor_currently_in_charge.blank? != true
+        self.production_status = "Footage to edit"
+      end
+      if self.footage_recieved == true && self.editor_currently_in_charge.blank? != true && self.edit_status = "On hold"
+        self.production_status = "Edit on hold"
+      end
+      if self.footage_recieved == true && self.editor_currently_in_charge.blank? != true && self.edit_status = "Done"
+        self.production_status = "Edit Done"
+      end
+      if self.footage_recieved == true && self.edit_status = "Done" && self.rough_cut_sent_to_goa == true
+        self.production_status = "Rough cut sent to Goa"
+        self.office_responsible = "Goa"
+      end
+      if self.edit_status == true && self.edit_received_in_goa_date.blank? == false
+        self.production_status = "Rough cuts to clean"
+      end
+      if self.edit_status == true && self.rough_cut_cleaned == true
+        self.production_status == "Rough cuts to review"
+      end
+      if self.rough_cut_cleaned == true && rough_cut_reviewed == true
+        self.production_status = "To finalize and upload"
+      end
+      if self.rough_cut_reviewed == true && self.uploaded == true
+        self.production_status = "Uploaded"
+      end
+      if self.edit_status == "Problem video"
+        self.production_status = "Problem video"
+      end
+    end
 
+end

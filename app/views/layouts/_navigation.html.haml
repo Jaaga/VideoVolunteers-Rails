@@ -4,62 +4,69 @@
       = link_to image_tag('vvnewlogo.png', size: '50', alt: 'Brand'), home_path, class: 'navbar-brand'
     %ul.nav.navbar-nav
       - if current_user
+        / State coordinator can create a new video right away
+        - if current_user.division == "State Coordinator"
+          %li
+            %li= link_to "New Form", new_tracker_path(state_name: "#{current_user.state}")
+
         %li.dropdown
           %a.dropdown-toggle{ href: '#', :'data-toggle' => 'dropdown', role: 'button' }
-            Video Forms
+            All Videos
             %span.caret
           %ul.dropdown-menu{ role: 'menu' }
-            %li= link_to "Recent", trackers_path(recent: true)
-            %li.dropdown-submenu
-              %a{ href: "#" } New Video Entry
-              %ul.dropdown-menu
-                - State.all.order(:name).each do |state|
-                  %li= link_to state.name, new_tracker_path(state_name: "#{state.name}")
+            - if current_user.division == "State Coordinator"
+              %li= link_to "All", trackers_path(state_name: "#{current_user.state}")
+              %li= link_to "Recent", trackers_path(recent: true, state: "#{current_user.state}")
+              
+
+        
+            
+            
+
+        
+          / %li.dropdown
+          /   %a.dropdown-toggle{ href: '#', :'data-toggle' => 'dropdown', role: 'button' }
+          /     Editors View
+          /     %span.caret
+          /   %ul.dropdown-menu{ role: 'menu' }
+          /     %h4.text-center Editors
+          /     - employees = employee_set
+          /     - employees[:editor].each do |employee|
+          /       %li.dropdown-submenu
+          /         %a{ href: "#" } #{ employee }
+          /         %ul.dropdown-menu
+          /           %li= link_to 'To Edit', trackers_path(view: "edit", name: "#{ employee }")
+          /           %li= link_to 'To Finalize', trackers_path(view: "finalize", name: "#{ employee }")
         %li.dropdown
           %a.dropdown-toggle{ href: '#', :'data-toggle' => 'dropdown', role: 'button' }
-            Editors View
+            Video By Stage
             %span.caret
           %ul.dropdown-menu{ role: 'menu' }
-            %h4.text-center Editors
-            - employees = employee_set
-            - employees[:editor].each do |employee|
-              %li.dropdown-submenu
-                %a{ href: "#" } #{ employee }
-                %ul.dropdown-menu
-                  %li= link_to 'To Edit', trackers_path(view: "edit", name: "#{ employee }")
-                  %li= link_to 'To Finalize', trackers_path(view: "finalize", name: "#{ employee }")
-        %li.dropdown
-          %a.dropdown-toggle{ href: '#', :'data-toggle' => 'dropdown', role: 'button' }
-            Coordinators View
-            %span.caret
-          %ul.dropdown-menu{ role: 'menu' }
-            %h4.text-center Coordinators
-            - employees[:sc].each do |employee|
-              %li.dropdown-submenu
-                %a{ href: "#" } #{ employee }
-                %ul.dropdown-menu
-                  - find_collection('production_status').each do |key, value|
-                    %li= link_to key, trackers_path(view: value, name: "#{ employee }")
+            - find_collection('production_status').each do |key, value|
+              %li= link_to key, trackers_path(view: value, name: "#{current_user.state}")
+                    
         %li.dropdown
           %a.dropdown-toggle{ href: '#', :'data-toggle' => 'dropdown', role: 'button' }
             CCs
             %span.caret
           %ul.dropdown-menu{ role: 'menu' }
-            %li= link_to "View All", ccs_path
+            - if current_user.division == "State Coordinator"
+              %li= link_to "View All", ccs_path(state: "#{current_user.state}")
             %li= link_to "New", new_cc_path
-        %li.dropdown
-          %a.dropdown-toggle{ href: '#', :'data-toggle' => 'dropdown', role: 'button' }
-            States
-            %span.caret
-          %ul.dropdown-menu{ role: 'menu' }
-            %li.dropdown-submenu
-              %a{ href: "#" } View All By State
-              %ul.dropdown-menu
-                - State.all.order(:name).each do |state|
-                  %li= link_to state.name, trackers_path(state_name: "#{state.name}")
-            - if current_user.try(:admin?)
-              %li= link_to "View All States", states_path
-              %li= link_to "New", new_state_path
+        - if current_user.division == "Admin"
+          %li.dropdown
+            %a.dropdown-toggle{ href: '#', :'data-toggle' => 'dropdown', role: 'button' }
+              States
+              %span.caret
+            %ul.dropdown-menu{ role: 'menu' }
+              %li.dropdown-submenu
+                %a{ href: "#" } View All By State
+                %ul.dropdown-menu
+                  - State.all.order(:name).each do |state|
+                    %li= link_to state.name, trackers_path(state_name: "#{state.name}")
+              - if current_user.try(:admin?)
+                %li= link_to "View All States", states_path
+                %li= link_to "New", new_state_path
     %ul.nav.navbar-nav.navbar-right
       - if current_user
         %li.dropdown

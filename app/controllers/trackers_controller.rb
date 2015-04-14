@@ -3,12 +3,15 @@ class TrackersController < ApplicationController
 
   def index
     if params[:recent]
-      @trackers = Tracker.where(updated_at: Date.today-14...Date.today+1).order("updated_at DESC").paginate(page: params[:page], per_page: 40)
+      if params[:state]
+        @trackers = Tracker.where(updated_at: Date.today-14...Date.today+1, state_name: params[:state]).order("updated_at DESC").paginate(page: params[:page], per_page: 40)
+      else
+        @trackers = Tracker.where(updated_at: Date.today-14...Date.today+1).order("updated_at DESC").paginate(page: params[:page], per_page: 40)
+      end
       @title = "Recent Trackers"
     elsif !params[:state_name].blank?
-      @state = State.find_by(name: params[:state_name])
-      @trackers = @state.trackers.order("uid DESC").paginate(page: params[:page], per_page: 40)
-      @title = "#{ @state.name }'s Videos"
+      @trackers = State.find_by(name: params[:state_name]).trackers.order("uid DESC").paginate(page: params[:page], per_page: 40)
+      @title = "#{params[:state_name]}'s Videos"
     elsif !params[:view].blank?
       if [params[:view]].any? { |x| ['edit', 'finalize'].include?(x) }
         @title = 'Editor View'

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150413073944) do
+ActiveRecord::Schema.define(version: 20150413115502) do
 
   create_table "ccs", force: :cascade do |t|
     t.string  "full_name",                                           null: false
@@ -195,6 +195,13 @@ ActiveRecord::Schema.define(version: 20150413073944) do
     t.string   "raw_footage_copy_goa"
     t.string   "tracker_type",                        default: "Story"
     t.boolean  "footage_recieved"
+    t.string   "edit_status"
+    t.boolean  "rough_cut_sent_to_goa",               default: false
+    t.date     "rough_cut_sent_to_goa_date"
+    t.boolean  "rough_cut_cleaned",                   default: false
+    t.string   "rough_cut_editor"
+    t.boolean  "rough_cut_reviewed",                  default: false
+    t.boolean  "uploaded",                            default: false
   end
 
   add_index "trackers", ["uid"], name: "index_trackers_on_uid", unique: true

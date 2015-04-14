@@ -10,8 +10,7 @@
       - if column.include? "_date"
         -# Not putting limits on dates because the imported data can be from
         -# years ago.
-        = f.input :"#{ column }", label: tracker_name_modifier(column),
-          include_blank: true
+        = f.input :"#{ column }", label: tracker_name_modifier(column), :input_html => { type: :date}, as: :string, include_blank: true
       - elsif column.include? "_rating"
         = f.input :"#{ column }", as: :select,
           collection: ratings_collection,
@@ -30,8 +29,6 @@
       - elsif column == "cc_name"
         = f.input :cc_id, as: :select, collection: @state.ccs.order('full_name'),
           value_method: :id, label_method: :full_name, label: 'CC Name', required: true
-      - elsif column == "production_status"
-        = f.input :"#{ column }", as: :select, collection: find_collection(column), default: "story pitched (no footage yet)", label: tracker_name_modifier(column)
       - else
         = f.input :"#{ column }", label: tracker_name_modifier(column)
 
@@ -46,3 +43,6 @@
     %br
     - if @context == 'edit'
       = link_to '^ back to top ^', edit_tracker_path(@tracker, anchor: 'top')
+
+
+
