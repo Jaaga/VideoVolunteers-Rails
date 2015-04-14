@@ -204,6 +204,15 @@ class TrackersController < ApplicationController
     redirect_to trackers_path(recent: true)
   end
 
+
+  def by_month
+    if params[:state]
+      @trackers = Tracker.where("strftime('%m',created_at) = ? AND state_name = ?", Time.new.strftime('%m'), params[:state])
+    else
+      @trackers = Tracker.where("strftime('%m',created_at) = ?", Time.new.strftime('%m'))
+    end
+  end
+
   private
 
 
