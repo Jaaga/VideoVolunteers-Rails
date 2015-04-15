@@ -39,17 +39,16 @@ module CollectionsHelper
   end
 
   def ratings_collection
-    [['1 - Poor (CC must reshoot)', :'1 - Poor (CC must reshoot)'],
-     ['2 - Mediocre', :'2 - Mediocre'],
-     ['3 - Very Good', :'3 - Very Good'],
-     ["4 - One of the Best Videos I've Seen",
-     :"4 - One of the Best Videos I've Seen"]]
+    [['1 - Poor (CC must reshoot)', :'1'],
+     ['2 - Mediocre', :'2'],
+     ['3 - Very Good', :'3'],
+     ["4 - One of the Best Videos I've Seen", :"4"]]
   end
 
   def themes_collection
-    [["Arts and Culture", :"Arts and Culture"],
+    [["Art & Culture", :"Art & Culture"],
      ["Caste", :Caste], ["Gender", :Gender],
-     ["Religion and Identity", :"Religion and Identity"],
+     ["Religion & Identity", :"Religion & Identity"],
      ["Indigenous People", :"Indigenous People"],
      ["Governance and Accountability", :"Governance and Accountability"],
      ["Corruption", :Corruption], ["Health", :Health],

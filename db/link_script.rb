@@ -1,3 +1,16 @@
+##set names proper
+def set_cc_names_proper
+  ccs = Cc.all
+  ccs.each do |cc|
+    first_name = cc.first_name
+    last_name = cc.last_name
+    cc.update_attribute(:first_name, "#{first_name.split.map(&:capitalize).join(' ')}")
+    cc.update_attribute(:last_name, "#{last_name.split.map(&:capitalize).join(' ')}")
+    cc.update_attribute(:full_name, "#{first_name} #{last_name}")
+  end
+end
+
+
 # Link the CCs to their respective state
 def cc_link
   ccs = Cc.all
@@ -93,3 +106,9 @@ def is_impact
     end
   end
 end
+
+
+
+
+
+

@@ -7,7 +7,8 @@ class Tracker < ActiveRecord::Base
   belongs_to :cc
 
   before_save :set_district_and_mentor
-  before_save :impact_errors, :proper_uid, :set_production_status
+  before_save :impact_errors
+  #before_save :set_production_status, :proper_uid
   after_save  :set_cc_dates
   before_destroy :unlink_impact
 
@@ -169,6 +170,7 @@ class Tracker < ActiveRecord::Base
         self.production_status = "Footage on hold"
       end
       if self.footage_recieved == true && self.proceed_with_edit_and_payment == 'Cleared'
+        self.proceed_with_edit_and_payment_date = Date.today.to_s
         self.production_status = "Footage approved for payment"
       end
       if self.footage_recieved == true && self.editor_currently_in_charge.blank? != true

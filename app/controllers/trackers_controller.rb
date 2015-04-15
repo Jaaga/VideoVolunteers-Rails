@@ -64,7 +64,7 @@ class TrackersController < ApplicationController
       @columns = view_context.array_set
       @unique = view_context.unique_set
       @context = "new"
-      @sections = [:general_info, :is_impact, :extra, :impact_achieved, :impact_video, :screening, :final_video_title, :url]
+      @sections = [:general_info, :impact_achieved, :impact_video, :screening, :final]
     else
       @tracker = Tracker.new
       @state = State.find_by(name: params[:state_name])

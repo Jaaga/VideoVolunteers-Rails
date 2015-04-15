@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150413115502) do
+ActiveRecord::Schema.define(version: 20150414134925) do
 
   create_table "ccs", force: :cascade do |t|
     t.string  "full_name",                                           null: false
@@ -202,6 +202,8 @@ ActiveRecord::Schema.define(version: 20150413115502) do
     t.string   "rough_cut_editor"
     t.boolean  "rough_cut_reviewed",                  default: false
     t.boolean  "uploaded",                            default: false
+    t.date     "proceed_with_edit_and_payment_date"
+    t.date     "payment_date"
   end
 
   add_index "trackers", ["uid"], name: "index_trackers_on_uid", unique: true
