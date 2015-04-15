@@ -13,17 +13,17 @@
 
 = render "trackers/forms", sections: @sections  
 
-- if @tracker.impact_uid.blank?
-  = simple_form_for @tracker do |f|
-    = f.error_notification
-    %h2 Impact Video?
-    = f.input :is_impact, label: tracker_name_modifier('is_impact')
-    - unless @tracker.uid.include? '_impact'
-      = f.input :original_uid, as: :select, collection: @state_videos,
-      label: tracker_name_modifier('original_uid')
-      = f.input :no_original_uid, label: tracker_name_modifier('no_original_uid')
-    = f.submit 'Save', class: 'btn btn-primary btn-block'
-  %br
-  = link_to '^ back to top ^', edit_tracker_path(@tracker, anchor: 'top')
+/ - if @tracker.impact_uid.blank?
+/   = simple_form_for @tracker do |f|
+/     = f.error_notification
+/     %h2 Impact Video?
+/     = f.input :is_impact, label: tracker_name_modifier('is_impact')
+/     - unless @tracker.uid.include? '_impact'
+/       = f.input :original_uid, as: :select, collection: @state_videos,
+/       label: tracker_name_modifier('original_uid')
+/       = f.input :no_original_uid, label: tracker_name_modifier('no_original_uid')
+/     = f.submit 'Save', class: 'btn btn-primary btn-block'
+/   %br
+/   = link_to '^ back to top ^', edit_tracker_path(@tracker, anchor: 'top')
 %br
 %p= link_to "Back to #{ @tracker.uid }", tracker_path(@tracker)

@@ -15,8 +15,8 @@ module CollectionsHelper
       return staff_collection
     elsif column == 'project'
       return [['None', :None], ['Oak', :Oak], ['PACS', :PACS]]
-    elsif column == 'edit_status'
-      return edit_status_collection
+    elsif column == 'production_status'
+      return production_status_collection
     elsif column == 'office_responsible'
       return [['State', :State], ['HQ', :HQ]]
     elsif column == 'proceed_with_edit_and_payment'
@@ -29,23 +29,26 @@ module CollectionsHelper
       return editor_changes_collection
     elsif column == 'translation_info'
       return translation_collection
+    elsif column == 'edit_status'
+      return edit_status_collection
+    elsif column == 'production_status'
+      return production_status_collection
     elsif column == 'impact_video_status'
       return impact_status_collection
     end
   end
 
   def ratings_collection
-    [['1 - Poor (CC must reshoot)', :'1 - Poor (CC must reshoot)'],
-     ['2 - Mediocre', :'2 - Mediocre'],
-     ['3 - Very Good', :'3 - Very Good'],
-     ["4 - One of the Best Videos I've Seen",
-     :"4 - One of the Best Videos I've Seen"]]
+    [['1 - Poor (CC must reshoot)', :'1'],
+     ['2 - Mediocre', :'2'],
+     ['3 - Very Good', :'3'],
+     ["4 - One of the Best Videos I've Seen", :"4"]]
   end
 
   def themes_collection
-    [["Arts and Culture", :"Arts and Culture"],
+    [["Art & Culture", :"Art & Culture"],
      ["Caste", :Caste], ["Gender", :Gender],
-     ["Religion and Identity", :"Religion and Identity"],
+     ["Religion & Identity", :"Religion & Identity"],
      ["Indigenous People", :"Indigenous People"],
      ["Governance and Accountability", :"Governance and Accountability"],
      ["Corruption", :Corruption], ["Health", :Health],
@@ -61,16 +64,18 @@ module CollectionsHelper
   end
 
   def types_collection
-    [["Entitlement Violation", :"Entitlement Violation"],
-     ["Human Interest", :"Human Interest"],
+    [["Don't Know", :"Don't Know"],
+     ["CC Profile", :"CC Profile"],
+     ["Community Profile", :"Community Profile"],
+     ["Entitlement Violation", :"Entitlement Violation"],
+     ["Inspirational Videos", :"Inspirational Videos"],
      ["Human Rights Violation", :"Human Rights Violation"],
-     ["CC Profile", :"CC Profile"], ["Community Profile", :"Community Profile"],
-     ["Mini-doc", :"Mini-doc"], ["Success", :Success]].sort
+     ["Mini-doc", :"Mini-doc"], 
+     ["Success", :Success]]
   end
 
   def campaigns_collection
-    [["None", :None], ["ARTICLE17", :"ARTICLE17"],
-     ["Anti-Untouchability", :"Anti-Untouchability"],
+    [["None", :None], ["ARTICLE17 (Anti-Untouchability)", :"ARTICLE17 (Anti-Untouchability)"],
      ["RTE-Pass ya Fail", :"RTE-Pass ya Fail"],
      ["Forced Evictions", :"Forced Evictions"],
      ["Maternal Health", :"Maternal Health"],
@@ -108,17 +113,20 @@ module CollectionsHelper
      ["Sajad Rasool", :"Sajad Rasool"]].sort
   end
 
-  def edit_status_collection
-    [["story pitched (no footage yet)", :"story pitched (no footage yet)"],
-     ["footage received", :"footage received"],
-     ["footage rated and approved for payment", :"footage rated and approved for payment"],
-     ["footage on hold", :"footage on hold"],
-     ["footage to edit’", :"footage to edit’"],
-     ["‘rough cuts to clean’", :"‘rough cuts to clean’"],
-     ["rough cuts to review", :"rough cuts to review"],
-     ["to finalize and upload", :"to finalize and upload"],
-     ["uploaded", :uploaded], ["edit on hold", :"edit on hold"],
-     ["problem video", :"problem video"]]
+  def production_status_collection
+    [["Story pitched (no footage yet)", :"Story pitched (no footage yet)"],
+     ["Footage received", :"Footage received"],
+     ["Footage on hold", :"Footage on hold"],
+     ["Footage approved for payment", :"Footage approved for payment"],
+     ["Footage to edit", :"Footage to edit"],
+     ["Edit on hold", :"Edit on hold"],
+     ["Edit Done", :"Edit Done"],
+     ["Rough cut sent to Goa", :"Rough cut sent to Goa"],
+     ["Rough cuts to clean", :"Rough cuts to clean"],
+     ["Rough cuts to review", :"Rough cuts to review"],
+     ["To finalize and upload", :"To finalize and upload"],
+     ["Uploaded", :"Uploaded"], 
+     ["Problem video", :"Problem video"]]
   end
 
   def subtitle_collection
@@ -149,9 +157,19 @@ module CollectionsHelper
   end
 
   def divisions_collection
-    [["State Coordinator", :"State Coordinator"],
+    [["State Coordinator", :"State Coordinator"], 
+     ["Production Manager", :"Production Manager"],
+     ["Editor", :"Editor"],
+     ["Reviewer", :"Reviewer"],
      ["Training & Mentoring", :"Training & Mentoring"],
-     ["Communications", :"Communications"], ["Production", :"Production"],
-     ["Executive Directors", :"Executive Directors"]]
+     ["Communications", :"Communication"],
+     ["Executive Directors", :"Executive Director"]]
   end
+
+  def edit_status_collection
+    [["On hold", :"On hold"],
+     ["Done", :"Done"],
+     ["Problem video", :"Problem video"]]
+  end
+
 end

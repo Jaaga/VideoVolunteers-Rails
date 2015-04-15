@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150410070445) do
+ActiveRecord::Schema.define(version: 20150414134925) do
 
   create_table "ccs", force: :cascade do |t|
     t.string  "full_name",                                           null: false
@@ -35,15 +35,15 @@ ActiveRecord::Schema.define(version: 20150410070445) do
     t.string  "gender"
     t.text    "address"
     t.string  "block"
-    t.integer "pincode"
+    t.string  "pincode"
     t.string  "email"
     t.string  "educational_qualifications"
     t.string  "occupation"
-    t.integer "personal_monthly_earning"
+    t.string  "personal_monthly_earning"
     t.string  "parents_occupation"
-    t.integer "monthly_household_income"
-    t.integer "no_of_people_in_household"
-    t.integer "avg_income_per_person"
+    t.string  "monthly_household_income"
+    t.string  "no_of_people_in_household"
+    t.string  "avg_income_per_person"
     t.string  "social_category"
     t.string  "name_of_category"
     t.string  "religion"
@@ -52,7 +52,7 @@ ActiveRecord::Schema.define(version: 20150410070445) do
     t.string  "issue_concerned"
     t.string  "opinion_on_media"
     t.boolean "operate_still_camera",                default: false
-    t.boolean "opearte_video_camera",                default: false
+    t.boolean "operate_video_camera",                default: false
     t.string  "experience_with_camera"
     t.boolean "have_mobile_phone",                   default: false
     t.boolean "phone_has_camera",                    default: false
@@ -64,31 +64,27 @@ ActiveRecord::Schema.define(version: 20150410070445) do
     t.boolean "knows_video_editing",                 default: false
     t.boolean "knows_graphics_multimedia",           default: false
     t.string  "access_to_internet"
-    t.float   "internet_access_distance"
+    t.string  "internet_access_distance"
     t.string  "speaking_languages"
     t.string  "reading_languages"
     t.string  "first_refrence_first_name"
     t.string  "first_refrence_last_name"
     t.string  "first_refrence_organization"
-    t.integer "first_refrence_phone"
+    t.string  "first_refrence_phone"
     t.string  "first_refrence_email"
     t.string  "second_refrence_second_name"
     t.string  "second_refrence_last_name"
     t.string  "second_refrence_organization"
-    t.integer "second_refrence_phone"
+    t.string  "second_refrence_phone"
     t.string  "second_refrence_email"
-    t.boolean "fellowship_payment_accept",           default: true
     t.text    "how_you_know_india_unheard"
     t.boolean "can_do_a_video_a_month",              default: true
     t.boolean "can_attend_training",                 default: true
     t.boolean "can_attend_regular_training",         default: true
     t.boolean "can_attend_quarterly_meet",           default: true
     t.date    "date_applied"
-    t.text    "program_coordinator_note"
-    t.text    "director_note"
     t.string  "accepted"
     t.string  "status"
-    t.text    "sac_notes"
   end
 
   create_table "states", force: :cascade do |t|
@@ -98,9 +94,9 @@ ActiveRecord::Schema.define(version: 20150410070445) do
   end
 
   create_table "trackers", force: :cascade do |t|
-    t.string   "uid",                                 null: false
-    t.string   "state_name",                          null: false
-    t.string   "cc_name",                             null: false
+    t.string   "uid",                                                   null: false
+    t.string   "state_name",                                            null: false
+    t.string   "cc_name",                                               null: false
     t.string   "district"
     t.string   "mentor"
     t.string   "iu_theme"
@@ -197,6 +193,17 @@ ActiveRecord::Schema.define(version: 20150410070445) do
     t.string   "production_status"
     t.text     "training_suggestion"
     t.string   "raw_footage_copy_goa"
+    t.string   "tracker_type",                        default: "Story"
+    t.boolean  "footage_recieved"
+    t.string   "edit_status"
+    t.boolean  "rough_cut_sent_to_goa",               default: false
+    t.date     "rough_cut_sent_to_goa_date"
+    t.boolean  "rough_cut_cleaned",                   default: false
+    t.string   "rough_cut_editor"
+    t.boolean  "rough_cut_reviewed",                  default: false
+    t.boolean  "uploaded",                            default: false
+    t.date     "proceed_with_edit_and_payment_date"
+    t.date     "payment_date"
   end
 
   add_index "trackers", ["uid"], name: "index_trackers_on_uid", unique: true
@@ -221,6 +228,8 @@ ActiveRecord::Schema.define(version: 20150410070445) do
     t.string   "division"
     t.boolean  "admin",                  default: false
     t.boolean  "approved",               default: false, null: false
+    t.string   "name"
+    t.string   "state"
   end
 
   add_index "users", ["approved"], name: "index_users_on_approved"

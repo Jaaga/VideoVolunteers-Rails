@@ -1,20 +1,16 @@
 = simple_form_for @tracker do |f|
   - @sections.each do |section|
-    - puts section
     %a{ id: "#{ section }" }
 
     %h2= tracker_name_modifier(section.to_s)
     = f.error_notification  
     - if @context == 'new'
-      = f.input :cc_id, as: :select, collection: @state.ccs.order('full_name'),
-        value_method: :id, label_method: :full_name, label: 'CC Name', required: true
       = f.input :state_name, as: :hidden, :input_html => { :value => @state.name }
     - @columns[section].each do |column|
       - if column.include? "_date"
         -# Not putting limits on dates because the imported data can be from
         -# years ago.
-        = f.input :"#{ column }", label: tracker_name_modifier(column),
-          include_blank: true
+        = f.input :"#{ column }", label: tracker_name_modifier(column), :input_html => { type: :date}, as: :string, include_blank: true
       - elsif column.include? "_rating"
         = f.input :"#{ column }", as: :select,
           collection: ratings_collection,
@@ -30,17 +26,23 @@
         = f.input :"#{ column }", as: :integer, label: tracker_name_modifier(column)
       - elsif column == 'cc_impact_action'
         = f.input :cc_impact_action, as: :boolean, label: tracker_name_modifier(column)
+      - elsif column == "cc_name"
+        = f.input :cc_id, as: :select, collection: @state.ccs.order('full_name'),
+          value_method: :id, label_method: :full_name, label: 'CC Name', required: true
       - else
         = f.input :"#{ column }", label: tracker_name_modifier(column)
 
-    - if @context == 'new'
-      %h2 Impact Video?
-      = f.input :is_impact, label: tracker_name_modifier('is_impact')
-      = f.input :original_uid, as: :select, collection: @state_videos,
-        label: tracker_name_modifier('original_uid')
-      = f.input :no_original_uid, label: tracker_name_modifier('no_original_uid')
+    / - if @context == 'new'
+    /   %h2 Impact Video?
+    /   = f.input :is_impact, label: tracker_name_modifier('is_impact')
+    /   = f.input :original_uid, as: :select, collection: @state_videos,
+    /     label: tracker_name_modifier('original_uid')
+    /   = f.input :no_original_uid, label: tracker_name_modifier('no_original_uid')
 
     = f.submit 'Save', class: 'btn btn-primary btn-block'
     %br
     - if @context == 'edit'
       = link_to '^ back to top ^', edit_tracker_path(@tracker, anchor: 'top')
+
+
+

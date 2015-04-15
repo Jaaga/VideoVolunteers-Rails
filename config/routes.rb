@@ -17,10 +17,14 @@ Rails.application.routes.draw do
     end
   end
 
+  match '/trackers/monthly', to: 'trackers#by_month', via: :get
+
   resources :trackers do
     member do
       get :note_form
       patch :note
     end
   end
+
+
 end

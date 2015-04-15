@@ -1,0 +1,29 @@
+= provide(:title, "Filter By Month")
+
+%h1.text-center Monthly Report
+- a = [["On hold", :"On hold"],["Done", :"Done"], ["Problem video", :"Problem video"]]
+
+= form_tag trackers_monthly_path, method: "get", class: "form-group col-md-12" do 
+	%div.col-md-1
+		%h4 Status:
+	%div.col-md-4
+		= select_tag "status", options_for_select(["Story Pitched", "Payment Cleared", "Uploaded"], "Visa"), {class: "form-control"}
+	%div.col-md-2
+		= select_month(Date.today, options = {}, html_options = {class: "form-control col-md-3"})
+	%div.col-md-2
+		= select_year(Date.today, options = {}, html_options = {class: "form-control col-md-6"})
+	= submit_tag("Search", class: "btn btn-success")
+
+%h3.text-center Stories Pitched this Month
+.table-responsive
+	%table.table.table-bordered.table-striped.table-condensed
+		%thead
+		-@trackers.each do |x|
+			%tr
+				%td
+					= x.uid
+
+
+
+
+

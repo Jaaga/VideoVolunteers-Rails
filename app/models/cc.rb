@@ -19,6 +19,7 @@ class Cc < ActiveRecord::Base
   validates :phone, length: { maximum: 60 }
   validates :mentor, presence: true, length: { maximum: 50 }
 
+
   private
 
     # Capitalizes the column data from the capitalize array.

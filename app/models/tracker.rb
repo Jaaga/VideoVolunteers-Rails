@@ -1,13 +1,14 @@
 class Tracker < ActiveRecord::Base
   attr_accessor :cc_impact_action
 
-  YESNO = %w(yes no)
+  YESNO = %w(Yes No)
 
   belongs_to :state
   belongs_to :cc
 
   before_save :set_district_and_mentor
   before_save :impact_errors
+  #before_save :set_production_status, :proper_uid
   after_save  :set_cc_dates
   before_destroy :unlink_impact
 
@@ -34,6 +35,41 @@ class Tracker < ActiveRecord::Base
   validates :screening_done, inclusion: YESNO, allow_blank: true
   validates :officials_at_screening, inclusion: YESNO, allow_blank: true
   validates :impact_video_approved, inclusion: YESNO, allow_blank: true
+
+
+
+  # def Tracker.show_to_sc(state, view)
+  #   if state == 'ROI'
+  #     # Get a list of all ROI state IDs and find the trackers based on this list
+  #     @states = State.where(roi: true)
+  #     roi_states = @states.map{ |state| state.id }.to_a
+  #     if view == 'pitched'
+  #       @trackers = Tracker.where("state_id IN (?) AND footage_recieved = ? AND proceed_with_edit_and_payment != ?", roi_states, false, 'On hold').order("updated_at DESC")
+  #     elsif view == 'produced'
+  #       @trackers = Tracker.where("state_id IN (?) AND footage_recieved = ? AND proceed_with_edit_and_payment = ?", roi_states, true, 'Cleared').order("updated_at DESC")
+  #     elsif view == 'hold'
+  #       @trackers = Tracker.where("state_id IN (?) AND footage_recieved = ? AND proceed_with_edit_and_payment = ?", roi_states, true, 'On hold').order("updated_at DESC")
+  #     end
+  #   else
+  #     if view == 'pitched'
+  #       @trackers = Tracker.where("state_name = ? AND footage_recieved = ? AND proceed_with_edit_and_payment != ?", "#{state}", false, 'On hold').order("updated_at DESC")
+  #     elsif view == 'produced'
+  #       @trackers = Tracker.where("state_name = ? AND footage_recieved = ? AND proceed_with_edit_and_payment = ?", "#{state}", true, 'Cleared').order("updated_at DESC")
+  #       # @title_header = "Raw Footage Has Not Been Reviewed and Footage is in State"
+  #     elsif view == 'hold'
+  #       @trackers = Tracker.where("state_name = ? AND footage_recieved = ? AND proceed_with_edit_and_payment = ?", "#{state}", true, 'On hold').order("updated_at DESC")
+  #       # @title_header = "Edit and Payment is on Hold"
+  #     end
+  #   end
+  # end
+
+  def Tracker.show_to_editor(view, name)
+    if view == 'edit'
+      @trackers = Tracker.where("editor_currently_in_charge = ?", "#{name}").order("updated_at DESC")
+    elsif view == 'finalize'
+      @trackers = Tracker.where("editor_currently_in_charge = ? AND finalized_date IS NOT NULL", "#{name}").order("updated_at DESC")
+    end
+  end
 
 
   private
@@ -107,4 +143,64 @@ class Tracker < ActiveRecord::Base
         linked_tracker.update_attribute(:impact_uid, nil)
       end
     end
+
+    def proper_uid
+      if (self.is_impact.blank? || self.is_impact == false) 
+        if self.footage_recieved && self.proceed_with_edit_and_payment == 'Cleared'
+          self.tracker_type = "Issue"
+          self.uid = "#{self.state.state_abb}_"+self.uid.gsub(/[^0-9]/,"")
+        else
+          self.tracker_type = "Story"
+          self.uid = "#{self.state.state_abb}_"+self.uid.gsub(/[^0-9]/,"")+"_story"
+        end
+      else
+        self.tracker_type = "Impact"
+        self.uid = "#{self.state.state_abb}_"+self.uid.gsub(/[^0-9]/,"")+"_impact"
+      end
+    end
+
+    def set_production_status
+      if self.footage_recieved == false
+        self.production_status = "Story pitched (no footage yet)"
+      end
+      if self.footage_recieved == true
+        self.production_status = "Footage received"
+      end
+      if self.footage_recieved == true && self.proceed_with_edit_and_payment == 'On hold'
+        self.production_status = "Footage on hold"
+      end
+      if self.footage_recieved == true && self.proceed_with_edit_and_payment == 'Cleared'
+        self.proceed_with_edit_and_payment_date = Date.today.to_s
+        self.production_status = "Footage approved for payment"
+      end
+      if self.footage_recieved == true && self.editor_currently_in_charge.blank? != true
+        self.production_status = "Footage to edit"
+      end
+      if self.footage_recieved == true && self.editor_currently_in_charge.blank? != true && self.edit_status = "On hold"
+        self.production_status = "Edit on hold"
+      end
+      if self.footage_recieved == true && self.editor_currently_in_charge.blank? != true && self.edit_status = "Done"
+        self.production_status = "Edit Done"
+      end
+      if self.footage_recieved == true && self.edit_status = "Done" && self.rough_cut_sent_to_goa == true
+        self.production_status = "Rough cut sent to Goa"
+        self.office_responsible = "HQ"
+      end
+      if self.edit_status == true && self.edit_received_in_goa_date.blank? == false
+        self.production_status = "Rough cuts to clean"
+      end
+      if self.edit_status == true && self.rough_cut_cleaned == true
+        self.production_status == "Rough cuts to review"
+      end
+      if self.rough_cut_cleaned == true && rough_cut_reviewed == true
+        self.production_status = "To finalize and upload"
+      end
+      if self.rough_cut_reviewed == true && self.uploaded == true
+        self.production_status = "Uploaded"
+      end
+      if self.edit_status == "Problem video"
+        self.production_status = "Problem video"
+      end
+    end
+
 end

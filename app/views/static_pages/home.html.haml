@@ -1,144 +1,163 @@
 = provide(:title, "Home")
 
-%h1.text-center Latest Stats
-%br/
+- if current_user.division = "State Coordinator"
+  %h1.text-center Latest Stats From #{current_user.state}
+  %br/
 
-%h3 General
-.table-responsive
-  %table.table.table-bordered.table-striped
-    %thead
-      %tr
-        %th
-        - @table_head.each do |head|
-          %th= head
-    %tbody
-      %tr
-        %td No. of story ideas pitched
-        -@table_head.each_with_index do |value, key|
-          %td= @stats[0][key]
-      %tr
-        %td No. of CCs who pitched story ideas
-        -@table_head.each_with_index do |value, key|
-          %td= @stats[1][key]
-      %tr
-        %td No. of CCs who made issue videos
-        -@table_head.each_with_index do |value, key|
-          %td= @stats[2][key]
-      %tr
-        %td No. of inactive CCs who made issue videos this quarter
-        -@table_head.each_with_index do |value, key|
-          %td= @stats[3][key]
-      %tr.double-border
-        %td No. of story ideas pitched so far this calendar month
-        -@table_head.each_with_index do |value, key|
-          %td= @stats[4][key]
-      %tr
-        %td No. of story ideas pitched in the last 3 months
-        -@table_head.each_with_index do |value, key|
-          %td= @stats[5][key]
-      %tr
-        %td No. of CC's who pitched a story this month
-        -@table_head.each_with_index do |value, key|
-          %td= @stats[6][key]
-      %tr
-        %td No. of CC's who pitched a story in the last 3 months
-        -@table_head.each_with_index do |value, key|
-          %td= @stats[7][key]
-      %tr.double-border
-        %td No. of issue videos made so far this month
-        -@table_head.each_with_index do |value, key|
-          %td= @stats[8][key]
-      %tr
-        %td No. of issue videos made in the last 3 months
-        -@table_head.each_with_index do |value, key|
-          %td= @stats[9][key]
-      %tr
-        %td No. of CC's who made an issue video this month
-        -@table_head.each_with_index do |value, key|
-          %td= @stats[10][key]
-      %tr
-        %td No. of CC's who made an issue video in the last three months
-        -@table_head.each_with_index do |value, key|
-          %td= @stats[11][key]
-      %tr.double-border
-        %td No. of impacts achived this month
-        -@table_head.each_with_index do |value, key|
-          %td= @stats[12][key]
-      %tr
-        %td No. of CC's who achieved an impact this month
-        -@table_head.each_with_index do |value, key|
-          %td= @stats[13][key]
-      %tr
-        %td No. of impacts achieved in the last 3 months
-        -@table_head.each_with_index do |value, key|
-          %td= @stats[14][key]
-      %tr
-        %td No. of CC's who achieved an impact in the last 3 months
-        -@table_head.each_with_index do |value, key|
-          %td= @stats[15][key]
+  %h3 General
+  .table-responsive
+    %table.table.table-bordered.table-striped
+      %thead
+        %tr
+          %th
+            %th #{current_user.state}
+      %tbody
+        - find_collection('production_status').each do |key, value|
+          %tr
+            %td= key
+            %td= Tracker.where(state_name: current_user.state, production_status: value).count
 
-%h3 In State
-.table-responsive
-  %table.table.table-bordered.table-striped
-    %thead
-      %tr
-        %th
-        - @table_head.each do |head|
-          %th= head
-    %tbody
-      %tr
-        %td Videos on hold
-        -@table_head.each_with_index do |value, key|
-          %td= @stats[16][key]
-      %tr
-        %td State Edit Bank: total approved videos whose edits haven't reached goa
-        -@table_head.each_with_index do |value, key|
-          %td= @stats[17][key]
-      %tr
-        %td Approved videos
-        -@table_head.each_with_index do |value, key|
-          %td= @stats[18][key]
+  
 
-%h3 In Goa
-.table-responsive
-  %table.table.table-bordered.table-striped
-    %thead
-      %tr
-        %th
-        - @table_head.each do |head|
-          %th= head
-    %tbody
-      %tr
-        %td Videos on hold
-        -@table_head.each_with_index do |value, key|
-          %td= @stats[19][key]
-      %tr
-        %td Videos to be edited
-        -@table_head.each_with_index do |value, key|
-          %td= @stats[20][key]
-      %tr
-        %td Videos to be reviewed
-        -@table_head.each_with_index do |value, key|
-          %td= @stats[21][key]
-      %tr
-        %td Videos to be finalized and uploaded
-        -@table_head.each_with_index do |value, key|
-          %td= @stats[22][key]
+-else
+  %h1.text-center Latest Stats
+  %br/
+  %h3 General
+  .table-responsive
+    %table.table.table-bordered.table-striped
+      %thead
+        %tr
+          %th
+          - @table_head.each do |head|
+            %th= head
+      %tbody
+        %tr
+          %td No. of story ideas pitched
+          -@table_head.each_with_index do |value, key|
+            %td= @stats[0][key]
+        %tr
+          %td No. of CCs who pitched story ideas
+          -@table_head.each_with_index do |value, key|
+            %td= @stats[1][key]
+        %tr
+          %td No. of CCs who made issue videos
+          -@table_head.each_with_index do |value, key|
+            %td= @stats[2][key]
+        %tr
+          %td No. of inactive CCs who made issue videos this quarter
+          -@table_head.each_with_index do |value, key|
+            %td= @stats[3][key]
+        %tr.double-border
+          %td No. of story ideas pitched so far this calendar month
+          -@table_head.each_with_index do |value, key|
+            %td= @stats[4][key]
+        %tr
+          %td No. of story ideas pitched in the last 3 months
+          -@table_head.each_with_index do |value, key|
+            %td= @stats[5][key]
+        %tr
+          %td No. of CC's who pitched a story this month
+          -@table_head.each_with_index do |value, key|
+            %td= @stats[6][key]
+        %tr
+          %td No. of CC's who pitched a story in the last 3 months
+          -@table_head.each_with_index do |value, key|
+            %td= @stats[7][key]
+        %tr.double-border
+          %td No. of issue videos made so far this month
+          -@table_head.each_with_index do |value, key|
+            %td= @stats[8][key]
+        %tr
+          %td No. of issue videos made in the last 3 months
+          -@table_head.each_with_index do |value, key|
+            %td= @stats[9][key]
+        %tr
+          %td No. of CC's who made an issue video this month
+          -@table_head.each_with_index do |value, key|
+            %td= @stats[10][key]
+        %tr
+          %td No. of CC's who made an issue video in the last three months
+          -@table_head.each_with_index do |value, key|
+            %td= @stats[11][key]
+        %tr.double-border
+          %td No. of impacts achived this month
+          -@table_head.each_with_index do |value, key|
+            %td= @stats[12][key]
+        %tr
+          %td No. of CC's who achieved an impact this month
+          -@table_head.each_with_index do |value, key|
+            %td= @stats[13][key]
+        %tr
+          %td No. of impacts achieved in the last 3 months
+          -@table_head.each_with_index do |value, key|
+            %td= @stats[14][key]
+        %tr
+          %td No. of CC's who achieved an impact in the last 3 months
+          -@table_head.each_with_index do |value, key|
+            %td= @stats[15][key]
 
-%h3 Global
-.table-responsive
-  %table.table.table-bordered.table-striped
-    %thead
-      %tr
-        %th
-        - @table_head.each do |head|
-          %th= head
-    %tbody
-      %tr
-        %td Total UID's
-        -@table_head.each_with_index do |value, key|
-          %td= @stats[23][key]
-      %tr
-        %td Total videos uploaded to YT
-        -@table_head.each_with_index do |value, key|
-          %td= @stats[24][key]
+  %h3 In State
+  .table-responsive
+    %table.table.table-bordered.table-striped
+      %thead
+        %tr
+          %th
+          - @table_head.each do |head|
+            %th= head
+      %tbody
+        %tr
+          %td Videos on hold
+          -@table_head.each_with_index do |value, key|
+            %td= @stats[16][key]
+        %tr
+          %td State Edit Bank: total approved videos whose edits haven't reached goa
+          -@table_head.each_with_index do |value, key|
+            %td= @stats[17][key]
+        %tr
+          %td Approved videos
+          -@table_head.each_with_index do |value, key|
+            %td= @stats[18][key]
+
+  %h3 In Goa
+  .table-responsive
+    %table.table.table-bordered.table-striped
+      %thead
+        %tr
+          %th
+          - @table_head.each do |head|
+            %th= head
+      %tbody
+        %tr
+          %td Videos on hold
+          -@table_head.each_with_index do |value, key|
+            %td= @stats[19][key]
+        %tr
+          %td Videos to be edited
+          -@table_head.each_with_index do |value, key|
+            %td= @stats[20][key]
+        %tr
+          %td Videos to be reviewed
+          -@table_head.each_with_index do |value, key|
+            %td= @stats[21][key]
+        %tr
+          %td Videos to be finalized and uploaded
+          -@table_head.each_with_index do |value, key|
+            %td= @stats[22][key]
+
+  %h3 Global
+  .table-responsive
+    %table.table.table-bordered.table-striped
+      %thead
+        %tr
+          %th
+          - @table_head.each do |head|
+            %th= head
+      %tbody
+        %tr
+          %td Total UID's
+          -@table_head.each_with_index do |value, key|
+            %td= @stats[23][key]
+        %tr
+          %td Total videos uploaded to YT
+          -@table_head.each_with_index do |value, key|
+            %td= @stats[24][key]

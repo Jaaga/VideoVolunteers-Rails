@@ -3,68 +3,43 @@ class TrackersController < ApplicationController
 
   def index
     if params[:recent]
-      @trackers = Tracker.where(updated_at: Date.today-14...Date.today+1).order("updated_at DESC").paginate(page: params[:page], per_page: 40)
+      if params[:state]
+        @trackers = Tracker.where(updated_at: Date.today-14...Date.today+1, state_name: params[:state]).order("updated_at DESC").paginate(page: params[:page], per_page: 40)
+      else
+        @trackers = Tracker.where(updated_at: Date.today-14...Date.today+1).order("updated_at DESC").paginate(page: params[:page], per_page: 40)
+      end
       @title = "Recent Trackers"
     elsif !params[:state_name].blank?
-      @state = State.find_by(name: params[:state_name])
-      @trackers = @state.trackers.order("uid DESC").paginate(page: params[:page], per_page: 40)
-      @title = "#{ @state.name }'s Videos"
+      @trackers = State.find_by(name: params[:state_name]).trackers.order("uid DESC").paginate(page: params[:page], per_page: 40)
+      @title = "#{params[:state_name]}'s Videos"
     elsif !params[:view].blank?
       if [params[:view]].any? { |x| ['edit', 'finalize'].include?(x) }
         @title = 'Editor View'
-        if params[:view] == 'edit'
-          @trackers = Tracker.where("editor_currently_in_charge = ?", "#{params[:name]}").order("updated_at DESC").paginate(page: params[:page], per_page: 40)
-          @title_header = "Cleared For Edit"
-        elsif params[:view] == 'finalize'
-          @trackers = Tracker.where("editor_currently_in_charge = ? AND finalized_date IS NOT NULL", "#{params[:name]}").order("updated_at DESC").paginate(page: params[:page], per_page: 40)
-          @title_header = "Has Been Finalized"
-        end
-      elsif [params[:view]].any? { |x| ['pitched', 'pending', 'hold'].include?(x) }
-        @title = 'State Coordinator View'
-        if params[:name] == 'ROI'
-          # Get a list of all ROI state IDs and find the trackers based on this list
-          @states = State.where(roi: true)
-          roi_states = @states.map{ |state| state.id }.to_a
-          if params[:view] == 'pitched'
-            @trackers = Tracker.where("state_id IN (?) AND story_pitch_date IS NOT NULL", roi_states).order("updated_at DESC").paginate(page: params[:page], per_page: 40)
-            @title_header = "Has been Pitched But Has No Footage"
-          elsif params[:view] == 'pending'
-            @trackers = Tracker.where("state_id IN (?) AND footage_check_date IS NULL AND office_responsible = ?", roi_states, 'State').order("updated_at DESC").paginate(page: params[:page], per_page: 40)
-            @title_header = "Raw Footage Has Not Been Reviewed and Footage is in State"
-          elsif params[:view] == 'hold'
-            @trackers = Tracker.where("state_id IN (?) AND proceed_with_edit_and_payment = ?", roi_states, 'On hold').order("updated_at DESC").paginate(page: params[:page], per_page: 40)
-            @title_header = "Edit and Payment is on Hold"
-          end
-        else
-          if params[:view] == 'pitched'
-            @trackers = Tracker.where("state_name = ? AND story_pitch_date IS NOT NULL", "#{params[:name]}").order("updated_at DESC").paginate(page: params[:page], per_page: 40)
-            @title_header = "Has been Pitched But Has No Footage"
-          elsif params[:view] == 'pending'
-            @trackers = Tracker.where("state_name = ? AND footage_check_date IS NULL AND office_responsible = ?", "#{params[:name]}", 'State').order("updated_at DESC").paginate(page: params[:page], per_page: 40)
-            @title_header = "Raw Footage Has Not Been Reviewed and Footage is in State"
-          elsif params[:view] == 'hold'
-            @trackers = Tracker.where("state_name = ? AND proceed_with_edit_and_payment = ?", "#{params[:name]}", 'On hold').order("updated_at DESC").paginate(page: params[:page], per_page: 40)
-            @title_header = "Edit and Payment is on Hold"
-          end
-        end
+        @trackers = Tracker.show_to_editor(params[:view], params[:name]).paginate(page: params[:page], per_page: 40)
+        titles = {edit: "Cleared For Edit", finalize: "Has Been Finalized"}
+        @title_header = titles[:"#{params[:view]}"] 
+      elsif [params[:view]].any? { |x| view_context.find_collection('production_status').map{|y| y[0]}.include?(x) }
+        @title = params[:name]+' Coordinator View'
+        @title_header = params[:view]
+        @trackers = Tracker.where(state_name: params[:name], production_status: params[:view]).paginate(page: params[:page], per_page: 40)
       end
     else
       @trackers = Tracker.all.paginate(page: params[:page], per_page: 40)
       @title = "All Video Forms"
     end
-
     @columns = Tracker.column_names - ['id', 'tracker_details_id',
-                                         'tracker_details_type']
-    @default_columns = @columns[0..7]
+                                         'tracker_details_type', 'subcategory', 'shoot_plan', 'footage_rating', 'story_type']
+    @default_columns = @columns[0..6]
     @non_default_columns = view_context.checkbox_label(@columns)
   end
 
+
   def show
     @tracker = Tracker.find(params[:id])
-    @columns = view_context.array_set
+    @columns = view_context.show_array_set
 
     unless @tracker.uid.include?('_impact')
-      @columns.except!(:impact_planning, :impact_achieved, :impact_video)
+      @columns.except!(:impact_achieved, :impact_video, :screening)
     end
 
     if @tracker.uid.include?('_impact')
@@ -72,20 +47,35 @@ class TrackersController < ApplicationController
     else
       @columns[:extra] -= ['original_uid', 'no_original_uid']
     end
-
     @sections = @columns.keys
   end
 
   def new
-    @tracker = Tracker.new
-    @state = State.find_by(name: params[:state_name])
-    # For dropdown of issue videos that have no impact videos linked to them.
-    @state_videos = @state.trackers.where("impact_uid IS NULL AND uid NOT
-                                          LIKE '%_impact'").map {|x| x.uid}
-    @columns = view_context.array_set
-    @unique = view_context.unique_set
-    @context = "new"
-    @sections = [:general_info]
+    if params[:tracker_type] && params[:tracker_id]
+      @track = Tracker.find(params[:tracker_id])
+      @tracker = Tracker.new
+      @track.attributes.except("id","created_at","updated_at").each do |key, value|
+        @tracker[key] = value
+      end
+      @tracker.is_impact = true
+      @state = @tracker.state
+      @tracker.tracker_type = "Impact"
+      @tracker.original_uid = @tracker.uid
+      @columns = view_context.array_set
+      @unique = view_context.unique_set
+      @context = "new"
+      @sections = [:general_info, :impact_achieved, :impact_video, :screening, :final]
+    else
+      @tracker = Tracker.new
+      @state = State.find_by(name: params[:state_name])
+      # For dropdown of issue videos that have no impact videos linked to them.
+      @state_videos = @state.trackers.where("impact_uid IS NULL AND uid NOT
+                                            LIKE '%_impact'").map {|x| x.uid}
+      @columns = view_context.array_set
+      @unique = view_context.unique_set
+      @context = "new"
+      @sections = [:general_info, :footage_check, :impact_planning]
+    end
   end
 
   def create
@@ -93,7 +83,18 @@ class TrackersController < ApplicationController
 
     # Method for dealing with making and linking impact videos
     @is_impact = is_impact?('new')
-
+    # if params[:tracker][:is_impact] == false
+    #   if params[:tracker][:footage_recieved] == true 
+    #     @tracker.tracker_type = "Issue"
+    #     @is_issue = true
+    #   else
+    #     @tracker.tracker_type = "Story"
+    #     @is_issue = false
+    #   end
+    # else
+    #   @tracker.tracker_type = "Impact"
+    #   @is_issue = false
+    # end
     # This condition exists just in case somebody submits a tracker with an
     # empty 'CC Name'. This way, simple_form will pick up on the model
     # validations.
@@ -103,13 +104,14 @@ class TrackersController < ApplicationController
       @state = @cc.state
       @tracker.state_name = @state.name
       @tracker.uid = view_context.set_uid(@state.trackers, @cc.state_abb,
-                                          @tracker, @is_impact)
+                                          @tracker, @is_issue, @is_impact)
       @tracker.assign_attributes(state: @state, cc: @cc)
     end
 
     if @tracker.save
       @tracker.update_attribute(:updated_by,
               "#{ Date.today }: #{ current_user.email } created this tracker.")
+
       unless performed? then flash[:success] = "Tracker successfully created." end
       redirect_to @tracker unless performed?
     else
@@ -121,21 +123,22 @@ class TrackersController < ApplicationController
     @tracker = Tracker.find(params[:id])
     @columns = view_context.array_set
 
-    unless @tracker.uid.include?('_impact')
-      @columns.except!(:impact_planning, :impact_achieved, :impact_video)
-    end
-
     @state = @tracker.state
-    @state_videos = @state.trackers.where("impact_uid IS NULL AND uid NOT
-                                          LIKE '%_impact'").map {|x| x.uid}
-
-    @state_videos -= [@tracker.uid]
-    unless @tracker.original_uid.blank?
-      original = Tracker.find_by(uid: @tracker.original_uid)
-      @state_videos += [original.uid]
+    # @state_videos = @state.trackers.where("impact_uid IS NULL AND uid NOT
+    #                                       LIKE '%_impact'").map {|x| x.uid}
+    # @state_videos -= [@tracker.uid]
+    # unless @tracker.original_uid.blank?
+    #   original = Tracker.find_by(uid: @tracker.original_uid)
+    #   @state_videos += [original.uid]
+    # end
+    if current_user.division == "State Coordinator"
+      @sections = [:general_info, :impact_planning, :footage_check, :edit, :rought_cut_sent_to_goa]
     end
-    @sections = @columns.keys
-    @sections -= [:extra]
+
+    if @tracker.uid.include?('_impact')
+      @sections += [:impact_achieved, :impact_video]
+      @sections -= [:impact_planning]
+    end
     @unique = view_context.unique_set
     @context = "edit"
   end
@@ -149,6 +152,7 @@ class TrackersController < ApplicationController
 
     # Method for dealing with making and linking impact videos
     is_impact?('edit')
+
     # Method for updating the CC's last impact action date
     update_cc_action_date
 
@@ -198,6 +202,15 @@ class TrackersController < ApplicationController
     @tracker.destroy
     flash[:success] = "Tracker successfully deleted."
     redirect_to trackers_path(recent: true)
+  end
+
+
+  def by_month
+    if params[:state]
+      @trackers = Tracker.where("strftime('%m',created_at) = ? AND state_name = ?", Time.new.strftime('%m'), params[:state])
+    else
+      @trackers = Tracker.where("strftime('%m',created_at) = ?", Time.new.strftime('%m'))
+    end
   end
 
   private
@@ -305,4 +318,8 @@ class TrackersController < ApplicationController
         redirect_to root_path
       end
     end
+
+
+
+    
 end

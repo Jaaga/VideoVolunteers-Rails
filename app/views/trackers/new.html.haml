@@ -1,4 +1,6 @@
 = provide(:title, "New Video Form")
-
-%h1.text-center New Video Form for #{ @state.name }
+- if @tracker.tracker_type == "Impact"
+	%h1.text-center Impact Video Form for #{ @tracker.uid }
+-else
+	%h1.text-center New Video Form for #{ @state.name }
 = render 'trackers/forms', section: @sections
