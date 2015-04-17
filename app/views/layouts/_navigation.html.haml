@@ -52,6 +52,11 @@
             - else
               %li= link_to "View All", ccs_path
             %li= link_to "New", new_cc_path
+
+        -if current_user.division == "State Coordinator"
+          %li
+            %li= link_to "Monthly", trackers_monthly_path(state: "#{current_user.state}")
+
         - if current_user.division == "Admin"
           %li.dropdown
             %a.dropdown-toggle{ href: '#', :'data-toggle' => 'dropdown', role: 'button' }
