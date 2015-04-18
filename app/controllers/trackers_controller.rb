@@ -133,6 +133,9 @@ class TrackersController < ApplicationController
     # end
     if current_user.division == "State Coordinator"
       @sections = [:general_info, :impact_planning, :footage_check, :edit, :rought_cut_sent_to_goa]
+    else
+      @sections = [:general_info, :impact_planning, :footage_check, :edit, :rought_cut_sent_to_goa, 
+                  :rough_cut_recieved_in_goa, :rough_cut_edit, :rough_cut_review, :final]
     end
 
     if @tracker.uid.include?('_impact')
