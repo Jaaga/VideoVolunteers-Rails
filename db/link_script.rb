@@ -25,8 +25,8 @@ def tracker_link
   trackers = Tracker.all
   trackers.each do |tracker|
     cc = Cc.find_by(full_name: tracker.cc_name)
-    state = cc.state
-    tracker.update_attribute(:state, state)
+    # state = cc.state
+    # tracker.update_attribute(:state, state)
     tracker.update_attribute(:cc, cc)
   end
 end
