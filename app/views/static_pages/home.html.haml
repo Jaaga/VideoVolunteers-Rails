@@ -1,6 +1,6 @@
 = provide(:title, "Home")
 
-- if current_user.division = "State Coordinator"
+-if current_user.division == "State Coordinator"
   %h1.text-center Latest Stats From #{current_user.state}
   %br/
 
@@ -17,7 +17,22 @@
             %td= key
             %td= Tracker.where(state_name: current_user.state, production_status: value).count
 
-  
+-elsif current_user.division == "Editor"
+  %h1.text-center Videos To be Edited by You
+  = will_paginate @trackers
+  %h4 #{@trackers.count} Videos
+  .table-responsive
+    %table.table.table-bordered.table-striped
+      %thead
+        %tr
+          %th UID
+          %th Editor
+      %tbody
+        - @trackers.each do |tracker|
+          %tr
+            %td= link_to tracker.uid, tracker
+            %td= tracker.editor_currently_in_charge
+  = will_paginate @trackers
 
 -else
   %h1.text-center Latest Stats

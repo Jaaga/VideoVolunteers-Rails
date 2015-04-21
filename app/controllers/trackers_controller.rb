@@ -13,15 +13,21 @@ class TrackersController < ApplicationController
       @trackers = State.find_by(name: params[:state_name]).trackers.order("uid DESC").paginate(page: params[:page], per_page: 40)
       @title = "#{params[:state_name]}'s Videos"
     elsif !params[:view].blank?
-      if [params[:view]].any? { |x| ['edit', 'finalize'].include?(x) }
-        @title = 'Editor View'
-        @trackers = Tracker.show_to_editor(params[:view], params[:name]).paginate(page: params[:page], per_page: 40)
-        titles = {edit: "Cleared For Edit", finalize: "Has Been Finalized"}
+      if [params[:view]].any? { |x| ['edit', 'hold', 'done', 'clean', 'finalize'].include?(x) }
+        titles = {edit: "To be Edited", hold: "Edit On Hold", done: "Edit Done", clean: "To be Cleaned", finalize: "To Finalize and Upload"}
+        @title = "#{params[:editor_name]} : " + titles[:"#{params[:view]}"]
+        @trackers = Tracker.show_to_editor(params[:view], params[:editor_name]).paginate(page: params[:page], per_page: 40)
         @title_header = titles[:"#{params[:view]}"] 
       elsif [params[:view]].any? { |x| view_context.find_collection('production_status').map{|y| y[0]}.include?(x) }
-        @title = params[:name]+' Coordinator View'
-        @title_header = params[:view]
-        @trackers = Tracker.where(state_name: params[:name], production_status: params[:view]).paginate(page: params[:page], per_page: 40)
+        if !params[:name].blank?
+          @title = params[:name]+' Coordinator View'
+          @title_header = params[:view]
+          @trackers = Tracker.where(state_name: params[:name], production_status: params[:view]).paginate(page: params[:page], per_page: 40)
+        else
+          @title = 'Production Stage: '+"#{params[:view]}"
+          @title_header = params[:view]
+          @trackers = Tracker.where(production_status: params[:view]).paginate(page: params[:page], per_page: 40)
+        end
       end
     else
       @trackers = Tracker.all.paginate(page: params[:page], per_page: 40)
@@ -214,6 +220,15 @@ class TrackersController < ApplicationController
     else
       @trackers = Tracker.where("strftime('%m',created_at) = ?", Time.new.strftime('%m'))
     end
+  end
+
+  def to_be_edited
+    if params[:editor_name]
+      name = params[:editor_name]
+    else
+      name = current_user.name
+    end
+    @trackers = Tracker.where(editor_currently_in_charge: name, production_status: "Footage to edit")
   end
 
   private

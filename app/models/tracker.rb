@@ -65,9 +65,15 @@ class Tracker < ActiveRecord::Base
 
   def Tracker.show_to_editor(view, name)
     if view == 'edit'
-      @trackers = Tracker.where("editor_currently_in_charge = ?", "#{name}").order("updated_at DESC")
+      @trackers = Tracker.where("editor_currently_in_charge = ? AND production_status = ?", "#{name}", "Footage to edit").order("updated_at DESC")
+    elsif view == 'hold'
+      @trackers = Tracker.where("editor_currently_in_charge = ? AND production_status = ?", "#{name}", "Edit on hold").order("updated_at DESC")
+    elsif view == 'done'
+      @trackers = Tracker.where("editor_currently_in_charge = ? AND edit_status = ?", "#{name}", "Done").order("updated_at DESC")
+    elsif view == 'clean'
+      @trackers = Tracker.where("rough_cut_editor = ? AND production_status = ?", "#{name}", "Rough cuts to clean").order("updated_at DESC")
     elsif view == 'finalize'
-      @trackers = Tracker.where("editor_currently_in_charge = ? AND finalized_date IS NOT NULL", "#{name}").order("updated_at DESC")
+      @trackers = Tracker.where("rough_cut_editor = ? AND production_status = ?", "#{name}", "To finalize and upload").order("updated_at DESC")
     end
   end
 

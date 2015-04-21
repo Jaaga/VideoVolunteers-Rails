@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   end
 
   match '/trackers/monthly', to: 'trackers#by_month', via: :get
+  match '/trackers/to-edit', to: 'trackers#to_be_edited', via: :get
 
   resources :trackers do
     member do

@@ -73,6 +73,10 @@ class StaticPagesController < ApplicationController
       # Videos uploaded to youtube
       @stats[24].push(state.trackers.where("youtube_date IS NOT NULL").count)
     end
+    if current_user.division == "Editor"
+      @trackers = Tracker.where("editor_currently_in_charge = ? AND production_status = ?", "#{current_user.name}", "Footage to edit").order("updated_at DESC").paginate(page: params[:page], per_page: 40)
+    end
+
   end
 
   def about
