@@ -24,9 +24,14 @@ class TrackersController < ApplicationController
           @title_header = params[:view]
           @trackers = Tracker.where(state_name: params[:name], production_status: params[:view]).paginate(page: params[:page], per_page: 40)
         else
-          @title = 'Production Stage: '+"#{params[:view]}"
+          @title = params[:filter_state] ? "Production Stage: #{params[:view]} - #{params[:filter_state]}" : "Production Stage: #{params[:view]} - All states"
+          @state_filter_needed = true
           @title_header = params[:view]
-          @trackers = Tracker.where(production_status: params[:view]).paginate(page: params[:page], per_page: 40)
+          if params[:commit] == "Filter"
+            @trackers = Tracker.where(state_name: params[:filter_state], production_status: params[:view]).paginate(page: params[:page], per_page: 40)
+          else
+            @trackers = Tracker.where(production_status: params[:view]).paginate(page: params[:page], per_page: 40)
+          end
         end
       end
     else
