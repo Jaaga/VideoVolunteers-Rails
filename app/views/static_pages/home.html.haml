@@ -34,6 +34,24 @@
             %td= tracker.editor_currently_in_charge
   = will_paginate @trackers
 
+-elsif current_user.division == "Production Coordinator"
+  - @trackers_array.each do |track|
+    %h2.text-center= track[:title]
+    %h5.text-center= track[:instruction]
+    = will_paginate track[:trackers]
+    %h4 #{track[:trackers].count} Videos
+    .table-responsive
+      %table.table.table-bordered.table-striped
+        %thead
+          %tr
+            %th UID
+            %th Description
+        %tbody
+          - track[:trackers].each do |tracker|
+            %tr
+              %td= link_to tracker.uid, tracker
+              %td= tracker.description
+
 -else
   %h1.text-center Latest Stats
   %br/

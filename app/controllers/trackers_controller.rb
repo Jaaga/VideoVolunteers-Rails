@@ -35,8 +35,14 @@ class TrackersController < ApplicationController
         end
       end
     else
-      @trackers = Tracker.all.paginate(page: params[:page], per_page: 40)
-      @title = "All Video Forms"
+      @state_filter_needed = true
+      if params[:commit] == "Filter"
+        @title = "#{params[:filter_state]}'s Video Forms"
+        @trackers = Tracker.where(state_name: params[:filter_state]).paginate(page: params[:page], per_page: 40)
+      else
+        @trackers = Tracker.all.paginate(page: params[:page], per_page: 40)
+        @title = "All Video Forms"
+      end
     end
     @columns = Tracker.column_names - ['id', 'tracker_details_id',
                                          'tracker_details_type', 'subcategory', 'shoot_plan', 'footage_rating', 'story_type']

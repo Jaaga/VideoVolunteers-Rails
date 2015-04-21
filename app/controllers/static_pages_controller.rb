@@ -75,8 +75,20 @@ class StaticPagesController < ApplicationController
     end
     if current_user.division == "Editor"
       @trackers = Tracker.where("editor_currently_in_charge = ? AND production_status = ?", "#{current_user.name}", "Footage to edit").order("updated_at DESC").paginate(page: params[:page], per_page: 40)
+    elsif current_user.division == "Production Coordinator"
+      @footage_approved_for_payment_trackers = Tracker.where("production_status = ?","Footage approved for payment").order("updated_at DESC").paginate(page: params[:page], per_page: 40)
+      @rough_cut_sent_to_goa_trackers = Tracker.where("production_status = ?","Rough cut sent to Goa").order("updated_at DESC").paginate(page: params[:page], per_page: 40)
+      @rough_cuts_to_clean_trackers = Tracker.where("production_status = ?","Rough cuts to clean").order("updated_at DESC").paginate(page: params[:page], per_page: 40)
+      @rough_cuts_to_review_trackers = Tracker.where("production_status = ?","Rough cuts to review").order("updated_at DESC").paginate(page: params[:page], per_page: 40)
+      @to_finalize_and_upload_trackers = Tracker.where("production_status = ?","To finalize and upload").order("updated_at DESC").paginate(page: params[:page], per_page: 40)
+      @problem_video_trackers = Tracker.where("production_status = ?","Problem video").order("updated_at DESC").paginate(page: params[:page], per_page: 40)
+      @trackers_array = [{trackers: @footage_approved_for_payment_trackers, title: "Videos Approved For Edit And Payment", instruction: "(Please assign Editor)"},
+                        {trackers: @rough_cut_sent_to_goa_trackers, title: "Videos Whose Rough Cut Is Sent To Goa", instruction: "(If recieved, update recieved date)"},
+                        {trackers: @rough_cuts_to_clean_trackers, title: "Rough Cuts To Clean", instruction: "(When cleaned, mark Rough cut cleaned as true)"},
+                        {trackers: @rough_cuts_to_review_trackers, title: "Rough Cuts to Review", instruction: "(when reviewed, mark Rough cut reviewed as true and put dates)"},
+                        {trackers: @to_finalize_and_upload_trackers, title: "Videos To Be Finalized And Uploaded", instruction: "(When Uploaded, updates dates, Youtube URL etc.)"},
+                        {trackers: @problem_video_trackers, title: "Problem Videos", instruction: ""}]
     end
-
   end
 
   def about
