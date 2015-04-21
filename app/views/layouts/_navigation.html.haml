@@ -110,6 +110,7 @@
             - if current_user.try(:admin?)
               %li= link_to "View All", users_path
               %li= link_to "View Unverified", users_path(approved: "false")
+              %li= link_to 'Download CSV list', trackers_csv_path(format: :csv)
             %li= link_to "Change your password", edit_user_registration_path
             %li= link_to "Log Out", destroy_user_session_path, method: :delete
       - else

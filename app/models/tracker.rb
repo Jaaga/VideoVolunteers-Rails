@@ -1,5 +1,6 @@
 class Tracker < ActiveRecord::Base
   attr_accessor :cc_impact_action
+  require 'csv'
 
   YESNO = %w(Yes No)
 
@@ -63,7 +64,7 @@ class Tracker < ActiveRecord::Base
   #   end
   # end
 
-  def Tracker.show_to_editor(view, name)
+  def self.show_to_editor(view, name)
     if view == 'edit'
       @trackers = Tracker.where("editor_currently_in_charge = ? AND production_status = ?", "#{name}", "Footage to edit").order("updated_at DESC")
     elsif view == 'hold'
@@ -74,6 +75,15 @@ class Tracker < ActiveRecord::Base
       @trackers = Tracker.where("rough_cut_editor = ? AND production_status = ?", "#{name}", "Rough cuts to clean").order("updated_at DESC")
     elsif view == 'finalize'
       @trackers = Tracker.where("rough_cut_editor = ? AND production_status = ?", "#{name}", "To finalize and upload").order("updated_at DESC")
+    end
+  end
+
+  def self.to_csv(options = {})
+    CSV.generate(options) do |csv|
+      csv << column_names
+      all.each do |tracker|
+        csv << tracker.attributes.values_at(*column_names)
+      end
     end
   end
 

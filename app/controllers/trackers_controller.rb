@@ -233,13 +233,11 @@ class TrackersController < ApplicationController
     end
   end
 
-  def to_be_edited
-    if params[:editor_name]
-      name = params[:editor_name]
-    else
-      name = current_user.name
+  def export_csv
+    @trackers = Tracker.all
+    respond_to do |format|
+      format.csv { send_data @trackers.to_csv }
     end
-    @trackers = Tracker.where(editor_currently_in_charge: name, production_status: "Footage to edit")
   end
 
   private
