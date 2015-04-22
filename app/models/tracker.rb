@@ -133,31 +133,31 @@ class Tracker < ActiveRecord::Base
 
   def self.monthly_report(month, year, status="Story pitched (no footage yet)", state = "%")
     if status == "Story pitched (no footage yet)"
-      @trackers = Tracker.where('extract(month from story_pitch_date) = ? AND extract(year from story_pitch_date) = ? AND state_name LIKE ?', "#{month}", "#{year}", "#{params[:state]}")
+      @trackers = Tracker.where('extract(month from story_pitch_date) = ? AND extract(year from story_pitch_date) = ? AND state_name LIKE ?', "#{month}", "#{year}", "#{state}")
     elsif status == "Footage received"
-      @trackers = Tracker.where('extract(month from footage_received_from_cc_date) = ? AND extract(year from footage_received_from_cc_date) = ? AND state_name LIKE ?', "#{month}", "#{year}", "#{params[:state]}")
+      @trackers = Tracker.where('extract(month from footage_received_from_cc_date) = ? AND extract(year from footage_received_from_cc_date) = ? AND state_name LIKE ?', "#{month}", "#{year}", "#{state}")
     elsif status == "Footage on hold"
-      @trackers = Tracker.where('extract(month from footage_check_date) = ? AND extract(year from footage_check_date) = ? AND state_name LIKE ? AND production_status = ?', "#{month}", "#{year}", "#{params[:state]}", "Footage on hold")
+      @trackers = Tracker.where('extract(month from footage_check_date) = ? AND extract(year from footage_check_date) = ? AND state_name LIKE ? AND production_status = ?', "#{month}", "#{year}", "#{state}", "Footage on hold")
     elsif status == "Footage approved for payment"
-      @trackers = Tracker.where('extract(month from proceed_with_edit_and_payment_date) = ? AND extract(year from proceed_with_edit_and_payment_date) = ? AND state_name LIKE ?', "#{month}", "#{year}", "#{params[:state]}")
+      @trackers = Tracker.where('extract(month from proceed_with_edit_and_payment_date) = ? AND extract(year from proceed_with_edit_and_payment_date) = ? AND state_name LIKE ?', "#{month}", "#{year}", "#{state}")
     elsif status == "Footage to edit"
-      @trackers = Tracker.where('extract(month from proceed_with_edit_and_payment_date) = ? AND extract(year from proceed_with_edit_and_payment_date) = ? AND state_name LIKE ? AND production_status = ?', "#{month}", "#{year}", "#{params[:state]}", "Footage to edit")
+      @trackers = Tracker.where('extract(month from proceed_with_edit_and_payment_date) = ? AND extract(year from proceed_with_edit_and_payment_date) = ? AND state_name LIKE ? AND production_status = ?', "#{month}", "#{year}", "#{state}", "Footage to edit")
     elsif status == "Edit on hold"
-      @trackers = Tracker.where('extract(month from proceed_with_edit_and_payment_date) = ? AND extract(year from proceed_with_edit_and_payment_date) = ? AND state_name LIKE ? AND edit_status = ?', "#{month}", "#{year}", "#{params[:state]}", "On hold")
+      @trackers = Tracker.where('extract(month from proceed_with_edit_and_payment_date) = ? AND extract(year from proceed_with_edit_and_payment_date) = ? AND state_name LIKE ? AND edit_status = ?', "#{month}", "#{year}", "#{state}", "On hold")
     elsif status == "Edit Done"
-      @trackers = Tracker.where('extract(month from state_edit_date) = ? AND extract(year from state_edit_date) = ? AND state_name LIKE ? AND edit_status = ?', "#{month}", "#{year}", "#{params[:state]}", "Done")
+      @trackers = Tracker.where('extract(month from state_edit_date) = ? AND extract(year from state_edit_date) = ? AND state_name LIKE ? AND edit_status = ?', "#{month}", "#{year}", "#{state}", "Done")
     elsif status == "Rough cut sent to Goa"
-      @trackers = Tracker.where('extract(month from rough_cut_sent_to_goa_date) = ? AND extract(year from rough_cut_sent_to_goa_date) = ? AND state_name LIKE ?', "#{month}", "#{year}", "#{params[:state]}")
+      @trackers = Tracker.where('extract(month from rough_cut_sent_to_goa_date) = ? AND extract(year from rough_cut_sent_to_goa_date) = ? AND state_name LIKE ?', "#{month}", "#{year}", "#{state}")
     elsif status == "Rough cuts to clean"
-      @trackers = Tracker.where('extract(month from edit_received_in_goa_date) = ? AND extract(year from edit_received_in_goa_date) = ? AND state_name LIKE ? AND production_status = ?', "#{month}", "#{year}", "#{params[:state]}", "Rough cuts to clean")
+      @trackers = Tracker.where('extract(month from edit_received_in_goa_date) = ? AND extract(year from edit_received_in_goa_date) = ? AND state_name LIKE ? AND production_status = ?', "#{month}", "#{year}", "#{state}", "Rough cuts to clean")
     elsif status == "Rough cuts to review"
-      @trackers = Tracker.where('extract(month from edit_received_in_goa_date) = ? AND extract(year from edit_received_in_goa_date) = ? AND state_name LIKE ? AND production_status = ?', "#{month}", "#{year}", "#{params[:state]}", "Rough cuts to review")
+      @trackers = Tracker.where('extract(month from edit_received_in_goa_date) = ? AND extract(year from edit_received_in_goa_date) = ? AND state_name LIKE ? AND production_status = ?', "#{month}", "#{year}", "#{state}", "Rough cuts to review")
     elsif status == "To finalize and upload"
-      @trackers = Tracker.where('extract(month from rough_cut_review_date) = ? AND extract(year from rough_cut_review_date) = ? AND state_name LIKE ? AND production_status = ?', "#{month}", "#{year}", "#{params[:state]}", "To finalize and upload")
+      @trackers = Tracker.where('extract(month from rough_cut_review_date) = ? AND extract(year from rough_cut_review_date) = ? AND state_name LIKE ? AND production_status = ?', "#{month}", "#{year}", "#{state}", "To finalize and upload")
     elsif status == "Uploaded"
-      @trackers = Tracker.where('extract(month from youtube_date) = ? AND extract(year from youtube_date) = ? AND state_name LIKE ? AND production_status = ?', "#{month}", "#{year}", "#{params[:state]}", "Uploaded")
+      @trackers = Tracker.where('extract(month from youtube_date) = ? AND extract(year from youtube_date) = ? AND state_name LIKE ? AND production_status = ?', "#{month}", "#{year}", "#{state}", "Uploaded")
     elsif status == "Problem video"
-      @trackers = Tracker.where('extract(month from footage_received_from_cc_date) = ? AND extract(year from footage_received_from_cc_date) = ? AND state_name LIKE ? AND production_status = ?', "#{month}", "#{year}", "#{params[:state]}", "Problem video")
+      @trackers = Tracker.where('extract(month from footage_received_from_cc_date) = ? AND extract(year from footage_received_from_cc_date) = ? AND state_name LIKE ? AND production_status = ?', "#{month}", "#{year}", "#{state}", "Problem video")
     end
   end
 
