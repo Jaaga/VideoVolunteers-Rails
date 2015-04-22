@@ -30,8 +30,7 @@ module ArraySettingHelper
     impact_planning = ['impact_possible', 'call_to_action', 'desired_change',
                        'impact_plan', 'target_official',
                        'target_official_email', 'target_official_phone',
-                       'impact_process', 'milestone', 'impact_progress',
-                       'cc_impact_action']
+                       'impact_process', 'milestone', 'impact_progress']
     impact_achieved = ['impact_achieved', 'impact_achieved_description',
                        'impact_date', 'impact_verified_by', 'people_involved',
                        'people_impacted', 'villages_impacted','impact_time',
@@ -86,8 +85,7 @@ module ArraySettingHelper
     impact_planning = ['impact_possible', 'call_to_action', 'desired_change',
                        'impact_plan', 'target_official',
                        'target_official_email', 'target_official_phone',
-                       'impact_process', 'milestone', 'impact_progress',
-                       'cc_impact_action']
+                       'impact_process', 'milestone', 'impact_progress']
     impact_achieved = ['impact_achieved', 'impact_achieved_description',
                        'impact_date', 'impact_verified_by', 'people_involved',
                        'people_impacted', 'villages_impacted','impact_time',

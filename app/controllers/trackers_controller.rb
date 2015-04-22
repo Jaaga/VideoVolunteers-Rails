@@ -226,10 +226,21 @@ class TrackersController < ApplicationController
 
 
   def by_month
-    if params[:state]
-      @trackers = Tracker.where("strftime('%m',created_at) = ? AND state_name = ?", Time.new.strftime('%m'), params[:state])
+    if params[:state] 
+      if params[:status] && params[:date]
+        month = params[:date]["month"]
+        #right format for month comparision
+        month = (month.to_i < 10) ? month = "0" + month : month 
+        @title = "#{params[:status]['stage']} : #{month}-#{params[:date]['year']} For #{params[:state]}"
+        @trackers = Tracker.dev_monthly_report(month, params[:date]["year"], params[:status]["stage"], params[:state])
+      else
+        @title = "Stories Pitched This month In #{params[:state]}"
+        @trackers = Tracker.where("strftime('%m%Y', story_pitch_date) = ? AND state_name LIKE ?", Time.new.strftime('%m%Y'), "#{params[:state]}")
+        #@trackers = Tracker.where('extract(month from story_pitch_date) = ? AND state_name LIKE ?', Time.new.strftime('%m'), "#{params[:state]}")
+      end
     else
-      @trackers = Tracker.where("strftime('%m',created_at) = ?", Time.new.strftime('%m'))
+      @title = "Stories Pitched This month All over India"
+      @trackers = Tracker.where("strftime('%m%Y', story_pitch_date) = ?", Time.new.strftime('%m%Y'))
     end
   end
 
@@ -313,7 +324,7 @@ class TrackersController < ApplicationController
       @state = State.find_by(name: params[:tracker][:state_name])
       @state_videos = @state.trackers.where("impact_uid IS NULL AND uid NOT
                                             LIKE '%_impact'").map {|x| x.uid}
-      @sections = [:story]
+      @sections = [:general_info, :footage_check, :impact_planning]
       @context = "new"
       render :new, state_name: params[:tracker][:state_name]
     end

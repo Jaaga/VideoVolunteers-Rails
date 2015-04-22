@@ -6,6 +6,7 @@
     = f.error_notification  
     - if @context == 'new'
       = f.input :state_name, as: :hidden, :input_html => { :value => @state.name }
+    - puts @columns
     - @columns[section].each do |column|
       - if column.include? "_date"
         -# Not putting limits on dates because the imported data can be from
