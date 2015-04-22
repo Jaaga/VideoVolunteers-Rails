@@ -232,15 +232,16 @@ class TrackersController < ApplicationController
         #right format for month comparision
         month = (month.to_i < 10) ? month = "0" + month : month 
         @title = "#{params[:status]['stage']} : #{month}-#{params[:date]['year']} For #{params[:state]}"
-        @trackers = Tracker.dev_monthly_report(month, params[:date]["year"], params[:status]["stage"], params[:state])
+        @trackers = Tracker.monthly_report(month, params[:date]["year"], params[:status]["stage"], params[:state])
       else
         @title = "Stories Pitched This month In #{params[:state]}"
-        @trackers = Tracker.where("strftime('%m%Y', story_pitch_date) = ? AND state_name LIKE ?", Time.new.strftime('%m%Y'), "#{params[:state]}")
-        #@trackers = Tracker.where('extract(month from story_pitch_date) = ? AND state_name LIKE ?', Time.new.strftime('%m'), "#{params[:state]}")
+        #@trackers = Tracker.where("strftime('%m%Y', story_pitch_date) = ? AND state_name LIKE ?", Time.new.strftime('%m%Y'), "#{params[:state]}")
+        @trackers = Tracker.where('extract(month from story_pitch_date) = ? AND state_name LIKE ?', Time.new.strftime('%m'), "#{params[:state]}")
       end
     else
       @title = "Stories Pitched This month All over India"
-      @trackers = Tracker.where("strftime('%m%Y', story_pitch_date) = ?", Time.new.strftime('%m%Y'))
+      @trackers = Tracker.where('extract(month from story_pitch_date) = ? AND state_name LIKE ?', Time.new.strftime('%m'), "#{params[:state]}")
+      #@trackers = Tracker.where("strftime('%m%Y', story_pitch_date) = ?", Time.new.strftime('%m%Y'))
     end
   end
 
