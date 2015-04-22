@@ -272,17 +272,17 @@ class Tracker < ActiveRecord::Base
       if self.footage_recieved == true && self.editor_currently_in_charge.blank? != true && self.edit_status == "Done"
         self.production_status = "Edit Done"
       end
-      if self.footage_recieved == true && self.edit_status = "Done" && self.rough_cut_sent_to_goa == true
+      if self.footage_recieved == true && (self.edit_status == "Done" || self.edit_status == "t") && self.rough_cut_sent_to_goa == true
         self.production_status = "Rough cut sent to Goa"
         self.office_responsible = "HQ"
       end
-      if self.edit_status == "Done" && self.edit_received_in_goa_date.blank? == false
+      if self.edit_received_in_goa_date.blank? == false && (self.edit_status == "Done" || self.edit_status == "t")
         self.production_status = "Rough cuts to clean"
       end
-      if self.edit_status == "Done" && self.rough_cut_cleaned == true
-        self.production_status == "Rough cuts to review"
+      if self.rough_cut_cleaned == true && self.rough_cut_reviewed == false
+        self.production_status = "Rough cuts to review"
       end
-      if self.rough_cut_cleaned == true && rough_cut_reviewed == true
+      if self.rough_cut_cleaned == true && self.rough_cut_reviewed == true
         self.production_status = "To finalize and upload"
       end
       if self.rough_cut_reviewed == true && self.uploaded == true
