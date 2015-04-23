@@ -21,6 +21,16 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
+# Sunspot to implement Solr based search
+gem 'sunspot_rails'
+gem 'kaminari'
+gem 'sunspot_with_kaminari'
+gem 'progress_bar'
+
+group :development do
+  gem 'sunspot_solr'
+end
+
 # Haml replaces erb
 gem 'haml'
 # Bootstrap and sass for page layouts

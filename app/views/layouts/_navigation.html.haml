@@ -102,9 +102,13 @@
 
     %ul.nav.navbar-nav.navbar-right
       - if current_user
+        =form_tag(search_index_path, {class: "navbar-form navbar-left", role:"search", method: "get"}) do
+          .form-group
+            =text_field_tag 'search',nil, {class: "form-control", placeholder: "Search"}
+            = submit_tag("Search", class: "btn btn-success")
         %li.dropdown
           %a.dropdown-toggle{ href: '#', :'data-toggle' => 'dropdown', role: 'button' }
-            Welcome #{ current_user.email }
+            Welcome #{ current_user.name }
             %span.caret
           %ul.dropdown-menu{ role: 'menu' }
             - if current_user.try(:admin?)

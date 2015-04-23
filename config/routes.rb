@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   devise_for :users
   devise_scope :user do
     root to: "devise/sessions#new"
@@ -16,6 +17,8 @@ Rails.application.routes.draw do
       patch :note
     end
   end
+
+  resources :search
 
   match '/trackers/monthly', to: 'trackers#by_month', via: :get
   match '/trackers/csv', to: 'trackers#export_csv', via: :get

@@ -38,6 +38,17 @@ class Tracker < ActiveRecord::Base
   validates :impact_video_approved, inclusion: YESNO, allow_blank: true
 
 
+  searchable do
+    text :uid, boost: 3.0                                 
+    text :cc_name, :district, :iu_theme, :state_name, :editor_currently_in_charge, boost: 1.0
+    text :impact_video_necessities, :impact_achieved_description, :impact_plan, :shoot_plan
+    text :youtube_url, :video_title, :impact_uid, :production_status, :tracker_type                                    
+    text :description, boost: 2.0
+    boolean :uploaded, :is_impact, :rough_cut_reviewed
+    time :updated_at
+    date :footage_received_from_cc_date, :footage_check_date, :rough_cut_review_date, :youtube_date
+  end
+
 
   # def Tracker.show_to_sc(state, view)
   #   if state == 'ROI'
