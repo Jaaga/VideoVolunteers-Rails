@@ -27,9 +27,9 @@ gem 'kaminari'
 gem 'sunspot_with_kaminari'
 gem 'progress_bar'
 
-group :development do
-  gem 'sunspot_solr'
-end
+
+gem 'sunspot_solr'
+
 
 # Haml replaces erb
 gem 'haml'
