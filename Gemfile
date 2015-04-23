@@ -22,9 +22,11 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Sunspot to implement Solr based search
-gem 'sunspot_rails'
-gem 'kaminari'
-gem 'sunspot_with_kaminari'
+# gem 'sunspot_rails'
+# gem 'kaminari'
+# gem 'sunspot_with_kaminari'
+#PG full text search
+gem 'pg_search'
 gem 'progress_bar'
 
 
@@ -47,9 +49,12 @@ gem 'alphabetical_paginate'
 
 # Replaces webrick
 gem 'puma'
+# Use postgresql as the production database for Heroku and in developement as well
+gem 'pg'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+
   gem 'byebug'
 
   # Access an IRB console on exception pages or by using <%= console %> in views
@@ -75,7 +80,7 @@ end
 
 group :production do
   # Use postgresql as the production database for Heroku
-  gem 'pg'
+
 
   # Needed for heroku
   gem 'rails_12factor'
