@@ -1,46 +1,25 @@
 module TrackersHelper
 
-  def set_uid(in_state, state_abb, tracker, is_issue = false, is_impact = false)
-    if !in_state.empty?
-      # Save each UID in an array
-      uids_from_state = Array.new
-      in_state.each do |tracker|
-        uids_from_state.push(tracker.uid)
-      end
-
-      # Sort it then save the highest number
-      uids_from_state.sort!
-      last_uid_from_state = uids_from_state[uids_from_state.length - 1].split('_')
-
-      # Take the number from the split UID (looks like ['XX', '1234']), then
-      # increment it
-      id = last_uid_from_state[1].to_i + 1
-
-      if is_impact == true
-        unless tracker.original_uid.blank?
-          id = tracker.original_uid.split('_').pop
-          impact_uid_set(tracker.original_uid)
+  def set_uid(state, tracker)
+      if tracker.is_impact == true
+        if tracker.original_uid.present?
+          id = "#{ state.state_abb }_#{tracker.original_uid.gsub(/[^0-9]/,"")}_impact"
+          impact_uid_set(tracker.original_uid, id)
+        elsif tracker.original_uid.blank? && tracker.no_original_uid.present?
+          state.update_attribute(:counter, state.counter + 1 )
+          id = "#{ state.state_abb }_#{ state.counter }_impact"
         end
-        return "#{ state_abb }_#{ id.to_s }_impact"
-      elsif is_issue == true
-        # Make unique UID from state abbreviation and newly created number
-        return "#{ state_abb }_#{ id.to_s }"
       else
-        return "#{ state_abb }_#{ id.to_s }_story"
+        state.update_attribute(:counter, state.counter + 1 )
+        id = "#{ state.state_abb }_#{ state.counter }"
       end
-    else
-      if is_impact == true
-        return "#{ state_abb }_1001_impact"
-      else
-        return "#{ state_abb }_1001"
-      end
-    end
+      return id
   end
 
   # Set the uid for an impact video tracker
-  def impact_uid_set(original_uid)
+  def impact_uid_set(original_uid, id)
     track = Tracker.find_by(uid: original_uid)
-    track.impact_uid = "#{ original_uid }_impact"
+    track.impact_uid = id
     track.save
   end
 
@@ -119,9 +98,8 @@ module TrackersHelper
       'impact_time' => 'Time it took to achieve the impact',
       'collaborations' => 'Who did the CC collaborate with to get the impact?',
       'impact_video_notes' => 'Other impact video notes',
-      'state_edit_date' => 'State edit date (only if there’s a state editor)',
-      'rough_cut_edit_date' => 'Goa Rough Cut Edit Date (only if the raw
-        footage is edited in Goa)',
+      'state_edit_date' => 'Edit date ',
+      'rough_cut_edit_date' => 'Goa Rough Cut Edit Date',
       'cc_impact_action' => 'Has the CC made an impact action?',
       'training_suggestion' => 'Training Team suggestion',
       'raw_footage_copy_goa' => 'Is there a copy of the raw footage in Goa?',

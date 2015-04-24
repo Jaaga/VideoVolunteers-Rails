@@ -1,6 +1,7 @@
+= console 
 = provide(:title, "New Video Form")
 - if @tracker.tracker_type == "Impact"
-	%h1.text-center Impact Video Form for #{ @tracker.uid }
+	%h1.text-center Impact Video Form for #{ @tracker.original_uid }
 -else
 	%h1.text-center New Video Form for #{ @state.name }
 = render 'trackers/forms', section: @sections

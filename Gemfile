@@ -25,12 +25,14 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # gem 'sunspot_rails'
 # gem 'kaminari'
 # gem 'sunspot_with_kaminari'
+# gem 'sunspot_solr'
+
 #PG full text search
 gem 'pg_search'
 gem 'progress_bar'
 
 
-gem 'sunspot_solr'
+
 
 
 # Haml replaces erb

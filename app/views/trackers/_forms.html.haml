@@ -6,7 +6,6 @@
     = f.error_notification  
     - if @context == 'new'
       = f.input :state_name, as: :hidden, :input_html => { :value => @state.name }
-    - puts @columns
     - @columns[section].each do |column|
       - if column.include? "_date"
         -# Not putting limits on dates because the imported data can be from
@@ -39,6 +38,10 @@
     /   = f.input :original_uid, as: :select, collection: @state_videos,
     /     label: tracker_name_modifier('original_uid')
     /   = f.input :no_original_uid, label: tracker_name_modifier('no_original_uid')
+    - unless @hidden_sections.blank?
+      - @hidden_sections.each do |section|
+        - @columns[section].each do |column|
+          = f.input column,as: :hidden, value: @tracker.attributes["#{column}"]
 
     = f.submit 'Save', class: 'btn btn-primary btn-block'
     %br

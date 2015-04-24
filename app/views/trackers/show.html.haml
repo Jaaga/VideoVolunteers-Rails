@@ -30,7 +30,7 @@
 
 %p.show-buttons
   - if @tracker.tracker_type == "Issue"
-    = link_to 'Add Impact Video For this issue', new_tracker_path(state_name: @tracker.state_name,tracker_id: @tracker.id, tracker_type: "impact"), class: 'btn btn-default'
+    = link_to 'Add Impact Video For this issue', new_tracker_path(state_name: @tracker.state_name,tracker_id: @tracker.id, tracker_type: "impact"), class: 'btn btn-default' if @tracker.impact_uid.blank?
   = link_to 'Edit', edit_tracker_path(@tracker), class: 'btn btn-default'
   = link_to 'Add Note', note_form_tracker_path(@tracker), class: 'btn btn-default'
   - if current_user.try(:admin?)

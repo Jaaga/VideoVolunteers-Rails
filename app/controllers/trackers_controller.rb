@@ -71,23 +71,21 @@ class TrackersController < ApplicationController
     if params[:tracker_type] && params[:tracker_id]
       @track = Tracker.find(params[:tracker_id])
       @tracker = Tracker.new
-      @track.attributes.except("id","created_at","updated_at").each do |key, value|
-        @tracker[key] = value
-      end
-      @tracker.is_impact = true
-      @state = @tracker.state
-      @tracker.tracker_type = "Impact"
-      @tracker.original_uid = @tracker.uid
       @columns = view_context.array_set
       @unique = view_context.unique_set
+      columns_to_copy = @columns[:general_info] + ["state_name", "cc_id", "state_id"]
+      columns_to_copy.each do |key|
+        @tracker[key] = @track[key]
+      end
+      @tracker.assign_attributes(tracker_type: "Impact", original_uid: @track.uid, is_impact: true)
       @context = "new"
-      @sections = [:general_info, :impact_achieved, :impact_video, :screening, :final]
+      @sections = [:general_info, :footage_check, :impact_achieved, :impact_video, :screening, :final]
+      @hidden_sections = [:impact_planning, :is_impact]
     else
       @tracker = Tracker.new
       @state = State.find_by(name: params[:state_name])
       # For dropdown of issue videos that have no impact videos linked to them.
-      @state_videos = @state.trackers.where("impact_uid IS NULL AND uid NOT
-                                            LIKE '%_impact'").map {|x| x.uid}
+      #@state_videos = @state.trackers.where("impact_uid IS NULL AND uid NOT LIKE '%_impact'").map {|x| x.uid}
       @columns = view_context.array_set
       @unique = view_context.unique_set
       @context = "new"
@@ -97,21 +95,8 @@ class TrackersController < ApplicationController
 
   def create
     @tracker = Tracker.new(tracker_params)
-
     # Method for dealing with making and linking impact videos
     @is_impact = is_impact?('new')
-    # if params[:tracker][:is_impact] == false
-    #   if params[:tracker][:footage_recieved] == true 
-    #     @tracker.tracker_type = "Issue"
-    #     @is_issue = true
-    #   else
-    #     @tracker.tracker_type = "Story"
-    #     @is_issue = false
-    #   end
-    # else
-    #   @tracker.tracker_type = "Impact"
-    #   @is_issue = false
-    # end
     # This condition exists just in case somebody submits a tracker with an
     # empty 'CC Name'. This way, simple_form will pick up on the model
     # validations.
@@ -120,8 +105,7 @@ class TrackersController < ApplicationController
       @tracker.cc_name = @cc.full_name
       @state = @cc.state
       @tracker.state_name = @state.name
-      @tracker.uid = view_context.set_uid(@state.trackers, @cc.state_abb,
-                                          @tracker, @is_issue, @is_impact)
+      @tracker.uid = view_context.set_uid(@state, @tracker)
       @tracker.assign_attributes(state: @state, cc: @cc)
     end
 
@@ -357,8 +341,5 @@ class TrackersController < ApplicationController
         redirect_to root_path
       end
     end
-
-
-
     
 end

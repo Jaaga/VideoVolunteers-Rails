@@ -9,6 +9,7 @@ class State < ActiveRecord::Base
              uniqueness: { case_sensitive: false }
   validates :state_abb, presence: true, length: { maximum: 2 },
              uniqueness: { case_sensitive: false }
+  validates :counter, presence: true
 
 
   private

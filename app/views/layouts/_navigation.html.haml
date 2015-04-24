@@ -26,7 +26,7 @@
               New Form
               %span.caret
             %ul.dropdown-menu{ role: 'menu' }
-              - State.all.each do |state|
+              - State.all.order(:name).order(:name).each do |state|
                 %li= link_to "#{state.name}", new_tracker_path(state_name: "#{state.name}")
 
         /See all videos
@@ -45,7 +45,7 @@
               /   %a.dropdown-toggle{ href: '#', :'data-toggle' => 'dropdown', role: 'button' }
               /     All by state
               /   %ul.dropdown-menu{ role: 'menu' }
-              /     - State.all.each do |state|
+              /     - State.all.order(:name).order(:name).each do |state|
               /       %li= link_to "#{state.name}", trackers_path(state_name: "#{state.name}")
               %li= link_to "All", trackers_path
               %li= link_to "Recent", trackers_path(recent: true)
@@ -86,7 +86,7 @@
               Month wise
               %span.caret
             %ul.dropdown-menu{ role: 'menu' }
-              - State.all.each do |state|
+              - State.all.order(:name).order(:name).each do |state|
                 %li= link_to "#{state.name}", trackers_monthly_path(state: "#{state.name}")
 
         - unless current_user.division == "State Coordinator" || current_user.division == "Editor"

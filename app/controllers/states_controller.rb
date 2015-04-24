@@ -3,12 +3,12 @@ class StatesController < ApplicationController
 
   def index
     @states = State.all.paginate(page: params[:page], per_page: 40)
-    @columns = State.column_names - ['id']
+    @columns = State.column_names - ['id', 'counter']
   end
 
   def show
     @state = State.find(params[:id])
-    @columns = State.column_names - ['id']
+    @columns = State.column_names - ['id','counter']
   end
 
   def new
@@ -40,12 +40,12 @@ class StatesController < ApplicationController
     end
   end
 
-  # def destroy
-  #   @state = State.find(params[:id])
-  #   @state.destroy
-  #   flash[:success] = "State successfully deleted."
-  #   redirect_to states_path
-  # end
+  def destroy
+    @state = State.find(params[:id])
+    @state.destroy
+    flash[:success] = "State successfully deleted."
+    redirect_to states_path
+  end
 
   private
 

@@ -102,49 +102,6 @@ class Tracker < ActiveRecord::Base
   end
 
 
-  def self.dev_monthly_report(month, year, status="Story pitched (no footage yet)", state = "%")
-    if status == "Story pitched (no footage yet)"
-      @trackers =  Tracker.where("strftime('%m%Y',story_pitch_date) = ? AND state_name LIKE ?", 
-                  "#{month}#{year}", "#{state}")
-    elsif status == "Footage received"
-      @trackers =  Tracker.where("strftime('%m%Y',footage_received_from_cc_date) = ? AND state_name LIKE ?", 
-                  "#{month}#{year}", "#{state}")
-    elsif status == "Footage on hold"
-      @trackers =  Tracker.where("strftime('%m%Y',footage_check_date) = ? AND state_name LIKE ? AND production_status = ?", 
-                  "#{month}#{year}", "#{state}", "Footage on hold")    
-    elsif status == "Footage approved for payment"
-      @trackers =  Tracker.where("strftime('%m%Y',proceed_with_edit_and_payment_date) = ? AND state_name LIKE ?", 
-                  "#{month}#{year}", "#{state}")
-    elsif status == "Footage to edit"
-      @trackers =  Tracker.where("strftime('%m%Y',proceed_with_edit_and_payment_date) = ? AND state_name LIKE ? AND production_status = ?", 
-                  "#{month}#{year}", "#{state}", "Footage to edit")
-    elsif status == "Edit on hold"
-      @trackers =  Tracker.where("strftime('%m%Y',proceed_with_edit_and_payment_date) = ? AND state_name LIKE ? AND edit_status = ?", 
-                  "#{month}#{year}", "#{state}", "On hold")
-    elsif status == "Edit Done"
-      @trackers =  Tracker.where("strftime('%m%Y',state_edit_date) = ? AND state_name LIKE ? AND edit_status = ?", 
-                  "#{month}#{year}", "#{state}", "Done")
-    elsif status == "Rough cut sent to Goa"
-      @trackers =  Tracker.where("strftime('%m%Y',rough_cut_sent_to_goa_date) = ? AND state_name LIKE ?", 
-                  "#{month}#{year}", "#{state}")
-    elsif status == "Rough cuts to clean"
-      @trackers =  Tracker.where("strftime('%m%Y',edit_received_in_goa_date) = ? AND state_name LIKE ? AND production_status = ?", 
-                  "#{month}#{year}", "#{state}", "Rough cuts to clean")
-    elsif status == "Rough cuts to review"
-      @trackers =  Tracker.where("strftime('%m%Y',edit_received_in_goa_date) = ? AND state_name LIKE ? AND production_status = ?", 
-                  "#{month}#{year}", "#{state}", "Rough cuts to review")
-    elsif status == "To finalize and upload"
-      @trackers =  Tracker.where("strftime('%m%Y',rough_cut_review_date) = ? AND state_name LIKE ? AND production_status = ?", 
-                  "#{month}#{year}", "#{state}", "To finalize and upload")
-    elsif status == "Uploaded"
-      @trackers =  Tracker.where("strftime('%m%Y',youtube_date) = ? AND state_name LIKE ? AND production_status = ?", 
-                  "#{month}#{year}", "#{state}", "Uploaded")
-    elsif status == "Problem video"
-      @trackers =  Tracker.where("strftime('%m%Y',footage_received_from_cc_date) = ? AND state_name LIKE ? AND production_status = ?", 
-                  "#{month}#{year}", "#{state}", "Problem video")
-    end
-  end
-
   def self.monthly_report(month, year, status="Story pitched (no footage yet)", state = "%")
     if status == "Story pitched (no footage yet)"
       @trackers = Tracker.where('extract(month from story_pitch_date) = ? AND extract(year from story_pitch_date) = ? AND state_name LIKE ?', "#{month}", "#{year}", "#{state}")
