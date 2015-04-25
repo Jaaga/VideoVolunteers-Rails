@@ -9,7 +9,7 @@ class Tracker < ActiveRecord::Base
 
   before_save :set_district_and_mentor
   before_save :impact_errors
-  before_save :set_production_status, :proper_uid
+  #before_save :set_production_status, :proper_uid
   after_save  :set_cc_dates
   before_destroy :unlink_impact
 

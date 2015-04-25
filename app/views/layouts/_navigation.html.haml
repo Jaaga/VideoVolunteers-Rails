@@ -108,7 +108,7 @@
             = submit_tag("Search", class: "btn btn-success")
         %li.dropdown
           %a.dropdown-toggle{ href: '#', :'data-toggle' => 'dropdown', role: 'button' }
-            Welcome #{ current_user.name }
+            Welcome #{ current_user.try(:name) }
             %span.caret
           %ul.dropdown-menu{ role: 'menu' }
             - if current_user.try(:admin?)

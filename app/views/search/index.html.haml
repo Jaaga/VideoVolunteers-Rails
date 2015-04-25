@@ -1,7 +1,7 @@
 = provide(:title, "Search")
 
 %h1.text-center Search Results
-%h4.text-center #{params[:search].present? ? "Showing #{@trackers.count} of #{@trackers.count} Search results for '#{params[:search]}'	" : "You gotta search something to get something"}
+%h4.text-center #{params[:search].present? ? "Found #{@trackers.count} Search results for '#{params[:search]}'	" : "You gotta search something to get something"}
 
 = will_paginate @trackers if @trackers.present?
 %br
