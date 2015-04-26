@@ -211,20 +211,20 @@ class Tracker < ActiveRecord::Base
         self.proceed_with_edit_and_payment_date = Date.today.to_s
         self.production_status = "Footage approved for payment"
       end
-      if self.footage_recieved == true && self.editor_currently_in_charge.blank? != true
+      if self.footage_recieved == true && self.proceed_with_edit_and_payment == 'Cleared' && self.editor_currently_in_charge.blank? != true
         self.production_status = "Footage to edit"
       end
-      if self.footage_recieved == true && self.editor_currently_in_charge.blank? != true && self.edit_status == "On hold"
+      if self.proceed_with_edit_and_payment == 'Cleared' && self.editor_currently_in_charge.blank? != true && self.edit_status == "On hold"
         self.production_status = "Edit on hold"
       end
-      if self.footage_recieved == true && self.editor_currently_in_charge.blank? != true && self.edit_status == "Done"
+      if self.proceed_with_edit_and_payment == 'Cleared' && self.editor_currently_in_charge.blank? != true && (self.edit_status == "Done" || self.edit_status == "t")
         self.production_status = "Edit Done"
       end
-      if self.footage_recieved == true && (self.edit_status == "Done" || self.edit_status == "t") && self.rough_cut_sent_to_goa == true
+      if self.footage_recieved == true && self.rough_cut_sent_to_goa == true
         self.production_status = "Rough cut sent to Goa"
         self.office_responsible = "HQ"
       end
-      if self.edit_received_in_goa_date.blank? == false && (self.edit_status == "Done" || self.edit_status == "t")
+      if self.edit_received_in_goa_date.blank? == false && self.rough_cut_sent_to_goa == true
         self.production_status = "Rough cuts to clean"
       end
       if self.rough_cut_cleaned == true && self.rough_cut_reviewed == false

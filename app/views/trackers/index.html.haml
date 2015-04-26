@@ -8,7 +8,7 @@
   %div.col-md-offset-8
     = form_tag trackers_path, method: "get" do 
       %div.col-md-8
-        = select_tag "filter_state", options_from_collection_for_select(State.all, "name", "name", params[:filter_state]), {class: "form-control"}
+        = select_tag "filter_state", options_from_collection_for_select(State.all.sort, "name", "name", params[:filter_state]), {class: "form-control"}
         = hidden_field_tag "view", params[:view] , {class: "form-control"}
       = submit_tag("Filter", class: "btn btn-success")
 

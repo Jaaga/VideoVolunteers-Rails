@@ -1,6 +1,6 @@
 = provide(:title, "Filter By Month")
-
-%h1.text-center Monthly Report For #{params[:state]}
+-state = params[:state]!="%" ? params[:state] : "All States"
+%h1.text-center Monthly Report For #{state}
 
 = form_tag trackers_monthly_path, method: "get", class: "form-group col-md-12" do 
 	%div.col-md-1
@@ -15,7 +15,7 @@
 	= submit_tag("Search", class: "btn btn-success")
 
 %br
-%h3.text-center= @title
+%h3.text-center= @title + "#{state}"
 .table-responsive
 	%table.table.table-bordered.table-striped.table-condensed
 		%thead

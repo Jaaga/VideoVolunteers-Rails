@@ -4,6 +4,9 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
+  validates :name, presence: true, length: { maximum: 30 }
+  before_save :capitalize_name
+
   after_create :send_admin_mail
 
   def active_for_authentication?
@@ -31,4 +34,10 @@ class User < ActiveRecord::Base
   def send_admin_mail
     UserMailer.new_user_approval(self).deliver_now
   end
+
+  private
+  def capitalize_name
+      self.name = name.split(' ').map(&:capitalize).join(' ')
+    end
 end
+

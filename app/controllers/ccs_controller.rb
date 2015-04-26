@@ -9,8 +9,8 @@ class CcsController < ApplicationController
       @ccs, @alphaParams = Cc.all.order("full_name ASC").alpha_paginate(params[:letter], 
                             {:bootstrap3 => true})
     end
-    @columns = Cc.column_names - ['id', 'first_name', 'last_name',
-                                  'state_name', 'state_id', 'notes']
+    @columns = ['full_name','state_name','mentor', 'last_pitched_story_idea_date',"last_impact_achieved_date","last_issue_video_made_date",
+                        "last_issue_video_sent_date","last_impact_video_made_date","last_impact_action_date", "status"]
   end
 
   def show
