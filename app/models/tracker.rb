@@ -53,30 +53,7 @@ class Tracker < ActiveRecord::Base
 
 
 
-  # def Tracker.show_to_sc(state, view)
-  #   if state == 'ROI'
-  #     # Get a list of all ROI state IDs and find the trackers based on this list
-  #     @states = State.where(roi: true)
-  #     roi_states = @states.map{ |state| state.id }.to_a
-  #     if view == 'pitched'
-  #       @trackers = Tracker.where("state_id IN (?) AND footage_recieved = ? AND proceed_with_edit_and_payment != ?", roi_states, false, 'On hold').order("updated_at DESC")
-  #     elsif view == 'produced'
-  #       @trackers = Tracker.where("state_id IN (?) AND footage_recieved = ? AND proceed_with_edit_and_payment = ?", roi_states, true, 'Cleared').order("updated_at DESC")
-  #     elsif view == 'hold'
-  #       @trackers = Tracker.where("state_id IN (?) AND footage_recieved = ? AND proceed_with_edit_and_payment = ?", roi_states, true, 'On hold').order("updated_at DESC")
-  #     end
-  #   else
-  #     if view == 'pitched'
-  #       @trackers = Tracker.where("state_name = ? AND footage_recieved = ? AND proceed_with_edit_and_payment != ?", "#{state}", false, 'On hold').order("updated_at DESC")
-  #     elsif view == 'produced'
-  #       @trackers = Tracker.where("state_name = ? AND footage_recieved = ? AND proceed_with_edit_and_payment = ?", "#{state}", true, 'Cleared').order("updated_at DESC")
-  #       # @title_header = "Raw Footage Has Not Been Reviewed and Footage is in State"
-  #     elsif view == 'hold'
-  #       @trackers = Tracker.where("state_name = ? AND footage_recieved = ? AND proceed_with_edit_and_payment = ?", "#{state}", true, 'On hold').order("updated_at DESC")
-  #       # @title_header = "Edit and Payment is on Hold"
-  #     end
-  #   end
-  # end
+
 
   def self.show_to_editor(view, name)
     if view == 'edit'

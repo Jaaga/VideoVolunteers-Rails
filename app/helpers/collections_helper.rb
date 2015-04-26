@@ -96,7 +96,7 @@ module CollectionsHelper
      ["Debaranjan Sarangi", :"Debaranjan Sarangi"],
      ["Kanhaiya Maurya", :"Kanhaiya Maurya"],
      ["Zuhaib Ashraf", :"Zuhaib Ashraf"], ["Deepak Bara", :"Deepak Bara"],
-     ["Raviraj Naik", :"Raviraj Naik"], ["Ashok", :Ashok]].sort
+     ["Raviraj Naik", :"Raviraj Naik"], ["Ashok", :"Ashok"]].sort
   end
 
   def staff_collection
@@ -145,6 +145,7 @@ module CollectionsHelper
 
   def translation_collection
     [["Required", :"Required"],
+     ["Not Required", :"Not Required"],
      ["Needed and provided", :"Needed and provided"],
      ["Needed & not provided", :"Needed & not provided"]]
   end
@@ -161,9 +162,7 @@ module CollectionsHelper
      ["Production Coordinator", :"Production Coordinator"],
      ["Editor", :"Editor"],
      ["Reviewer", :"Reviewer"],
-     ["Training & Mentoring", :"Training & Mentoring"],
-     ["Communications", :"Communication"],
-     ["Executive Directors", :"Executive Director"]]
+     ["Admin", :"Admin"]]
   end
 
   def edit_status_collection

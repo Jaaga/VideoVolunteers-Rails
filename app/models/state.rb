@@ -2,8 +2,8 @@ class State < ActiveRecord::Base
   has_many :ccs
   has_many :trackers
 
-  before_save :capitalize_data
-  before_save :modify_associations
+  #before_save :capitalize_data
+  #before_save :modify_associations
 
   validates :name, presence: true, length: { maximum: 50 },
              uniqueness: { case_sensitive: false }

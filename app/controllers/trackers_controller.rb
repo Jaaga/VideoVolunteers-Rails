@@ -72,6 +72,7 @@ class TrackersController < ApplicationController
       @track = Tracker.find(params[:tracker_id])
       @tracker = Tracker.new
       @columns = view_context.array_set
+      @state = @track.state
       @unique = view_context.unique_set
       columns_to_copy = @columns[:general_info] + ["state_name", "cc_id", "state_id"]
       columns_to_copy.each do |key|
@@ -133,10 +134,10 @@ class TrackersController < ApplicationController
     #   @state_videos += [original.uid]
     # end
     if current_user.division == "State Coordinator"
-      @sections = [:general_info, :impact_planning, :footage_check, :edit, :rought_cut_sent_to_goa]
+      @sections = [:general_info, :impact_planning, :footage_check, :edit, :rought_cut_sent_to_goa, :is_impact]
     else
       @sections = [:general_info, :impact_planning, :footage_check, :edit, :rought_cut_sent_to_goa, 
-                  :rough_cut_recieved_in_goa, :rough_cut_edit, :rough_cut_review, :final]
+                  :rough_cut_recieved_in_goa, :rough_cut_edit, :rough_cut_review, :final, :is_impact]
     end
 
     if @tracker.uid.include?('_impact')
