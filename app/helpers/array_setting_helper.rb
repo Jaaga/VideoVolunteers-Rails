@@ -43,7 +43,7 @@ module ArraySettingHelper
                  'officials_involved', 'screening_details']
     payment = ['payment_status']
     # ratings = ['footage_rating', 'final_video_rating']
-    final = ['video_title', 'youtube_url',"finalized_date", 'youtube_date', 'iu_publish_date']
+    final = ['uploaded','video_title', 'youtube_url',"finalized_date", 'youtube_date', 'iu_publish_date']
 
     extra = ['notes', 'flag','flag_notes', 'flag_date', 'updated_by', 'created_at', 'updated_at']
     is_impact = ['is_impact', 'impact_uid', 'original_uid', 'no_original_uid']
@@ -98,7 +98,7 @@ module ArraySettingHelper
                  'officials_involved', 'screening_details']
     payment = ['payment_status']
     ratings = ['footage_rating', 'final_video_rating']
-    final = ['video_title', 'youtube_url',"finalized_date", 'youtube_date', 'iu_publish_date']
+    final = ['uploaded', 'video_title', 'youtube_url',"finalized_date", 'youtube_date', 'iu_publish_date']
 
     extra = ['notes', 'flag','flag_notes', 'flag_date', 'updated_by', 'created_at', 'updated_at']
     is_impact = ['is_impact', 'impact_uid', 'original_uid', 'no_original_uid']
