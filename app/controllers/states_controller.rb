@@ -2,7 +2,7 @@ class StatesController < ApplicationController
   before_filter :is_admin?, :only => [:destroy]
 
   def index
-    @states = State.all.paginate(page: params[:page], per_page: 40)
+    @states = State.all.order('name').paginate(page: params[:page], per_page: 40)
     @columns = State.column_names - ['id', 'counter']
   end
 

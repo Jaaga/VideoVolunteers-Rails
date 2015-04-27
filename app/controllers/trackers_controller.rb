@@ -16,21 +16,21 @@ class TrackersController < ApplicationController
       if [params[:view]].any? { |x| ['edit', 'hold', 'done', 'clean', 'finalize'].include?(x) }
         titles = {edit: "To be Edited", hold: "Edit On Hold", done: "Edit Done", clean: "To be Cleaned", finalize: "To Finalize and Upload"}
         @title = "#{params[:editor_name]} : " + titles[:"#{params[:view]}"]
-        @trackers = Tracker.show_to_editor(params[:view], params[:editor_name]).paginate(page: params[:page], per_page: 40)
+        @trackers = Tracker.show_to_editor(params[:view], params[:editor_name]).order("updated_at DESC").paginate(page: params[:page], per_page: 40)
         @title_header = titles[:"#{params[:view]}"] 
       elsif [params[:view]].any? { |x| view_context.find_collection('production_status').map{|y| y[0]}.include?(x) }
         if !params[:name].blank?
           @title = params[:name]+' Coordinator View'
           @title_header = params[:view]
-          @trackers = Tracker.where(state_name: params[:name], production_status: params[:view]).paginate(page: params[:page], per_page: 40)
+          @trackers = Tracker.where(state_name: params[:name], production_status: params[:view]).order("updated_at DESC").paginate(page: params[:page], per_page: 40)
         else
           @title = params[:filter_state] ? "Production Stage: #{params[:view]} - #{params[:filter_state]}" : "Production Stage: #{params[:view]} - All states"
           @state_filter_needed = true
           @title_header = params[:view]
           if params[:commit] == "Filter"
-            @trackers = Tracker.where(state_name: params[:filter_state], production_status: params[:view]).paginate(page: params[:page], per_page: 40)
+            @trackers = Tracker.where(state_name: params[:filter_state], production_status: params[:view]).order("updated_at DESC").paginate(page: params[:page], per_page: 40)
           else
-            @trackers = Tracker.where(production_status: params[:view]).paginate(page: params[:page], per_page: 40)
+            @trackers = Tracker.where(production_status: params[:view]).order("updated_at DESC").paginate(page: params[:page], per_page: 40)
           end
         end
       end
@@ -38,9 +38,9 @@ class TrackersController < ApplicationController
       @state_filter_needed = true
       if params[:commit] == "Filter"
         @title = "#{params[:filter_state]}'s Video Forms"
-        @trackers = Tracker.where(state_name: params[:filter_state]).paginate(page: params[:page], per_page: 40)
+        @trackers = Tracker.where(state_name: params[:filter_state]).order("updated_at DESC").paginate(page: params[:page], per_page: 40)
       else
-        @trackers = Tracker.all.paginate(page: params[:page], per_page: 40)
+        @trackers = Tracker.all.order("updated_at DESC").paginate(page: params[:page], per_page: 40)
         @title = "All Video Forms"
       end
     end
@@ -218,15 +218,15 @@ class TrackersController < ApplicationController
         #right format for month comparision
         month = (month.to_i < 10) ? month = "0" + month : month 
         @title = "#{params[:status]['stage']} : #{month}-#{params[:date]['year']} For "
-        @trackers = Tracker.monthly_report(month, params[:date]["year"], params[:status]["stage"], params[:state])
+        @trackers = Tracker.monthly_report(month, params[:date]["year"], params[:status]["stage"], params[:state]).order("updated_at DESC")
       else
         @title = "Stories Pitched This month In "
         #@trackers = Tracker.where("strftime('%m%Y', story_pitch_date) = ? AND state_name LIKE ?", Time.new.strftime('%m%Y'), "#{params[:state]}")
-        @trackers = Tracker.where('extract(month from story_pitch_date) = ? AND state_name LIKE ?', Time.new.strftime('%m'), "#{params[:state]}")
+        @trackers = Tracker.where('extract(month from story_pitch_date) = ? AND state_name LIKE ?', Time.new.strftime('%m'), "#{params[:state]}").order("updated_at DESC")
       end
     else
       @title = "Stories Pitched This month All over India"
-      @trackers = Tracker.where('extract(month from story_pitch_date) = ? AND state_name LIKE ?', Time.new.strftime('%m'), "%")
+      @trackers = Tracker.where('extract(month from story_pitch_date) = ? AND state_name LIKE ?', Time.new.strftime('%m'), "%").order("updated_at DESC")
     end
   end
 
