@@ -50,7 +50,9 @@ gem 'bootstrap-will_paginate'
 gem 'alphabetical_paginate'
 
 # Replaces webrick
-gem 'puma'
+# gem 'puma'
+# Replace puma
+gem "passenger"
 # Use postgresql as the production database for Heroku and in developement as well
 gem 'pg'
 
