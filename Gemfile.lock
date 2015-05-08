@@ -123,9 +123,6 @@ GEM
       hodel_3000_compliant_logger
     options (2.3.2)
     orm_adapter (0.5.0)
-    passenger (5.0.7)
-      rack
-      rake (>= 0.8.1)
     pg (0.18.1)
     pg_search (1.0.0)
       activerecord (>= 3.1)
@@ -253,7 +250,6 @@ DEPENDENCIES
   minitest-reporters
   newrelic_rpm
   oink
-  passenger
   pg
   pg_search
   progress_bar
