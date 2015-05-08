@@ -51,7 +51,9 @@ gem 'alphabetical_paginate'
 # Replaces webrick
 # gem 'puma'
 # Replace puma
-gem "passenger"
+# gem "passenger"
+gem 'unicorn'
+gem 'unicorn-worker-killer'
 # Use postgresql as the production database for Heroku and in developement as well
 gem 'pg'
 
