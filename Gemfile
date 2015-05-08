@@ -31,9 +31,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'pg_search'
 gem 'progress_bar'
 
-
-
-
+# To See which action is causing memory leak
+gem "oink"
 
 # Haml replaces erb
 gem 'haml'

@@ -124,15 +124,7 @@ class TrackersController < ApplicationController
   def edit
     @tracker = Tracker.find(params[:id])
     @columns = view_context.array_set
-
     @state = @tracker.state
-    # @state_videos = @state.trackers.where("impact_uid IS NULL AND uid NOT
-    #                                       LIKE '%_impact'").map {|x| x.uid}
-    # @state_videos -= [@tracker.uid]
-    # unless @tracker.original_uid.blank?
-    #   original = Tracker.find_by(uid: @tracker.original_uid)
-    #   @state_videos += [original.uid]
-    # end
     if current_user.division == "State Coordinator"
       @sections = [:general_info, :impact_planning, :footage_check, :edit, :rought_cut_sent_to_goa, :is_impact]
     else
@@ -141,8 +133,8 @@ class TrackersController < ApplicationController
     end
 
     if @tracker.uid.include?('_impact')
-      @sections += [:impact_achieved, :impact_video]
-      @sections -= [:impact_planning]
+      @sections << [:impact_achieved, :impact_video]
+      @sections << [:impact_planning]
     end
     @unique = view_context.unique_set
     @context = "edit"
