@@ -107,7 +107,6 @@ class TrackersController < ApplicationController
       @tracker.uid = view_context.set_uid(@state, @tracker)
       @tracker.assign_attributes(cc_name: @cc.full_name, state: @state, cc: @cc, state_name: @state.name)
     end
-
     if @tracker.save
       @tracker.update_attribute(:updated_by,
               "#{ Date.today }: #{ current_user.email } created this tracker.")

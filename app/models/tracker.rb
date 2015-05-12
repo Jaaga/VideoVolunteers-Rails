@@ -164,7 +164,6 @@ class Tracker < ActiveRecord::Base
         if impact_video_status_changed? && impact_video_status == 'Completed'
           self.cc.assign_attributes(last_impact_video_made_date: Date.today)
         end
-
         self.cc.save
       end
     end

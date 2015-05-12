@@ -2,6 +2,7 @@ module TrackersHelper
 
   def set_uid(state, tracker)
       if tracker.is_impact == true
+         puts "Inside impact set uid"
         if tracker.original_uid.present?
           id = "#{ state.state_abb }_#{tracker.original_uid.gsub(/[^0-9]/,"")}_impact"
           impact_uid_set(tracker.original_uid, id)
@@ -11,7 +12,7 @@ module TrackersHelper
         end
       else
         state.update_attribute(:counter, state.counter + 1 )
-        id = "#{ state.state_abb }_#{ state.counter }"
+        id = "#{ state.state_abb }_#{ state.counter}"
       end
       return id
   end
