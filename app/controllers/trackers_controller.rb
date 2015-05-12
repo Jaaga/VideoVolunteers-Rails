@@ -97,17 +97,15 @@ class TrackersController < ApplicationController
   def create
     @tracker = Tracker.new(tracker_params)
     # Method for dealing with making and linking impact videos
-    @is_impact = is_impact?('new')
+    is_impact?('new')
     # This condition exists just in case somebody submits a tracker with an
     # empty 'CC Name'. This way, simple_form will pick up on the model
     # validations.
     unless params[:tracker][:cc_id].blank?
       @cc = Cc.find(params[:tracker][:cc_id])
-      @tracker.cc_name = @cc.full_name
       @state = @cc.state
-      @tracker.state_name = @state.name
       @tracker.uid = view_context.set_uid(@state, @tracker)
-      @tracker.assign_attributes(state: @state, cc: @cc)
+      @tracker.assign_attributes(cc_name: @cc.full_name, state: @state, cc: @cc, state_name: @state.name)
     end
 
     if @tracker.save
@@ -255,9 +253,6 @@ class TrackersController < ApplicationController
         elsif caller == 'edit'
           view_context.impact_edit_system(@tracker)
         end
-        # This variable will be passed on to the UID setter so that impact UID's
-        # can be made. (for @is_impact)
-        return true
       elsif params[:tracker][:is_impact] == "0"
         if !params[:tracker][:original_uid].blank? && !params[:tracker][:no_original_uid].blank?
           flash.now[:error] = "The 'is impact' checkbox needs to be checked if it

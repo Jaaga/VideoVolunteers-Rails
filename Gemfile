@@ -49,7 +49,7 @@ gem 'bootstrap-will_paginate'
 gem 'alphabetical_paginate'
 
 # Replaces webrick
-# gem 'puma'
+gem 'puma'
 # Replace puma
 # gem "passenger"
 gem 'unicorn'

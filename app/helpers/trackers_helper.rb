@@ -5,7 +5,7 @@ module TrackersHelper
         if tracker.original_uid.present?
           id = "#{ state.state_abb }_#{tracker.original_uid.gsub(/[^0-9]/,"")}_impact"
           impact_uid_set(tracker.original_uid, id)
-        elsif tracker.original_uid.blank? && tracker.no_original_uid.present?
+        elsif tracker.original_uid.blank?
           state.update_attribute(:counter, state.counter + 1 )
           id = "#{ state.state_abb }_#{ state.counter }_impact"
         end
