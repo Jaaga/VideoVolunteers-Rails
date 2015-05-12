@@ -131,8 +131,7 @@ class TrackersController < ApplicationController
     end
 
     if @tracker.uid.include?('_impact')
-      @sections << [:impact_achieved, :impact_video]
-      @sections << [:impact_planning]
+      @sections += [:impact_achieved, :impact_video]
     end
     @unique = view_context.unique_set
     @context = "edit"
