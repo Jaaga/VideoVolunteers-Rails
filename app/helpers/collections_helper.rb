@@ -96,7 +96,7 @@ module CollectionsHelper
      ["Debaranjan Sarangi", :"Debaranjan Sarangi"],
      ["Kanhaiya Maurya", :"Kanhaiya Maurya"],
      ["Zuhaib Ashraf", :"Zuhaib Ashraf"], ["Deepak Bara", :"Deepak Bara"],
-     ["Raviraj Naik", :"Raviraj Naik"], ["Ashok", :"Ashok"]].sort
+     ["Raviraj Naik", :"Raviraj Naik"], ["Ashok", :"Ashok"], ["Purnima Damade", :"Purnima Damade"]].sort
   end
 
   def staff_collection
