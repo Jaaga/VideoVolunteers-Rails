@@ -37,7 +37,7 @@ gem "oink"
 # Haml replaces erb
 gem 'haml'
 # Bootstrap and sass for page layouts
-gem 'bootstrap-sass', '~> 3.3.4'
+gem 'bootstrap-sass', '~> 3.4.1'
 # Use Simpleform to create forms with complete html input
 gem 'simple_form'
 # Use Devise for user authentication system
